@@ -1,19 +1,21 @@
-# [Nome do projeto]
-
+# Prontuário Unificado (PrU)
 [Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
 
 ## Alunos integrantes da equipe
-
-* [Nome completo do aluno 1]
-* [Nome completo do aluno 2]
-* [Nome completo do aluno 3]
-* [Nome completo do aluno 4]
+- André Luís Silva de Paula
+- João de Jesus e Avila
+- Pedro Henrique Soares Rosemberg
+- Priscila Andrade de Moraes
+- Sirius Victor Zevallos
 
 ## Professores responsáveis
-
-* [Nome completo do professor 1]
-* [Nome completo do professor 2]
+- Max do Val Machado
+- Walisson Ferreira de Carvalho
 
 ## Instruções de utilização
+Para usar a aplicação, você precisa ter o Docker e o Docker compose instalado e executar o seguinte comando no terminal:
+```
+$ docker compose up -d
+```
 
 [Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.]
