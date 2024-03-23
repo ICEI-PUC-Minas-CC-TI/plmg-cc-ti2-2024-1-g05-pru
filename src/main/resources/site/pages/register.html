@@ -3,25 +3,18 @@ layout: no-header
 permalink: /register/
 ---
 
-<!DOCTYPE html>
-<html lang="pt-br">
+<main>
+  <h1>Registre-se no PrU</h1>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PrU - Prontuário Unificado</title>
+  <section class="form-container">
+    <form action="" class="register">
+      {%include input-field.html type="text" label="Usuário" id="username"%}
+      {%include input-field.html type="email" label="E-mail" id="email"%}
+      {%include input-field.html type="password" label="Senha" id="pass"%}
+      <button id="register">Criar conta</button>
+    </form>
 
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
+    <p>Já tem uma conta? <a href="/login">Fazer login</a></p>
+  </section>
 
-<body>
-  {%include header.html%}
-
-  <main>
-    <h2>login</h2>
-  </main>
-
-  {%include footer.html%}
-</body>
-
-</html>
+</main>

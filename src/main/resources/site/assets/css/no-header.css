@@ -120,7 +120,7 @@ form {
   }
 }
 
-.login-container {
+.form-container {
   padding: .5rem 1.5rem;
   border-radius: 1vmax;
   border: 1px solid var(--gray-dark);
