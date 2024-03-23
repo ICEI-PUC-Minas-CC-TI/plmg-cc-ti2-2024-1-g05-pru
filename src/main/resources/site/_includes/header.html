@@ -1,0 +1,20 @@
+<header>
+  <a href="" class="logo">
+    {%include logo.html%}
+    PrU
+  </a>
+
+  <!-- Hamburger icon -->
+  <input class="side-menu" type="checkbox" id="side-menu" />
+  <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
+
+  <!-- Menu -->
+  <nav>
+    <ul class="menu">
+      {% for page in site.header_pages %}
+      <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+      {% endfor %}
+      <li><a href="/login" class="login">LOGIN</a></li>
+    </ul>
+  </nav>
+</header>

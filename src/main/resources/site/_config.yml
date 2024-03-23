@@ -1,0 +1,8 @@
+title: Prontuário Universal
+
+# PRU CONFIGS
+header_pages:
+  - title: Histórico
+    url: '#'
+  - title: Sobre
+    url: '#'

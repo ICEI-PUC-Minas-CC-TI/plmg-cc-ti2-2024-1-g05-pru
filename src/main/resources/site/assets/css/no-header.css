@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
+
+:root {
+  --primary: #3348C3;
+  --secondary: #05B2DC;
+  --yellow: #F9ED4E;
+  --red: #FF7547;
+  --green: #94F155;
+  --gray-light: #DDDDDD;
+  --gray-dark: #596475;
+  --white: #EEEEEE;
+  --black: #112233;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  background-color: var(--white);
+  font-family: "Roboto", sans-serif;
+}
+
+/* HEADER */
+.container-logo {
+  margin: auto;
+  max-width: 50rem;
+  padding: 3rem 1rem 0;
+  display: flex;
+}
+
+.logo {
+  margin: auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  color: inherit;
+  font-family: "Madimi One", sans-serif;
+  font-size: 2em;
+  color: var(--primary);
+
+  & svg {
+    fill: var(--primary);
+    width: 2em;
+    margin-right: 1rem;
+  }
+}
+
+/* MAIN */
+main {
+  margin: auto;
+  max-width: 50rem;
+  padding: 1rem 1rem 0;
+  min-height: 70vh;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: normal;
+}
+
+/* FOOTER */
+footer {
+  background-color: var(--black);
+  min-height: 20vh;
+}
+
+/* FORM */
+form {
+  .input-field {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+
+    & label {
+      margin-bottom: .3em;
+      font-size: 1.1em;
+    }
+
+    & input {
+      width: 100%;
+      height: 2.5rem;
+      outline: none;
+      border: 1px solid var(--gray-dark);
+      border-radius: 1vmax;
+      padding: 0.5rem;
+      font-size: 1.1em;
+
+      &:focus {
+        border: 2px solid var(--primary);
+      }
+    }
+  }
+
+  & button {
+    width: 100%;
+    height: 2.5rem;
+    border: none;
+    border-radius: 1vmax;
+    margin-top: 1.5em;
+    background-color: var(--primary);
+    color: var(--white);
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--gray-dark);
+    }
+  }
+}
+
+.login-container {
+  padding: .5rem 1.5rem;
+  border-radius: 1vmax;
+  border: 1px solid var(--gray-dark);
+  width: 22rem;
+  max-width: 90%;
+  margin: 1rem auto;
+
+  p {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+}
