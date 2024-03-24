@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
+@import url("https://www.nerdfonts.com/assets/css/webfont.css");
 
 :root {
 	--primary: #3348C3;
@@ -8,6 +9,7 @@
 	--green: #94F155;
 	--gray-light: #DDDDDD;
 	--gray-dark: #596475;
+	--gray-darker: #222222;
 	--white: #EEEEEE;
 	--black: #112233;
 }
@@ -93,7 +95,8 @@ nav {
 		}
 
 		& li {
-			.login {
+
+			& .login {
 				background-color: var(--white);
 				color: var(--black);
 				border-radius: 1vmax;
@@ -104,10 +107,15 @@ nav {
 				}
 			}
 
-			a {
+			& a {
 				color: inherit;
 				display: block;
 				padding: 1rem 2rem;
+			}
+
+			& a.icon {
+				font-size: 2rem;
+				padding: .2rem 2rem;
 			}
 		}
 	}

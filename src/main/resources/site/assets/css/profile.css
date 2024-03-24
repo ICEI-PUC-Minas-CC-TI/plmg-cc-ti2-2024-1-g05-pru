@@ -1,0 +1,24 @@
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+
+  & .user-image i {
+    color: var(--gray-darker);
+    font-size: 7rem;
+  }
+
+  & .user-name {
+    color: var(--gray-darker);
+    font-family: "Roboto", sans-serif;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  & .edit-user {
+    font-size: 1.2rem;
+    color: var(--primary);
+  }
+}
