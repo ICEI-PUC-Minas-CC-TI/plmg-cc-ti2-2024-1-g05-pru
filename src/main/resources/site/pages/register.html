@@ -1,6 +1,7 @@
 ---
 layout: no-header
 permalink: /register/
+css: assets/css/form.css
 ---
 
 <main>
@@ -11,6 +12,12 @@ permalink: /register/
       {%include input-field.html type="text" label="Usuário" id="username"%}
       {%include input-field.html type="email" label="E-mail" id="email"%}
       {%include input-field.html type="password" label="Senha" id="pass"%}
+      {%include input-field.html type="password" label="Confirme a senha" id="pass-confirm"%}
+      <div class="radio-input">
+        {%include input-field.html name="account-type" type="radio" label="Paciente" id="patient"%}
+        {%include input-field.html name="account-type" type="radio" label="Médico" id="doctor"%}
+      </div>
+
       <button id="register">Criar conta</button>
     </form>
 
