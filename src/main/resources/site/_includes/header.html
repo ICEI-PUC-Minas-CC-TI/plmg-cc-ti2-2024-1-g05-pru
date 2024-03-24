@@ -14,8 +14,14 @@
       {% for page in site.header_pages %}
       <li><a href="{{ page.url }}">{{ page.title }}</a></li>
       {% endfor %}
-      <li><a href="/login" class="login">LOGIN</a></li>
-      <li><a class="icon" href="/profile"><i class="nf nf-fa-user_circle_o"></i></a></li>
+      <li class="login">
+        <a href="/login">LOGIN</a>
+      </li>
+      <li class="profile">
+        <a class="icon" href="/profile">
+          <i class="nf nf-fa-user_circle_o"></i>
+        </a>
+      </li>
     </ul>
   </nav>
 </header>
