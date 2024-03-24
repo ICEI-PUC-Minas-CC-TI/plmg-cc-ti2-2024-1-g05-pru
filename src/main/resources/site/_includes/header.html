@@ -1,5 +1,5 @@
 <header>
-  <a href="/" class="logo">
+  <a href="{{ site.baseurl }}/" class="logo">
     {%include logo.html%}
     PrU
   </a>
@@ -12,13 +12,13 @@
   <nav>
     <ul class="menu">
       {% for page in site.header_pages %}
-      <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+      <li><a href="{{ site.baseurl }}/{{ page.url }}">{{ page.title }}</a></li>
       {% endfor %}
       <li class="login">
-        <a href="/login">LOGIN</a>
+        <a href="{{ site.baseurl }}/login">LOGIN</a>
       </li>
       <li class="profile">
-        <a class="icon" href="/profile">
+        <a class="icon" href="{{ site.baseurl }}/profile">
           <i class="nf nf-fa-user_circle_o"></i>
         </a>
       </li>
