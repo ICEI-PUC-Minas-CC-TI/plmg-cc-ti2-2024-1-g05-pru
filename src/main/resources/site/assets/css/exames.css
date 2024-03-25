@@ -1,0 +1,56 @@
+section#exams {
+  margin-top: 2rem;
+
+  & li {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+
+    a {
+      color: inherit;
+    }
+
+    &.future {
+      &::after {
+        content: "Agendado";
+        display: inline-block;
+        margin-left: 10px;
+        padding: 2px 5px;
+        color: var(--gray-darker);
+        font-weight: bold;
+        background-color: var(--green);
+        border-radius: 3px;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+
+
+
+
+.info {
+  margin-bottom: 2rem;
+
+  & p {
+
+    & a {
+      color: var(--primary);
+      font-weight: bold;
+    }
+  }
+}
+
+.result {
+  & div {
+    display: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    & i {
+      font-size: 3rem;
+    }
+  }
+}

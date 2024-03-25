@@ -3,12 +3,8 @@ window.addEventListener('load', loadHeader, false);
 function loadHeader() {
   const login = document.querySelector('header nav .menu li.login');
   const profile = document.querySelector('header nav .menu li.profile');
+  const isUserSessionExists = userSessionExists();
 
-  if (userSessionExists()) {
-    login.style.display = 'none';
-    profile.style.display = 'block';
-  } else {
-    login.style.display = 'block';
-    profile.style.display = 'none';
-  }
+  login.style.display = isUserSessionExists ? 'none' : 'block';
+  profile.style.display = isUserSessionExists ? 'block' : 'none';
 }

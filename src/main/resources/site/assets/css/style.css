@@ -2,91 +2,47 @@
 @import url("https://www.nerdfonts.com/assets/css/webfont.css");
 
 :root {
-	--primary: #3348C3;
-	--secondary: #05B2DC;
-	--yellow: #F9ED4E;
-	--red: #FF7547;
-	--green: #94F155;
-	--gray-light: #DDDDDD;
-	--gray-dark: #596475;
-	--gray-darker: #222222;
-	--white: #EEEEEE;
-	--black: #112233;
+  --primary: #3348C3;
+  --secondary: #05B2DC;
+  --yellow: #F9ED4E;
+  --red: #FF7547;
+  --green: #94F155;
+  --gray-light: #DDDDDD;
+  --gray-dark: #596475;
+  --gray-darker: #222222;
+  --white: #EEEEEE;
+  --black: #112233;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 li {
-	list-style: none;
+  list-style: none;
 }
 
 body {
-	background-color: var(--white);
-	font-family: "Roboto", sans-serif;
+  background-color: var(--white);
+  font-family: "Roboto", sans-serif;
 }
 
 /* MAIN */
 main {
-	margin: auto;
-	max-width: 50rem;
-	padding: 1rem 1rem 0;
-	min-height: 90vh;
+  margin: auto;
+  max-width: 50rem;
+  padding: 1rem 1rem 0;
+  min-height: 90vh;
 }
 
 /* FOOTER */
 footer {
-	background-color: var(--black);
-	min-height: 20vh;
-}
-
-/* FORM */
-form {
-	.input-field {
-		display: flex;
-		flex-direction: column;
-		margin-top: 1em;
-
-		& label {
-			margin-bottom: .5em;
-			font-size: 1.1em;
-		}
-
-		& input {
-			width: 100%;
-			height: 3rem;
-			outline: none;
-			border: 1px solid var(--gray-dark);
-			border-radius: 1vmax;
-			padding: 0.5rem;
-			font-size: 1.3em;
-
-			&:focus {
-				border: 2px solid var(--primary);
-			}
-		}
-	}
-
-	& button {
-		width: 100%;
-		height: 3rem;
-		border: none;
-		border-radius: 1vmax;
-		margin-top: 1.5em;
-		background-color: var(--primary);
-		color: var(--white);
-		font-weight: bold;
-
-		&:hover {
-			cursor: pointer;
-			background-color: var(--gray-dark);
-		}
-	}
+  background-color: var(--black);
+  min-height: 20vh;
 }

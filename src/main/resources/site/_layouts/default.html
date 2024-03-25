@@ -9,11 +9,16 @@
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/header.css">
   {% if page.css %}
-  <link rel="stylesheet" href="{{ site.baseurl }}/{{ page.css }}">
+    {% for css_file in page.css %}
+      <link rel="stylesheet" href="{{ site.baseurl }}/{{ css_file }}">
+    {% endfor %}
   {% endif %}
 
   <script src="{{ site.baseurl }}/assets/js/index.js" defer></script>
   <script src="{{ site.baseurl }}/assets/js/header.js" defer></script>
+  {% if page.js %}
+  <script src="{{ site.baseurl }}/{{ page.js }}" defer></script>
+  {% endif %}
 
   <link rel="shortcut icon" href="{{ site.baseurl }}/assets/favicon/pru.ico" type="image/x-icon">
 </head>
