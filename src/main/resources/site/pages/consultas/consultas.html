@@ -1,0 +1,35 @@
+---
+layout: default
+permalink: /consultas/
+css:
+- assets/css/exames.css
+- assets/css/form.css
+---
+
+<main>
+  <section class="exams-list">
+    <h2>Consultas</h2>
+
+    <section class="order-filter ">
+      <form class="order">
+        <section class="input-field-select">
+          <label for="date">Ordenar por:</label>
+          <select name="date" id="date">
+            <option value="new" selected>Mais recentes</option>
+            <option value="old">Mais antigos</option>
+          </select>
+        </section>
+      </form>
+
+      <button type="button">Marcar Consulta</button>
+    </section>
+
+    <section class="itens-list" id="exams">
+      <ul>
+        <li><a href="./consulta?id=">Consulta XPTO - 01/01/2024</a></li>
+        <li><a href="./consulta?id=">Consulta Y - 20/03/2024</a></li>
+        <li class="future"><a href="./consulta?id=">Consulta Z - 31/12/2023</a></li>
+      </ul>
+    </section>
+  </section>
+</main>
