@@ -1,0 +1,94 @@
+---
+layout: default
+permalink: /perfil/
+css:
+- assets/css/perfil.css
+js:
+- assets/js/perfil.js
+---
+
+<main>
+  <section class="user-info">
+    <div class="user-image">
+      <i class="nf nf-fa-user_circle"></i>
+    </div>
+    <span class="user-name">
+      Fulano da Silva
+    </span>
+    <span id="crm">
+      12345-CRM
+    </span>
+    <a class="edit-user" href="{{ site.baseurl }}/perfil/editar">
+      Editar perfil
+      <i class="nf nf-md-account_edit"></i>
+    </a>
+  </section>
+
+  <section class="patient-info">
+    <section class="consultas-recentes">
+      <h2><a href="/consultas">Consultas recentes</a></h2>
+      <ul>
+        <li>
+          <span class="date">01/01/2024</span>
+          <span class="doctor">Dr. José da Silva</span>
+          <span class="specialty">Clínico Geral</span>
+        </li>
+        <li>
+          <span class="date">01/01/2024</span>
+          <span class="doctor">Dr. Fulano Beltrano</span>
+          <span class="specialty">Clínico Geral</span>
+        </li>
+        <li>
+          <span class="date">01/01/2024</span>
+          <span class="doctor">Dr. José da Silva</span>
+          <span class="specialty">Clínico Geral</span>
+        </li>
+        <li>
+          <span class="date">01/01/2024</span>
+          <span class="doctor">Dr. José da Silva</span>
+          <span class="specialty">Clínico Geral</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="exames-recentes">
+      <h2><a href="/exames">Exames recentes</a></h2>
+      <ul>
+        <li>
+          <span class="date">31/12/2024</span>
+          <span class="title">Exame XPTO</span>
+          <span class="pendente">Pendente</span>
+        </li>
+        <li>
+          <span class="date">01/01/2024</span>
+          <span class="title">Exame XPTO</span>
+        </li>
+        <li>
+          <span class="date">01/01/2024</span>
+          <span class="title">Exame XPTO</span>
+        </li>
+      </ul>
+    </section>
+  </section>
+
+  <section class="doctor-info">
+    <section class="pacientes-recentes">
+      <h2><a href="/pacientes">Pacientes</a></h2>
+
+      <ul>
+        <li>
+          <a href="/pacientes/paciente?id=">
+            <span class="name">Fulano da Silva</span>
+            <span class="ultima-consulta">01/01/2024</span>
+          </a>
+        </li>
+        <li>
+          <a href="/pacientes/paciente?id=01">
+            <span class="name">Fulano da Silva</span>
+            <span class="ultima-consulta">01/01/2024</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </section>
+</main>
