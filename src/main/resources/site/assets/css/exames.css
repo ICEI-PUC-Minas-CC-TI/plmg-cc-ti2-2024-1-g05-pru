@@ -25,22 +25,6 @@ section#exams {
   }
 }
 
-
-
-
-
-.info {
-  margin-bottom: 2rem;
-
-  & p {
-
-    & a {
-      color: var(--primary);
-      font-weight: bold;
-    }
-  }
-}
-
 .result {
   & div {
     display: none;

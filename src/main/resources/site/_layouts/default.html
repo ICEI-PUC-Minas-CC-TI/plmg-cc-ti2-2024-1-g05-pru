@@ -16,8 +16,11 @@
 
   <script src="{{ site.baseurl }}/assets/js/index.js" defer></script>
   <script src="{{ site.baseurl }}/assets/js/header.js" defer></script>
+
   {% if page.js %}
-  <script src="{{ site.baseurl }}/{{ page.js }}" defer></script>
+    {% for js_file in page.js %}
+      <script src="{{ site.baseurl }}/{{ js_file }}" defer></script>
+    {% endfor %}
   {% endif %}
 
   <link rel="shortcut icon" href="{{ site.baseurl }}/assets/favicon/pru.ico" type="image/x-icon">
