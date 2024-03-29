@@ -1,7 +1,10 @@
 ---
 layout: no-header
 permalink: /register/
-css: assets/css/form.css
+css:
+- assets/css/form.css
+- assets/css/register.css
+js: assets/js/register.js
 ---
 
 <main>
@@ -9,14 +12,34 @@ css: assets/css/form.css
 
   <section class="form-container">
     <form action="" class="register">
-      {%include input-field.html type="text" label="Nome" id="name"%}
+      {%include input-field.html type="text" label="Nome" id="nome"%}
       {%include input-field.html type="email" label="E-mail" id="email"%}
-      {%include input-field.html type="email" label="Confirme o e-mail" id="email-confirm"%}
-      {%include input-field.html type="password" label="Senha" id="pass"%}
-      {%include input-field.html type="password" label="Confirme a senha" id="pass-confirm"%}
+      {%include input-field.html type="email" label="Confirme o e-mail" id="email-confirme"%}
+      {%include input-field.html type="password" label="Senha" id="senha"%}
+      {%include input-field.html type="password" label="Confirme a senha" id="senha-confirme"%}
+
       <div class="radio-input">
-        {%include input-field.html name="account-type" type="radio" label="Paciente" id="patient"%}
-        {%include input-field.html name="account-type" type="radio" label="Médico" id="doctor"%}
+        {%include input-field.html name="account-type" type="radio" label="Paciente" id="paciente" value="paciente"%}
+        {%include input-field.html name="account-type" type="radio" label="Médico" id="medico" value="medico"%}
+      </div>
+
+      <div class="personal-info">
+        {%include input-field.html type="text" label="CPF" id="cpf" placeholder="XXX.XXX.XXX-XX"%}
+        {%include input-field.html type="tel" label="Telefone" id="telefone" placeholder="(XX) X XXXX-XXXX"%}
+
+        <div class="address">
+          {%include input-field.html type="number" label="CEP" id="cep" placeholder="XXXXX-XXX"%}
+          {%include input-field.html type="text" label="Estado" id="estado"%}
+          {%include input-field.html type="text" label="Cidade" id="cidade"%}
+          {%include input-field.html type="text" label="Logradouro" id="logradouro"%}
+          {%include input-field.html type="number" label="Número" id="numero"%}
+          {%include input-field.html type="text" label="Bairro" id="bairro"%}
+          {%include input-field.html type="text" label="Complemento" id="complemento"%}
+        </div>
+      </div>
+
+      <div class="doctor-info">
+        {%include input-field.html type="text" label="CRM" id="crm" placeholder=""%}
       </div>
 
       <button id="register">Criar conta</button>

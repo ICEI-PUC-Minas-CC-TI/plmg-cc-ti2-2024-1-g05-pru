@@ -1,0 +1,10 @@
+.register {
+  & .radio-input input:hover {
+    cursor: pointer;
+  }
+
+  & .personal-info,
+  & .doctor-info {
+    display: none;
+  }
+}
