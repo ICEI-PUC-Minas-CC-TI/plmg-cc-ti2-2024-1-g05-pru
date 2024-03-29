@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PrU - Prontuário Unificado</title>
 
+  <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/no-header.css">
   {% if page.css %}
@@ -14,12 +15,15 @@
     {% endfor %}
   {% endif %}
 
+  <!-- JS -->
+  <script src="{{ site.baseurl }}/assets/js/app.js" defer></script>
   {% if page.js %}
     {% for js_file in page.js %}
       <script src="{{ site.baseurl }}/{{ js_file }}" defer></script>
     {% endfor %}
   {% endif %}
 
+  <!-- Favicon -->
   <link rel="shortcut icon" href="{{ site.baseurl }}/assets/favicon/pru.ico" type="image/x-icon">
 </head>
 
