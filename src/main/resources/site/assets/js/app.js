@@ -1,5 +1,5 @@
 // baseUrl é essencial para a construção de URLs relativas
-const baseUrl = window.location.origin + (window.location.hostname !== "localhost" ? window.location.pathname.split('/')[1] : '');
+const baseUrl = window.location.origin + (window.location.hostname !== "localhost" ? '/' + window.location.pathname.split('/')[1] : '');
 
 // Função para gerar UUIDs, podendo passar a quantidade de caracteres desejada
 function generateUUID(qtde) {
