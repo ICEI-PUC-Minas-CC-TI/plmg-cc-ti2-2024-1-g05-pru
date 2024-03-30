@@ -39,7 +39,8 @@ form {
       font-size: 1.1em;
     }
 
-    & input {
+    & input,
+    & textarea {
       width: 100%;
       height: 2.5rem;
       outline: none;
@@ -51,6 +52,12 @@ form {
       &:focus {
         border: 2px solid var(--primary);
       }
+    }
+
+    & textarea {
+      min-width: 100%;
+      max-width: 100%;
+      height: 4rem;
     }
   }
 

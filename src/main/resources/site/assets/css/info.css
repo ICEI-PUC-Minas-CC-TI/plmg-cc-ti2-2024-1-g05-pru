@@ -1,9 +1,38 @@
-.info {
+.info-header {
   margin-bottom: 2rem;
 
-  & p {
-    & a {
+  & h1 {
+    font-size: 2rem;
+  }
+
+  & .doctor {
+    display: block;
+    margin: .5rem 0;
+
+    a {
+      font-size: 1.2rem;
       color: var(--primary);
+    }
+
+    & span.specialty {
+      font-size: .8rem;
+      background-color: var(--green);
+      padding: .2rem .4rem;
+      border-radius: 1vmax;
+      margin-left: .2rem;
+    }
+  }
+
+  & .date {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+
+    & i {
+      margin-right: .5rem;
+    }
+
+    & span {
       font-weight: bold;
     }
   }

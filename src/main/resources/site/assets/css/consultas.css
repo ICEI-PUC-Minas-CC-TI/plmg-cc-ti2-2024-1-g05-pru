@@ -1,0 +1,141 @@
+#consultas {
+  margin-top: 2rem;
+
+  & li {
+    margin: 1rem;
+    font-size: 1.2rem;
+    background-color: var(--gray-light);
+    border-radius: 1vmax;
+    padding: 1rem 2rem;
+
+    & a {
+      color: inherit;
+      display: block;
+    }
+
+    & span.title {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: bold;
+      display: block;
+      margin-bottom: .5rem;
+    }
+
+    & span.doctor {
+      font-size: 1.1rem;
+    }
+
+    & span.specialty {
+      display: inline-flex;
+      align-items: center;
+      font-size: .8rem;
+      background-color: var(--green);
+      padding: .2rem .5rem;
+      border-radius: 1vmax;
+    }
+
+    & .date {
+      display: inline-flex;
+      align-items: center;
+      font-size: .8rem;
+      background-color: var(--gray-darker);
+      color: var(--white);
+      padding: .2rem .5rem;
+      border-radius: 1vmax;
+
+      & i {
+        margin-right: .3rem;
+      }
+    }
+  }
+}
+
+.diagnostic,
+.requested-exams,
+.remedy {
+  background-color: var(--gray-light);
+  border-radius: 1vmax;
+  padding: 2rem 3rem;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+
+  & h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  & li {
+    list-style: disc inside;
+    margin: .5rem 0;
+  }
+
+  & .status {
+    display: inline-flex;
+    align-items: center;
+    font-size: .8rem;
+    color: var(--gray-darker);
+    font-weight: bold;
+    padding: .2rem .5rem;
+    border-radius: 1vmax;
+
+    &.done {
+      background-color: var(--green);
+    }
+
+    &.pending {
+      background-color: var(--yellow);
+    }
+
+    &.canceled {
+      background-color: var(--red);
+    }
+  }
+}
+
+
+
+
+
+/* ADICIONAR CONSULTA */
+form {
+
+  & #exames,
+  & #medicamentos {
+    background-color: var(--gray-light);
+    padding: .7rem 1rem;
+    border-radius: 1vmax;
+    margin-top: 1rem;
+
+    & button {
+      width: 3rem;
+      display: inline;
+      margin: 0;
+      color: var(--white);
+    }
+
+    & .head-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: .2rem;
+    }
+
+    & .exame,
+    & .medicamento {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      & input {
+        display: inline-block;
+        width: 85%;
+      }
+
+      & .remove {
+        background-color: var(--red);
+      }
+    }
+  }
+}
