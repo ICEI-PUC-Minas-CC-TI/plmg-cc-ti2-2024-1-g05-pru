@@ -36,4 +36,13 @@
       font-weight: bold;
     }
   }
+
+  & .edit {
+    display: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--primary);
+    padding: .5rem 0;
+    font-size: 1.1rem;
+  }
 }

@@ -1,6 +1,6 @@
 var modal = document.getElementById('modal');
 
-document.querySelector('#add-consulta').addEventListener('click', () => {
+document.querySelector('#open-modal').addEventListener('click', () => {
   modal.style.display = 'block';
 }, false);
 

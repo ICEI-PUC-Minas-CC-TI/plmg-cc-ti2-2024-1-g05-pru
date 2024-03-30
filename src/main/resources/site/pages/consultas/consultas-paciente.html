@@ -6,6 +6,7 @@ css:
 - assets/css/form.css
 - assets/css/modal.css
 js:
+- assets/js/consulta.js
 - assets/js/consultas-paciente.js
 - assets/js/modal.js
 ---
@@ -24,9 +25,8 @@ js:
       </section>
     </form>
 
-    <button type="button" id="add-consulta">Nova consulta</button>
+    <button type="button" id="open-modal">Nova consulta</button>
   </section>
-
 
   <section id="modal" class="modal-overlay">
     <div class="modal-content">
@@ -64,12 +64,10 @@ js:
     </div>
   </section>
 
-
-
   <section class="itens-list" id="consultas">
     <ul>
       <li>
-        <a href="./consulta?id=">
+        <a href="./consulta?id=1">
           <span class="title">Consulta XPTO</span>
           <span class="doctor">Dr. Fulano Beltrano</span>
           <span class="specialty">Cardiologista</span>
@@ -77,7 +75,7 @@ js:
         </a>
       </li>
       <li>
-        <a href="./consulta?id=">
+        <a href="./consulta?id=2">
           <span class="title">Consulta Y</span>
           <span class="doctor">Dr. João da Silva</span>
           <span class="specialty">Neuorologista</span>
@@ -85,7 +83,7 @@ js:
         </a>
       </li>
       <li>
-        <a href="./consulta?id=">
+        <a href="./consulta?id=3">
           <span class="title">Consulta Z</span>
           <span class="doctor">Dr. Fulano da Silva</span>
           <span class="specialty">Ortopedista</span>
@@ -95,12 +93,3 @@ js:
     </ul>
   </section>
 </main>
-
-
-<!--
-<section class="input-field exame">
-  <label for="exame1">Exame 1</label>
-  <input type="text" id="exame1" name="exame1">
-  <button type="button" class="removeExame">Remover</button>
-</section>
--->
