@@ -1,0 +1,106 @@
+---
+layout: default
+permalink: /consultas/paciente
+css:
+- assets/css/consultas.css
+- assets/css/form.css
+- assets/css/modal.css
+js:
+- assets/js/consultas-paciente.js
+- assets/js/modal.js
+---
+
+<main>
+  <h2>Consultas do paciente <span>Fulano da Silva</span></h2>
+
+  <section class="order-filter ">
+    <form class="order">
+      <section class="input-field-select">
+        <label for="date">Ordenar por:</label>
+        <select name="date" id="date">
+          <option value="new" selected>Mais recentes</option>
+          <option value="old">Mais antigos</option>
+        </select>
+      </section>
+    </form>
+
+    <button type="button" id="add-consulta">Nova consulta</button>
+  </section>
+
+
+  <section id="modal" class="modal-overlay">
+    <div class="modal-content">
+      <span id="close-modal"><i class="nf nf-md-close_circle"></i></span>
+
+      <h2>Nova Consulta</h2>
+
+      <form action="" id="form-add-consulta">
+        {%include input-field.html type="text" label="Título" id="titulo" name="titulo"%}
+        <section class="input-field">
+          <label for="diagnostico">Diagnóstico / Resumo</label>
+          <textarea id="diagnostico" name="diagnostico"></textarea>
+        </section>
+
+        <section id="exames">
+          <div class="head-info">
+            <h3>Exames</h3>
+            <button type="button" id="addExame">
+              <i class="nf nf-fa-plus"></i>
+            </button>
+          </div>
+        </section>
+
+        <section id="medicamentos">
+          <div class="head-info">
+            <h3>Medicamentos</h3>
+            <button type="button" id="addMedicamento">
+              <i class="nf nf-fa-plus"></i>
+            </button>
+          </div>
+        </section>
+
+        <button type="submit">Adicionar consulta</button>
+      </form>
+    </div>
+  </section>
+
+
+
+  <section class="itens-list" id="consultas">
+    <ul>
+      <li>
+        <a href="./consulta?id=">
+          <span class="title">Consulta XPTO</span>
+          <span class="doctor">Dr. Fulano Beltrano</span>
+          <span class="specialty">Cardiologista</span>
+          <span class="date">01/01/2024</span>
+        </a>
+      </li>
+      <li>
+        <a href="./consulta?id=">
+          <span class="title">Consulta Y</span>
+          <span class="doctor">Dr. João da Silva</span>
+          <span class="specialty">Neuorologista</span>
+          <span class="date">12/12/2023</span>
+        </a>
+      </li>
+      <li>
+        <a href="./consulta?id=">
+          <span class="title">Consulta Z</span>
+          <span class="doctor">Dr. Fulano da Silva</span>
+          <span class="specialty">Ortopedista</span>
+          <span class="date">01/01/2023</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+
+<!--
+<section class="input-field exame">
+  <label for="exame1">Exame 1</label>
+  <input type="text" id="exame1" name="exame1">
+  <button type="button" class="removeExame">Remover</button>
+</section>
+-->
