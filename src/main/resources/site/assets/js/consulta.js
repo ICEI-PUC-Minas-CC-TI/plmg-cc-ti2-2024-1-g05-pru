@@ -29,10 +29,18 @@ function createChildField(childName, id = generateUUID(8)) {
   const childField = document.createElement('section');
   childField.className = `input-field ${childName}`;
 
-  childField.innerHTML = `
-    <input type="text" name="${childName}-${id}" placeholder="Novo ${childName}">
-    <button class="remove"><i class="nf nf-fa-trash"></i></button>
-  `;
+  if (childName === 'medicamento') {
+    childField.innerHTML = `
+      <input type="text" name="${childName}-${id}" placeholder="Novo ${childName}">
+      <input type="number" name="${childName}-dias-${id}" placeholder="Dias" min="0">
+      <button class="remove"><i class="nf nf-fa-trash"></i></button>
+    `;
+  } else {
+    childField.innerHTML = `
+      <input type="text" name="${childName}-${id}" placeholder="Novo ${childName}">
+      <button class="remove"><i class="nf nf-fa-trash"></i></button>
+    `;
+  }
 
   childField.querySelector('.remove').addEventListener('click', () => {
     childField.remove();
