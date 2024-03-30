@@ -12,11 +12,11 @@ js: assets/js/register.js
 
   <section class="form-container">
     <form action="" class="register">
-      {%include input-field.html type="text" label="Nome" id="nome"%}
-      {%include input-field.html type="email" label="E-mail" id="email"%}
-      {%include input-field.html type="email" label="Confirme o e-mail" id="email-confirme"%}
-      {%include input-field.html type="password" label="Senha" id="senha"%}
-      {%include input-field.html type="password" label="Confirme a senha" id="senha-confirme"%}
+      {%include input-field.html type="text" name="nome" label="Nome" id="nome"%}
+      {%include input-field.html type="email" name="email" label="E-mail" id="email"%}
+      {%include input-field.html type="email" name="email-confirme" label="Confirme o e-mail" id="email-confirme"%}
+      {%include input-field.html type="password" name="senha" label="Senha" id="senha"%}
+      {%include input-field.html type="password" name="senha-confirme" label="Confirme a senha" id="senha-confirme"%}
 
       <div class="radio-input">
         {%include input-field.html name="account-type" type="radio" label="Paciente" id="paciente" value="paciente"%}
@@ -24,17 +24,27 @@ js: assets/js/register.js
       </div>
 
       <div class="personal-info">
-        {%include input-field.html type="text" label="CPF" id="cpf" placeholder="XXX.XXX.XXX-XX"%}
-        {%include input-field.html type="tel" label="Telefone" id="telefone" placeholder="(XX) X XXXX-XXXX"%}
+        {%include input-field.html type="text" name="cpf" label="CPF" id="cpf" placeholder="XXX.XXX.XXX-XX"%}
 
-        {%include input-field.html type="number" label="CEP" id="cep" placeholder="XXXXX-XXX"%}
+        <section class="input-field">
+          <label for="sexo">Sexo</label>
+          <select name="sexo" id="sexo">
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminino</option>
+            <option value="null">Prefiro não informar</option>
+          </select>
+        </section>
+
+        {%include input-field.html type="tel" name="telefone" label="Telefone" id="telefone" placeholder="(XX) X XXXX-XXXX"%}
+
+        {%include input-field.html type="text" name="cep" label="CEP" id="cep" placeholder="XXXXX-XXX"%}
       </div>
 
       <div class="doctor-info">
-        {%include input-field.html type="text" label="CRM" id="crm" placeholder=""%}
+        {%include input-field.html type="text" name="crm" label="CRM" id="crm" placeholder=""%}
       </div>
 
-      <button id="register">Criar conta</button>
+      <button type="submit" id="register">Criar conta</button>
     </form>
 
     <p>Já tem uma conta? <a href="{{ site.baseurl }}/login">Fazer login</a></p>
