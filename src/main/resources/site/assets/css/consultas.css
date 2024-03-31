@@ -137,5 +137,15 @@ form {
         background-color: var(--red);
       }
     }
+
+    & .medicamento {
+      & input[type="text"] {
+        width: 60%;
+      }
+
+      & input[type="number"] {
+        width: 20%;
+      }
+    }
   }
 }
