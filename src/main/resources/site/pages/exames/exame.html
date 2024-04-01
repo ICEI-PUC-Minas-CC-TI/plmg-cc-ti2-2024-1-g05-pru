@@ -8,26 +8,36 @@ js: assets/js/exames.js
 ---
 
 <main>
-  <section class="info">
-    <h2>Exame XPTO</h2>
-    <time datetime="2024-01-01" class="date">01/01/2024</time>
-    <p>Solicitado na
-      <a href="#" title="Consulta XYZ">consulta XYZ</a> pelo médico
-    </p>
-    <span class="doctor">Dr. Fulano Beltrano</span>
+  <section class="info-header">
+    <h1>Exame XPTO</h1>
+
+    <div class="requested">
+      Exame solicitado na
+      <a id="consulta" href="{{ base.url }}/consultas/consulta?id=1">Consulta XPTO</a>
+      pelo médico
+      <div class="doctor">
+        <span>Dr. Fulano Beltrano</span>
+        <span class="specialty">Cardiologista</span>
+      </div>
+    </div>
+
+    <div class="date">
+      <i class="nf nf-md-calendar"></i>
+      <span>01/01/2024</span>
+    </div>
   </section>
 
   <section class="result">
-    <h3>Resultados</h3>
+    <h2>Resultados</h2>
 
     <div class="download">
       <i class="nf nf-md-file_download"></i>
-      baixar o resultado do exame
+      Baixar resultado do exame
     </div>
 
     <div class="upload">
       <i class="nf nf-md-file_upload"></i>
-      enviar o resultado do exame
+      Enviar resultado do exame
     </div>
   </section>
 </main>
