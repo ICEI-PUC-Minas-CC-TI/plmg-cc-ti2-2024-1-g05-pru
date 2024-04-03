@@ -1,10 +1,10 @@
-{ 
+{
   "usuarios": [
     {
       "id": 1,
       "nome": "João da Silva",
-      "email": "joaosilva@gmail.com",
-      "senha": "12345678",
+      "email": "paciente@gmail.com",
+      "senha": "paciente123",
       "nascimento": "01-01-2000",
       "sexo": "masculino",
       "tipo": "paciente",
@@ -31,8 +31,8 @@
     {
       "id": 3,
       "nome": "Carlos Alberto",
-      "email": "carlosalberto@gmail.com",
-      "senha": "56781234",
+      "email": "medico@gmail.com",
+      "senha": "medico123",
       "nascimento": "03-03-1970",
       "sexo": "masculino",
       "tipo": "medico",
@@ -166,5 +166,11 @@
       "id": 2,
       "nome": "Vacina"
     }
-  ]
+  ],
+  "login_medico": {
+    "token": "eyJleHBpcmVzSW4iOiI0aCIsImFsZyI6IkhTMjU2IiwidHlwIjoiSldUIn0.eyJpZCI6MSwidGlwbyI6InBhY2llbnRlIn0.4CSuDbEzK52iDq5d0PtAY6dDtYxPFCDr9VNdsWeVctQ"
+  },
+  "login_paciente": {
+    "token": "eyJleHBpcmVzSW4iOiI0aCIsImFsZyI6IkhTMjU2IiwidHlwIjoiSldUIn0.eyJpZCI6MywidGlwbyI6Im1lZGljbyJ9.8A2941kkCcqDsIoIepQXut3lO9Wh3dZ_MeWp1pvATCY"
+  }
 }

@@ -1,23 +1,57 @@
-document.querySelector('.login').addEventListener('submit', loginValidations);
-import jwt from 'jsonwebtoken';
-/*
-  Função que chamara o back para validar o login, este retornara 
-  seu jwt caso esteja correto e entao sera adicionado ao sesionStoare
-*/
+// TODO Descobrir pq nao esta funcinando o import
+//import { requestLoginWithRole } from './services/requests.js';
+document.querySelector('.login').addEventListener('submit', login);
+// import jwt from 'jsonwebtoken';
+
 
 // Valores padroes que serao usados no token, TODO no back
-const secretKey = 'CHAVE_SECRETA_PRU';
-const jwtConfig = {
-  "expiresIn": "4h",
-  "alg": "HS256",
-  "typ": "JWT"
-};
+/*
+  const secretKey = 'CHAVE_SECRETA_PRU';
+  const jwtConfig = {
+    "expiresIn": "4h",
+    "alg": "HS256",
+    "typ": "JWT"
+  };
+*/
 
-async function loginValidations() { 
+/*
+  Função que chamara o back para validar o login, este retornara 
+  seu jwt e a role do usuario caso esteja correto
+*/
+async function requestLoginWithRole(url, data) {
+  const { email, password } = data;
+  let role = 'paciente'
+  // TODO - retirar esse mock
+  if(email === 'medico@gmail.com') {
+    if(password !== 'medico123') { throw new Error('Email ou senha inválidos');} 
+    url = 'http://localhost:3000/login_medico';
+    role = 'medico';
+  } else {
+    if(password !== 'paciente123') { throw new Error('Email ou senha inválidos')}
+    url = 'http://localhost:3000/login_paciente';
+  }
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  const { token } = await response.json();
+  return { token, role };
+}
+
+/*
+  Função que valida o login, e caso estaja correto adiciona os dados ao localstorage e retorna true
+*/
+async function loginValidations(email, password) { 
+  const data = { email, password };
   try {
-    const { token } = await requestLogin('/login', { email, password });
-    const { role } = await requestData('/login/role', { email, password });
-
+    const { token, role } = await requestLoginWithRole('/login', data);
     localStorage.setItem('token',  token);
     localStorage.setItem('role',  role);
 
@@ -28,14 +62,22 @@ async function loginValidations() {
   }
 }
 
-function login(event) {
+/*
+  Função que realiza o login, e redireciona o usuario para a pagina correta
+*/
+async function login(event) {
   event.preventDefault();
 
   const email = document.querySelector('#email').value;
   const password = document.querySelector('#senha').value;
 
-  if(loginValidations(email, password)) {
-    
+  if(await loginValidations(email, password)) {
+    if(localStorage.getItem('role') === 'medico') {
+      window.location.href = `${baseUrl}/pacientes`;
+    } else {
+      window.location.href = `${baseUrl}/perfil`;
+    }
+  } else {
+    alert('Erro ao efetuar o login, tente novamente.');
   }
-  console.log(email, password);
 }

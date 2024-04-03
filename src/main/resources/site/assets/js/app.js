@@ -4,7 +4,7 @@
 *  - requestPath - é a URL da requisição atual
 */
 const baseUrl = window.location.origin + (window.location.hostname !== "localhost" ? '/' + window.location.pathname.split('/')[1] : '');
-const requestPath = 'http://localhost:3000/db';
+const requestPath = 'http://localhost:3000/';
 
 // Função para gerar UUIDs, podendo passar a quantidade de caracteres desejada
 function generateUUID(qtde) {
@@ -34,16 +34,15 @@ function getUserType() {
 function userSessionExists() { return false; }
 //function userSessionExists() { return sessionStorage.getItem('user') ? true : false; }
 
-function fetchData() {
-  fetch(requestPath)
-    .then(response => response.json())
-    .then(data => {
-      // Process the fetched data here
-      console.log(data);
-    })
-    .catch(error => {
-      // Handle any errors here
-      console.error(error);
-    });
-}
-fetchData();
+// function fetchData() {
+//   fetch(requestPath)
+//     .then(response => response.json())
+//     .then(data => {
+//       // Process the fetched data here
+//       console.log(data);
+//     })
+//     .catch(error => {
+//       // Handle any errors here
+//       console.error(error);
+//     });
+// }
