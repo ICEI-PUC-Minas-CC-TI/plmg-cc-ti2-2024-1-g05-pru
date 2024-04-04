@@ -21,27 +21,19 @@ document.querySelector('.login').addEventListener('submit', login);
 async function requestLoginWithRole(url, data) {
   const { email, password } = data;
   let role = 'paciente'
-  // TODO - retirar esse mock
+  let token = ''
+  // TODO - retirar esse mock quando implementar o back
   if (email === 'medico@gmail.com') {
     if (password !== 'medico123') { throw new Error('Email ou senha inválidos'); }
     url = 'http://localhost:3000/login_medico';
     role = 'medico';
+    token = 'eyJleHBpcmVzSW4iOiI0aCIsImFsZyI6IkhTMjU2IiwidHlwIjoiSldUIn0.eyJpZCI6MywidGlwbyI6Im1lZGljbyJ9.8A2941kkCcqDsIoIepQXut3lO9Wh3dZ_MeWp1pvATCY'
   } else {
     if (password !== 'paciente123') { throw new Error('Email ou senha inválidos') }
     url = 'http://localhost:3000/login_paciente';
-  }
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
+    token = 'eyJleHBpcmVzSW4iOiI0aCIsImFsZyI6IkhTMjU2IiwidHlwIjoiSldUIn0.eyJpZCI6MSwidGlwbyI6InBhY2llbnRlIn0.4CSuDbEzK52iDq5d0PtAY6dDtYxPFCDr9VNdsWeVctQ'
   }
 
-  const { token } = await response.json();
   return { token, role };
 }
 

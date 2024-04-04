@@ -40,16 +40,3 @@ document.querySelector('#logout').addEventListener('click', () => {
   sessionStorage.removeItem('role');
   window.location.href = baseUrl + '/login';
 });
-
-// function fetchData() {
-//   fetch(requestPath)
-//     .then(response => response.json())
-//     .then(data => {
-//       // Process the fetched data here
-//       console.log(data);
-//     })
-//     .catch(error => {
-//       // Handle any errors here
-//       console.error(error);
-//     });
-// }
