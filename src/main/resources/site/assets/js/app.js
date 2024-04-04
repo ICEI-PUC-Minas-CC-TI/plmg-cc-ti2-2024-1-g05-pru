@@ -8,7 +8,7 @@ const requestPath = 'http://localhost:3000/';
 
 // Função para gerar UUIDs, podendo passar a quantidade de caracteres desejada
 function generateUUID(qtde) {
-  uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = Math.random() * 16 | 0,
       v = c === 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
@@ -24,15 +24,15 @@ function getIDFromURL() {
   return id ? id : null;
 }
 
-// TODO - implementar função que retorna o tipo de usuário
+// Retorna o tipo de usuário
+// TODO - buscar o tipo do usuário no token (JWT)
 function getUserType() {
-  return 'paciente';
-  //return 'medico';
+  return sessionStorage.getItem('role');
 }
 
-// TODO - implementar função que retorna se existe uma sessão de usuário
-function userSessionExists() { return false; }
-//function userSessionExists() { return sessionStorage.getItem('user') ? true : false; }
+// Retorna se existe uma sessão de usuário
+// TODO - verificar se o token ainda é válido
+function userSessionExists() { return sessionStorage.getItem('token') ? true : false; }
 
 // function fetchData() {
 //   fetch(requestPath)

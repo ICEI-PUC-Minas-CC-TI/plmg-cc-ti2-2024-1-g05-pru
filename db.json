@@ -167,10 +167,10 @@
       "nome": "Vacina"
     }
   ],
-  "login_medico": {
+  "login_paciente": {
     "token": "eyJleHBpcmVzSW4iOiI0aCIsImFsZyI6IkhTMjU2IiwidHlwIjoiSldUIn0.eyJpZCI6MSwidGlwbyI6InBhY2llbnRlIn0.4CSuDbEzK52iDq5d0PtAY6dDtYxPFCDr9VNdsWeVctQ"
   },
-  "login_paciente": {
+  "login_medico": {
     "token": "eyJleHBpcmVzSW4iOiI0aCIsImFsZyI6IkhTMjU2IiwidHlwIjoiSldUIn0.eyJpZCI6MywidGlwbyI6Im1lZGljbyJ9.8A2941kkCcqDsIoIepQXut3lO9Wh3dZ_MeWp1pvATCY"
   }
 }

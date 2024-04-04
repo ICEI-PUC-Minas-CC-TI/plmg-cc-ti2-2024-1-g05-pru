@@ -15,19 +15,19 @@ document.querySelector('.login').addEventListener('submit', login);
 */
 
 /*
-  Função que chamara o back para validar o login, este retornara 
+  Função que chamara o back para validar o login, este retornara
   seu jwt e a role do usuario caso esteja correto
 */
 async function requestLoginWithRole(url, data) {
   const { email, password } = data;
   let role = 'paciente'
   // TODO - retirar esse mock
-  if(email === 'medico@gmail.com') {
-    if(password !== 'medico123') { throw new Error('Email ou senha inválidos');} 
+  if (email === 'medico@gmail.com') {
+    if (password !== 'medico123') { throw new Error('Email ou senha inválidos'); }
     url = 'http://localhost:3000/login_medico';
     role = 'medico';
   } else {
-    if(password !== 'paciente123') { throw new Error('Email ou senha inválidos')}
+    if (password !== 'paciente123') { throw new Error('Email ou senha inválidos') }
     url = 'http://localhost:3000/login_paciente';
   }
   const response = await fetch(url, {
@@ -36,7 +36,7 @@ async function requestLoginWithRole(url, data) {
       'Content-Type': 'application/json',
     },
   });
-  
+
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
@@ -48,12 +48,12 @@ async function requestLoginWithRole(url, data) {
 /*
   Função que valida o login, e caso estaja correto adiciona os dados ao localstorage e retorna true
 */
-async function loginValidations(email, password) { 
+async function loginValidations(email, password) {
   const data = { email, password };
   try {
     const { token, role } = await requestLoginWithRole('/login', data);
-    localStorage.setItem('token',  token);
-    localStorage.setItem('role',  role);
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('role', role);
 
     return true;
 
@@ -71,12 +71,8 @@ async function login(event) {
   const email = document.querySelector('#email').value;
   const password = document.querySelector('#senha').value;
 
-  if(await loginValidations(email, password)) {
-    if(localStorage.getItem('role') === 'medico') {
-      window.location.href = `${baseUrl}/pacientes`;
-    } else {
-      window.location.href = `${baseUrl}/perfil`;
-    }
+  if (await loginValidations(email, password)) {
+    window.location.href = `${baseUrl}/perfil`;
   } else {
     alert('Erro ao efetuar o login, tente novamente.');
   }
