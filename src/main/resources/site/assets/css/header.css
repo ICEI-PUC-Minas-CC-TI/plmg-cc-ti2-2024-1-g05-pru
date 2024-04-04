@@ -60,6 +60,14 @@ nav {
     }
 
     & li {
+      &.page {
+        display: none;
+
+        &.all {
+          display: flex;
+        }
+      }
+
       &.login {
         background-color: var(--white);
         color: var(--black);
@@ -72,9 +80,16 @@ nav {
         }
       }
 
-      &.profile .icon {
-        font-size: 2rem;
-        padding: .3rem 2rem;
+      &.profile,
+      &.logout {
+        & .icon {
+          font-size: 2rem;
+          padding: .3rem 2rem;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
       }
 
       & a {

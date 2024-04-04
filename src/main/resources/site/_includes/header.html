@@ -12,19 +12,19 @@
   <nav>
     <ul class="menu">
       {% for page in site.header_pages %}
-      <li><a href="{{ site.baseurl }}/{{ page.url }}">{{ page.title }}</a></li>
+      <li class="page {{ page.role }}"><a href="{{ site.baseurl }}/{{ page.url }}">{{ page.title }}</a></li>
       {% endfor %}
       <li class="login">
         <a href="{{ site.baseurl }}/login">LOGIN</a>
       </li>
       <li class="profile">
         <a class="icon" href="{{ site.baseurl }}/perfil">
-          <i class="nf nf-fa-user_circle_o"></i>
+          <i class="nf nf-fa-user_circle_o" title="Perfil"></i>
         </a>
       </li>
-      <li class="logout profile">
+      <li class="logout">
         <div class="icon" id="logout">
-          <i class="nf nf-fa-sign_out"></i>
+          <i class="nf nf-fa-sign_out" title="Logout"></i>
         </div>
       </li>
     </ul>

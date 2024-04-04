@@ -4,7 +4,15 @@ title: Prontuário Universal
 
 # PRU CONFIGS
 header_pages:
-  - title: Histórico
-    url: '#'
+  - title: Consultas
+    url: consultas
+    role: paciente
+  - title: Exames
+    url: exames
+    role: paciente
+  - title: Pacientes
+    url: pacientes
+    role: medico
   - title: Sobre
-    url: '#'
+    url: sobre
+    role: all
