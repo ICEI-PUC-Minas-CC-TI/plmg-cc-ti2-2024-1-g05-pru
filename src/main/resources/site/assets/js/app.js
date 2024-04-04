@@ -34,6 +34,13 @@ function getUserType() {
 // TODO - verificar se o token ainda é válido
 function userSessionExists() { return sessionStorage.getItem('token') ? true : false; }
 
+// Logout do sistema
+document.querySelector('#logout').addEventListener('click', () => {
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('role');
+  window.location.href = baseUrl + '/login';
+});
+
 // function fetchData() {
 //   fetch(requestPath)
 //     .then(response => response.json())
