@@ -1,5 +1,5 @@
 # Prontuário Unificado (PrU)
-[Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
+O objetivo do sistema é reunir num único local as informações de saúde de indivíduos pacientes de determinados profissionais e/ou organizações e criar um vínculo entre eles e as possibilidades oferecidas pelo respectivo consultório ou profissional, de maneira a facilitar atendimentos e mitigar comuns redundâncias vistas nos atuais sistemas médicos.
 
 ## Alunos integrantes da equipe
 - André Luís Silva de Paula
