@@ -5,16 +5,20 @@ function showTypeSection() {
   const crmDoctor = document.querySelector('#crm');
   const patientInfo = document.querySelector('.patient-info');
 
-  //const userType = getUserType();
-  userType = 'paciente'
+  const userType = getUserType();
 
-  if (userType === 'paciente') {
-    doctorInfo.style.display = 'none';
-    crmDoctor.style.display = 'none';
-    patientInfo.style.display = 'flex';
+
+  if (userType) {
+    if (userType === 'paciente') {
+      doctorInfo.style.display = 'none';
+      crmDoctor.style.display = 'none';
+      patientInfo.style.display = 'flex';
+    } else {
+      patientInfo.style.display = 'none';
+      doctorInfo.style.display = 'flex';
+      crmDoctor.style.display = 'block';
+    }
   } else {
-    patientInfo.style.display = 'none';
-    doctorInfo.style.display = 'flex';
-    crmDoctor.style.display = 'block';
+    window.location.href = `${baseUrl}/login`;
   }
 }

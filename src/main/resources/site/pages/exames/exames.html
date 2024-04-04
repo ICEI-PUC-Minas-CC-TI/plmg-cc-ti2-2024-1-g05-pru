@@ -22,8 +22,6 @@ js:
         </select>
       </section>
     </form>
-
-    <button type="button" id="open-modal">Novo exame</button>
   </section>
 
   <section class="itens-list" id="exames">
@@ -52,20 +50,4 @@ js:
       </li>
     </ul>
   </section>
-
-  <section id="modal" class="modal-overlay">
-    <div class="modal-content">
-      <span id="close-modal"><i class="nf nf-md-close_circle"></i></span>
-
-      <h2>Novo exame</h2>
-
-      <form action="" id="form-add-exame">
-        {%include input-field.html type="text" label="Título" id="titulo" name="titulo"%}
-        {%include input-field.html type="file" label="Arquivo" id="arquivo" name="arquivo"%}
-
-        <button type="submit">Adicionar exame</button>
-      </form>
-    </div>
-  </section>
-
 </main>
