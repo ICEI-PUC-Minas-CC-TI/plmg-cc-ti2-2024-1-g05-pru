@@ -39,7 +39,7 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Build with Jekyll
         run: |
-          cd ./src/main/resources/site
+          cd ./codigo/src/main/resources/site
           bundle install
           bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
