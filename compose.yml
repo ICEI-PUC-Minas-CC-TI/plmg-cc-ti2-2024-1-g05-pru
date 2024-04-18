@@ -11,7 +11,7 @@ services:
   jekyll:
     image: bretfisher/jekyll-serve
     volumes:
-      - ./src/main/resources/site:/site
+      - ./codigo/src/main/resources/site:/site
     ports:
       - 4000:4000
     networks:

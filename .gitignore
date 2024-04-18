@@ -1,3 +1,5 @@
+.vscode
+
 _site
 .sass-cache
 .jekyll-cache
@@ -7,3 +9,6 @@ vendor
 /node_modules
 package-lock.json
 package.json
+
+target
+.metadata/
