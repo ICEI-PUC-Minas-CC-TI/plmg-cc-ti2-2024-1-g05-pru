@@ -53,8 +53,3 @@ async function showTypeSection() {
   await fetchDataAndPopulate(token, role);
   console.log("passei");
 }
-// const teste = decodeJwt(`
-// eyJleHBpcmVzSW4iOiI0aCIsImFsZyI6IkhTMjU2IiwidHlwIjoiSldUIn0.eyJpZCI6MywidGlwbyI6Im1lZGljbyJ9.8A2941kkCcqDsIoIepQXut3lO9Wh3dZ_MeWp1pvATCY
-// `);
-
-// console.log(teste);

@@ -20,7 +20,6 @@ document.querySelector('.login').addEventListener('submit', login);
 async function loginValidations(email, password) {
   const data = { email, password };
   try {
-    //TODO CHECAR SE ESTA FUNCIONANDO, ALTERAR URL
     const { token, role } = await requestData(`${baseURLRequest}/login`, 'POST', data);
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('role', role);

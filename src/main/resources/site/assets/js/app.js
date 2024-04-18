@@ -5,9 +5,6 @@
 */
 const baseUrl = window.location.origin + (window.location.hostname !== "localhost" ? '/' + window.location.pathname.split('/')[1] : '');
 const baseURLRequest= 'http://..........';
-// const pathLogin = requestBase + '/login';
-// const pathMedico = requestBase + '/medico'
-// const pathPaciente = requestBase + '/paciente'
 
 document.addEventListener('DOMContentLoaded', () => {
   const logoutButton = document.querySelector('#logout');
