@@ -5,12 +5,12 @@ function loadHeader() {
   const profile = document.querySelector('header nav .menu li.profile');
   const logout = document.querySelector('header nav .menu li.logout');
   const menuPages = document.querySelectorAll('header nav li.page');
-  const isUserSessionExists = userSessionExists();
-  const role = getUserType();
+  const userSession = doesUserSessionExists();
+  const {role} = getUserSession();
 
-  login.style.display = isUserSessionExists ? 'none' : 'block';
-  profile.style.display = isUserSessionExists ? 'block' : 'none';
-  logout.style.display = isUserSessionExists ? 'flex' : 'none';
+  login.style.display = userSession ? 'none' : 'block';
+  profile.style.display = userSession ? 'block' : 'none';
+  logout.style.display = userSession ? 'flex' : 'none';
 
   if (role === 'paciente') {
     // display only menu pages who are not restricted (.all class)
