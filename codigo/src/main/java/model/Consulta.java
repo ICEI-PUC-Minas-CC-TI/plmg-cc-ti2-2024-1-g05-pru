@@ -8,8 +8,8 @@ public class Consulta {
     private String diagnostico;
     private LocalDateTime dataHora;
     private String urlAnexo;
-    private int idPaciente;
-    private int idMedico;
+    private int pacienteId;
+    private int medicoId;
 
     public Consulta() {
     }
@@ -21,8 +21,8 @@ public class Consulta {
         setDiagnostico(diagnostico);
         setDataHora(dataHora);
         setUrlAnexo(urlAnexo);
-        setIdPaciente(idPaciente);
-        setIdMedico(idMedico);
+        setPacienteId(idPaciente);
+        setMedicoId(idMedico);
     }
 
     public int getId() {
@@ -65,20 +65,20 @@ public class Consulta {
         this.urlAnexo = urlAnexo;
     }
 
-    public int getIdPaciente() {
-        return idPaciente;
+    public int getPacienteId() {
+        return pacienteId;
     }
 
-    public void setIdPaciente(int idPaciente) {
-        this.idPaciente = idPaciente;
+    public void setPacienteId(int pacienteId) {
+        this.pacienteId = pacienteId;
     }
 
-    public int getIdMedico() {
-        return idMedico;
+    public int getMedicoId() {
+        return medicoId;
     }
 
-    public void setIdMedico(int idMedico) {
-        this.idMedico = idMedico;
+    public void setMedicoId(int medicoId) {
+        this.medicoId = medicoId;
     }
 
     @Override
@@ -89,8 +89,8 @@ public class Consulta {
                 ", diagnostico='" + diagnostico + '\'' +
                 ", data e hora=" + dataHora +
                 ", urlAnexo='" + urlAnexo + '\'' +
-                ", idPaciente=" + idPaciente +
-                ", idMedico=" + idMedico +
+                ", idPaciente=" + pacienteId +
+                ", idMedico=" + medicoId +
                 '}';
     }
 }

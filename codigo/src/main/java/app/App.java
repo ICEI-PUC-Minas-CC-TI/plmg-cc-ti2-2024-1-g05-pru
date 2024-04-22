@@ -38,9 +38,9 @@ public class App {
 
     // endpoints consulta
     path("/consulta", () -> {
-      get("/:id", (request, response) -> consultaService.get(request, response));
+      get("/:id", (request, response) -> consultaService.read(request, response));
       post("/", (request, response) -> consultaService.create(request, response));
-      put("/:id", (request, response) -> consultaService.put(request, response));
+      put("/:id", (request, response) -> consultaService.update(request, response));
       delete("/:id", (request, response) -> consultaService.delete(request, response));
     });
 
