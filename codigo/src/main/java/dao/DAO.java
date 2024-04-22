@@ -14,9 +14,9 @@ public class DAO {
 		String serverName = "localhost";
 		String mydatabase = "pru";
 		int porta = 5432;
-		String url = "jdbc:postgresql://" + serverName + ":" + porta +"/" + mydatabase;
-		String username = "postgres";
-		String password = "123";
+		String url = "jdbc:postgresql://" + serverName + ":" + porta + "/" + mydatabase;
+		String username = "ti2cc";
+		String password = "ti@cc";
 		boolean status = false;
 
 		try {
@@ -42,7 +42,7 @@ public class DAO {
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
-    
+
 		return status;
 	}
 }
