@@ -7,6 +7,7 @@ public class DAO {
 
 	public DAO() {
 		conexao = null;
+		conectar();
 	}
 
 	public boolean conectar() {
@@ -42,7 +43,7 @@ public class DAO {
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
-    
+
 		return status;
 	}
 }

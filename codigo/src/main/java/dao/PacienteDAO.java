@@ -8,13 +8,9 @@ import java.util.List;
 
 import model.Paciente;
 
-public class PacienteDAO extends UsuarioDAO {
+public class PacienteDAO extends DAO {
 	public PacienteDAO() {
 		super();
-	}
-
-	public void finalize() {
-		close();
 	}
 
   public boolean insert(Paciente paciente) {
@@ -100,11 +96,43 @@ public class PacienteDAO extends UsuarioDAO {
     return paciente;
   }
 
-  public List<Paciente> get() {
-    return get("nome");
+  public Paciente get(String email) {
+    Paciente paciente = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+
+    try {
+      String sql = "SELECT * FROM usuario INNER JOIN paciente ON usuario.id = paciente.usuario_id WHERE email = ?";
+      st = conexao.prepareStatement(sql);
+      st.setString(1, email);
+
+      rs = st.executeQuery();
+      if (rs.next()) {
+        paciente = new Paciente(
+          rs.getInt("id"),
+          rs.getString("nome"),
+          rs.getString("cpf"),
+          rs.getString("email"),
+          rs.getString("senha"),
+          rs.getString("telefone"),
+          rs.getString("sexo").charAt(0),
+          rs.getDate("nascimento").toLocalDate(),
+          rs.getString("urlfoto"),
+          rs.getString("cep")
+        );
+      }
+    } catch (SQLException u) {
+      throw new RuntimeException(u);
+    }
+
+    return paciente;
   }
 
-  public List<Paciente> get(String orderBy) {
+  public List<Paciente> getAll() {
+    return getAll("nome");
+  }
+
+  public List<Paciente> getAll(String orderBy) {
     List<Paciente> pacientes = new ArrayList<Paciente>();
     PreparedStatement st = null;
     ResultSet rs = null;
