@@ -47,7 +47,7 @@ function doesUserSessionExists() {
 /*
   Função que verifica se o token existe no sessionStorage e realiza o logout do usuário caso nao exista
 */
-function getUserSession() { 
+function getUserSession() {
   const token = sessionStorage.getItem('token');
   const role = sessionStorage.getItem('role');
   return token && role ? {token, role } : logout();
@@ -58,7 +58,7 @@ function getUserSession() {
 async function decodeJwt (token) {
   return await JSON.parse(decodeURIComponent(atob(token.split('.')[1].replace('-', '+')
           .replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0)
-          .toString(16)).slice(-2)}`).join(''))); } 
+          .toString(16)).slice(-2)}`).join(''))); }
 
 /*
   Função que realiza o logout do usuário e redireciona para a página de login
@@ -75,6 +75,7 @@ function logout() {
 async function requestData(url, method, body) {
   const response = await fetch(url, {
     method: method,
+    mode: 'no-cors',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -87,4 +88,3 @@ async function requestData(url, method, body) {
   data = await response.json();
   return data;
 };
-

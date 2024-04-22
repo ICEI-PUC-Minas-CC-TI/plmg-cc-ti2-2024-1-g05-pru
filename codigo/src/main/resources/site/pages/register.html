@@ -24,14 +24,15 @@ js: assets/js/register.js
       </div>
 
       <div class="personal-info">
+        {%include input-field.html type="date" name="nascimento" label="Data de nascimento" id="nascimento"%}
         {%include input-field.html type="text" name="cpf" label="CPF" id="cpf" placeholder="XXX.XXX.XXX-XX"%}
 
         <section class="input-field">
           <label for="sexo">Sexo</label>
           <select name="sexo" id="sexo">
-            <option value="masculino">Masculino</option>
-            <option value="feminino">Feminino</option>
-            <option value="null">Prefiro não informar</option>
+            <option value="m">Masculino</option>
+            <option value="f">Feminino</option>
+            <option value="">Prefiro não informar</option>
           </select>
         </section>
 
