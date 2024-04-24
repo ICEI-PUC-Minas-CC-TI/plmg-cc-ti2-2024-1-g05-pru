@@ -5,12 +5,18 @@ import static spark.Spark.*;
 import service.*;
 
 public class App {
+  private static LoginService loginService = new LoginService();
   private static MedicoService medicoService = new MedicoService();
   private static PacienteService pacienteService = new PacienteService();
-  private static LoginService loginService = new LoginService();
+  private static ConsultaService consultaService = new ConsultaService();
 
   public static void main(String[] args) {
     port(6789);
+
+    // endpoint login
+    path("/login", () -> {
+      post("/", (request, response) -> loginService.login(request, response));
+    });
 
     // endpoints medico
     path("/medico", () -> {
@@ -30,14 +36,14 @@ public class App {
       delete("/:id", (request, response) -> pacienteService.delete(request, response));
     });
 
-    path("/login", () -> {
-      post("/", (request, response) -> loginService.login(request, response));
+    // endpoints consulta
+    path("/consulta", () -> {
+      get("/:id", (request, response) -> consultaService.read(request, response));
+      post("/", (request, response) -> consultaService.create(request, response));
+      put("/:id", (request, response) -> consultaService.update(request, response));
+      delete("/:id", (request, response) -> consultaService.delete(request, response));
     });
 
-    // endpoints consulta
-
     // endpoints exame
-
-    // endpoints especialidade
   }
 }

@@ -7,18 +7,26 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class GsonUtil {
-  private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+  private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+  private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-  private static final JsonSerializer<LocalDate> serializer =
-    (src, typeOfSrc, context) -> new JsonPrimitive(src.format(formatter));
-  private static final JsonDeserializer<LocalDate> deserializer =
-    (json, typeOfT, context) -> LocalDate.parse(json.getAsString(), formatter);
+  private static final JsonSerializer<LocalDate> dateSerializer =
+    (src, typeOfSrc, context) -> new JsonPrimitive(src.format(dateFormatter));
+  private static final JsonDeserializer<LocalDate> dateDeserializer =
+    (json, typeOfT, context) -> LocalDate.parse(json.getAsString(), dateFormatter);
+  private static final JsonSerializer<LocalDateTime> dateTimeSerializer =
+    (src, typeOfSrc, context) -> new JsonPrimitive(src.format(dateTimeFormatter));
+  private static final JsonDeserializer<LocalDateTime> dateTimeDeserializer =
+    (json, typeOfT, context) -> LocalDateTime.parse(json.getAsString(), dateTimeFormatter);
 
   public static final Gson GSON = new GsonBuilder()
-    .registerTypeAdapter(LocalDate.class, serializer)
-    .registerTypeAdapter(LocalDate.class, deserializer)
+    .registerTypeAdapter(LocalDate.class, dateSerializer)
+    .registerTypeAdapter(LocalDate.class, dateDeserializer)
+    .registerTypeAdapter(LocalDateTime.class, dateTimeSerializer)
+    .registerTypeAdapter(LocalDateTime.class, dateTimeDeserializer)
     .create();
 }

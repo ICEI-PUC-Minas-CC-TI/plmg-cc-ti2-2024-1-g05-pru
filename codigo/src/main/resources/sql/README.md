@@ -43,3 +43,17 @@ Inserir um registro na tabela medico
 INSERT INTO medico (usuario_id, crm) 
 VALUES (3, '1234567');
 ```
+
+
+Criar tabela consulta
+```sql
+CREATE TABLE consulta (
+  id SERIAL PRIMARY KEY,
+  titulo VARCHAR(255),
+  diagnostico VARCHAR(1023),
+  data_hora TIMESTAMP,
+  urlAnexo VARCHAR(255),
+  paciente_id INTEGER,
+  medico_id INTEGER
+);
+```
