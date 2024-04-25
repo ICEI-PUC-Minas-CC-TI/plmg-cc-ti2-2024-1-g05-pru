@@ -4,13 +4,12 @@
 *  - requestPath - é a URL da requisição atual
 */
 const baseUrl = window.location.origin + (window.location.hostname !== "localhost" ? '/' + window.location.pathname.split('/')[1] : '');
-const baseURLRequest= 'http://..........';
+const baseURLRequest= 'http://localhost:6789';
 
 document.addEventListener('DOMContentLoaded', () => {
   const logoutButton = document.querySelector('#logout');
-  if (logoutButton) {
-      logoutButton.addEventListener('click', logout);
-  }
+
+  logoutButton ? logoutButton.addEventListener('click', logout) : null;
 });
 
 /*
@@ -23,8 +22,7 @@ function generateUUID(qtde) {
     return v.toString(16);
   });
 
-  if (qtde) { return uuid.slice(0, qtde) }
-  else { return uuid }
+  return qtde ? uuid.slice(0, qtde) : uuid;
 }
 
 /*
@@ -37,54 +35,52 @@ function getIDFromURL() {
 }
 
 /*
-  Função que verifica se existe token/role no sessionStorage e retorna um booleano
-*/
-function doesUserSessionExists() {
-  return sessionStorage.getItem('token') && sessionStorage.getItem('role');
-}
-
-//TODO - Separar logica talvez... Poder add Alert e retirar doesUserSessionExists
-/*
   Função que verifica se o token existe no sessionStorage e realiza o logout do usuário caso nao exista
 */
 function getUserSession() {
   const token = sessionStorage.getItem('token');
-  const role = sessionStorage.getItem('role');
-  return token && role ? {token, role } : logout();
+
+  // early return
+  if (!token) return null;
+
+  const tipo = token ? decodeJwt(token).tipo : null;
+
+  return { token, tipo }
 }
+
 /*
   Função que decodifica o token JWT
 */
-async function decodeJwt (token) {
-  return await JSON.parse(decodeURIComponent(atob(token.split('.')[1].replace('-', '+')
-          .replace('_', '/')).split('').map(c => `%${('00' + c.charCodeAt(0)
-          .toString(16)).slice(-2)}`).join(''))); }
+function decodeJwt (token) {
+  return JSON.parse(atob(token.split('.')[1]));
+}
 
 /*
   Função que realiza o logout do usuário e redireciona para a página de login
 */
 function logout() {
   sessionStorage.removeItem('token');
-  sessionStorage.removeItem('role');
+
   window.location.href = baseUrl + '/login';
 }
 
-/*
-  Função que realiza a requisição para o servidor
-*/
 async function requestData(url, method, body) {
-  const response = await fetch(url, {
+  const options = {
     method: method,
-    mode: 'no-cors',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: body ? JSON.stringify(body) : '',
-  });
+  };
+
+  if (body && method !== 'GET') {
+    options.body = JSON.stringify(body);
+  }
+
+  const response = await fetch(url, options);
 
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
-  data = await response.json();
-  return data;
+
+  return await response.json();
 };

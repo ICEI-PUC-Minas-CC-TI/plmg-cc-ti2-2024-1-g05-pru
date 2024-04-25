@@ -1,7 +1,5 @@
 package service;
 
-import model.Medico;
-import model.Paciente;
 import model.Usuario;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
@@ -21,27 +19,29 @@ public class LoginService {
 
     String email = jsonBody.get("email").getAsString();
     String senha = jsonBody.get("senha").getAsString();
-    char tipo = jsonBody.get("tipo").getAsString()
-      .toUpperCase().charAt(0);
+    char tipo = jsonBody.get("tipo").getAsString().toUpperCase().charAt(0);
 
+    Usuario usuario = null;
     if (tipo == 'M') {
       MedicoDAO medicoDAO = new MedicoDAO();
-      Medico medico = medicoDAO.get(email);
-
-      if (medico != null && medico.getSenha().equals(senha)) {
-        String jwt = JWTUtil.generateToken((Usuario) medico);
-        return jwt;
-      }
+      usuario = medicoDAO.get(email);
     } else if (tipo == 'P') {
       PacienteDAO pacienteDAO = new PacienteDAO();
-      Paciente paciente = pacienteDAO.get(email);
-      
-      if (paciente != null && paciente.getSenha().equals(senha)) {
-        String jwt = JWTUtil.generateToken((Usuario) paciente);
-        return jwt;
-      }
+      usuario = pacienteDAO.get(email);
+    } else {
+      response.status(400);
+      return "Tipo de usuário inválido.";
     }
 
-    return null;
+    if (usuario != null && usuario.getSenha().equals(senha)) {
+      String jwt = JWTUtil.generateToken(usuario);
+
+      JsonObject jsonObject = new JsonObject();
+      jsonObject.addProperty("token", jwt);
+      return GsonUtil.GSON.toJson(jsonObject);
+    } else {
+      response.status(401);
+      return "Falha na autenticação.";
+    }
   }
 }

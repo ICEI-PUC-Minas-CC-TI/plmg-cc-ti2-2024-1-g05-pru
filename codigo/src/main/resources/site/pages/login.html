@@ -1,7 +1,7 @@
 ---
 layout: no-header
 permalink: /login/
-css: 
+css:
 - assets/css/form.css
 js:
 - assets/js/login.js
@@ -14,6 +14,10 @@ js:
     <form action="" class="login">
       {%include input-field.html type="email" label="E-mail" id="email"%}
       {%include input-field.html type="password" label="Senha" id="senha"%}
+      <div class="radio-input">
+        {%include input-field.html name="account-type" type="radio" label="Paciente" id="paciente" value="P"%}
+        {%include input-field.html name="account-type" type="radio" label="Médico" id="medico" value="M"%}
+      </div>
       <button id="login">Login</button>
     </form>
 

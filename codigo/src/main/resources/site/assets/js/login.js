@@ -1,33 +1,26 @@
-// TODO Descobrir pq nao esta funcinando o import
-//import { requestLoginWithRole } from './services/requests.js';
 document.querySelector('.login').addEventListener('submit', login);
-// import jwt from 'jsonwebtoken';
-
-
-// Valores padroes que serao usados no token, TODO no back
-/*
-  const secretKey = 'CHAVE_SECRETA_PRU'; 
-  const jwtConfig = {
-    "expiresIn": "4h",
-    "alg": "HS256",
-    "typ": "JWT"
-  };
-*/
 
 /*
   Função que valida o login, e caso estaja correto adiciona os dados ao localstorage e retorna true
 */
-async function loginValidations(email, password) {
-  const data = { email, password };
+async function loginValidations(email, senha, tipo) {
+  const data = { email, senha, tipo };
+
   try {
-    const { token, role } = await requestData(`${baseURLRequest}/login`, 'POST', data);
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('role', role);
+    const response = await requestData(`${baseURLRequest}/login`, 'POST', data);
+
+    if (!response.token) {
+      alert('Falha na autenticação. Tente novamente.');
+      return false;
+    }
+
+    sessionStorage.setItem('token', response.token);
 
     return true;
-
   } catch (error) {
-    alert('Email ou senha inválidos');
+    console.error('Erro ao tentar fazer login:', error);
+    alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+    return false;
   }
 }
 
@@ -38,9 +31,15 @@ async function login(event) {
   event.preventDefault();
 
   const email = document.querySelector('#email').value;
-  const password = document.querySelector('#senha').value;
+  const senha = document.querySelector('#senha').value;
+  const tipo = document.querySelector('.radio-input [name="account-type"]:checked')?.value;
 
-  if (await loginValidations(email, password)) {
+  if (tipo == null) {
+    alert('É necessário selecionar um tipo de conta!');
+    return;
+  }
+
+  if (await loginValidations(email, senha, tipo)) {
     window.location.href = `${baseUrl}/perfil`;
   } else {
     alert('Erro ao efetuar o login, tente novamente.');
