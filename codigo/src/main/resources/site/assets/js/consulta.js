@@ -1,17 +1,49 @@
 window.addEventListener('load', () => {
-  const editButton = document.querySelector('.info-header .edit');
-
-  const userType = getUserType();
-  const id = getIDFromURL();
-
-  if (!id) {
-    // se for médico, redireciona para a página de pacientes e se for paciente, redireciona para a página de consultas (caso não tenha id na URL)
-    window.location.href = baseUrl + (userType === 'paciente' ? '/consultas' : '/pacientes');
-  } else {
-    // se for médico, exibe o botão de editar
-    editButton.style.display = userType === 'medico' ? 'inline-block' : 'none';
+  const token = getUserSession();
+  if (!token) {
+    // early return
+    window.location.href = `${baseUrl}/login`;
   }
+
+  const { tipo } = decodeJwt(token);
+
+  const consultaId = getUrlId();
+  if (!consultaId) {
+    // se for médico, redireciona para a página de pacientes e se for paciente, redireciona para a página de consultas (caso não tenha id na URL)
+    window.location.href = baseUrl +
+      (tipo === 'Medico' ?  + '/pacientes' : '/consultas');
+  }
+
+  // TODO - Validar se o médico ou o paciente tem acesso
+
+  if (tipo === 'Medico') {
+    // se for médico, exibe o botão de editar
+    document.querySelector('.info-header .edit').style.display = 'inline-block';
+  }
+
+  fetchDataAndPopulate(consultaId);
 }, false);
+
+
+async function fetchDataAndPopulate(consultaId) {
+  //const { id } = decodeJwt(token);
+  const consulta = await requestData(`${baseURLRequest}/consulta/${consultaId}`, 'GET');
+
+  // Header
+  document.querySelector('.info-header h1').textContent = consulta.titulo;
+  document.querySelector('.info-header .doctor a').textContent = consulta.medico;
+  document.querySelector('.info-header .doctor a').href = `${baseUrl}/medico/${consulta.medicoId}`;
+
+  document.querySelector('.info-header .date span').textContent = formatDate(consulta.dataHora);
+
+  document.querySelector('.diagnostic p').textContent = consulta.diagnostico;
+
+  // TODO - Adicionar lista de exames e medicamentos
+//   const exames = await requestData(`${baseURLRequest}/consulta/${consultaId}/exames`, 'GET');
+
+//   const medicamentos = await requestData(`${baseURLRequest}/consulta/${consultaId}/medicamentos`, 'GET');
+}
+
 
 
 // FORM ADD/EDIT CONSULTA
@@ -29,18 +61,9 @@ function createChildField(childName, id = generateUUID(8)) {
   const childField = document.createElement('section');
   childField.className = `input-field ${childName}`;
 
-  if (childName === 'medicamento') {
-    childField.innerHTML = `
-      <input type="text" name="${childName}-${id}" placeholder="Novo ${childName}">
-      <input type="number" name="${childName}-dias-${id}" placeholder="Dias" min="0">
-      <button class="remove"><i class="nf nf-fa-trash"></i></button>
-    `;
-  } else {
-    childField.innerHTML = `
-      <input type="text" name="${childName}-${id}" placeholder="Novo ${childName}">
-      <button class="remove"><i class="nf nf-fa-trash"></i></button>
-    `;
-  }
+  childField.innerHTML = `<input type="text" name="${childName}-${id}" placeholder="Novo ${childName}">`
+  childField.innerHTML += (childName === 'medicamento') ? `<input type="number" name="${childName}-dias-${id}" placeholder="Dias" min="0">` : '';
+  childField.innerHTML += ` <button class="remove"><i class="nf nf-fa-trash"></i></button>`;
 
   childField.querySelector('.remove').addEventListener('click', () => {
     childField.remove();
