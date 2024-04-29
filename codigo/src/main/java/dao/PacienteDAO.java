@@ -22,7 +22,7 @@ public class PacienteDAO extends DAO {
     }
 
     try {
-      String sql = "INSERT INTO usuario (nome, cpf, email, senha, telefone, sexo, nascimento, urlfoto, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      String sql = "INSERT INTO usuario (nome, cpf, email, senha, telefone, sexo, nascimento, url_foto, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
       PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
       st.setString(1, paciente.getNome());
@@ -85,7 +85,7 @@ public class PacienteDAO extends DAO {
           rs.getString("telefone"),
           rs.getString("sexo").charAt(0),
           rs.getDate("nascimento").toLocalDate(),
-          rs.getString("urlfoto"),
+          rs.getString("url_foto"),
           rs.getString("cep")
         );
       }
@@ -117,7 +117,7 @@ public class PacienteDAO extends DAO {
           rs.getString("telefone"),
           rs.getString("sexo").charAt(0),
           rs.getDate("nascimento").toLocalDate(),
-          rs.getString("urlfoto"),
+          rs.getString("url_foto"),
           rs.getString("cep")
         );
       }
@@ -154,7 +154,7 @@ public class PacienteDAO extends DAO {
           rs.getString("telefone"),
           rs.getString("sexo").charAt(0),
           rs.getDate("nascimento").toLocalDate(),
-          rs.getString("urlfoto"),
+          rs.getString("url_foto"),
           rs.getString("cep")
         );
 
@@ -176,7 +176,7 @@ public class PacienteDAO extends DAO {
     }
 
     try {
-      String sql = "UPDATE usuario SET nome = ?, cpf = ?, email = ?, senha = ?, telefone = ?, sexo = ?, nascimento = ?, urlfoto = ?, cep = ? WHERE id = ?";
+      String sql = "UPDATE usuario SET nome = ?, cpf = ?, email = ?, senha = ?, telefone = ?, sexo = ?, nascimento = ?, url_foto = ?, cep = ? WHERE id = ?";
 
       PreparedStatement st = conexao.prepareStatement(sql);
       st.setString(1, paciente.getNome());
