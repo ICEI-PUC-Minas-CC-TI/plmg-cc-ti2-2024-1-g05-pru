@@ -6,24 +6,20 @@ function loadHeader() {
   const logout = document.querySelector('header nav .menu li.logout');
   const menuPages = document.querySelectorAll('header nav li.page');
 
-  const userSession = getUserSession();
-  let tipo;
+  const token = getUserSession();
+  const tipo = decodeJwt(token).tipo;
 
-  userSession ? ({ tipo } = userSession) : null
-
-  login.style.display = userSession ? 'none' : 'block';
-  profile.style.display = userSession ? 'block' : 'none';
-  logout.style.display = userSession ? 'flex' : 'none';
+  login.style.display = token ? 'none' : 'block';
+  profile.style.display = token ? 'block' : 'none';
+  logout.style.display = token ? 'flex' : 'none';
 
   if (tipo === 'Paciente') {
-    // display only menu pages who are not restricted (.all class)
     menuPages.forEach((menuPage) => {
       if (menuPage.classList.contains('paciente')) {
         menuPage.style.display = 'flex';
       }
     });
   } else if (tipo === 'Medico') {
-    // display only menu pages who are not restricted (.all class)
     menuPages.forEach((menuPage) => {
       if (menuPage.classList.contains('medico')) {
         menuPage.style.display = 'flex';

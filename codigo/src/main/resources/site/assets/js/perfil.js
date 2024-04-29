@@ -36,15 +36,19 @@ async function fetchDataAndPopulate(token) {
 }
 
 async function showTypeSection() {
+  const token = getUserSession();
+  if (!token) {
+    // early return
+    window.location.href = `${baseUrl}/login`;
+  }
+
   const doctorInfo = document.querySelector('.doctor-info');
   const crmDoctor = document.querySelector('#crm');
   const patientInfo = document.querySelector('.patient-info');
 
-  const {token, tipo} = getUserSession() || {};
+  const { tipo } = decodeJwt(token);
 
-  if (!tipo) {
-    window.location.href = `${baseUrl}/login`;
-  } else if (tipo === 'Paciente') {
+  if (tipo === 'Paciente') {
     doctorInfo.style.display = 'none';
     crmDoctor.style.display = 'none';
     patientInfo.style.display = 'flex';

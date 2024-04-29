@@ -6,6 +6,14 @@
 const baseUrl = window.location.origin + (window.location.hostname !== "localhost" ? '/' + window.location.pathname.split('/')[1] : '');
 const baseURLRequest= 'http://localhost:6789';
 
+
+// Date formater
+function formatDate(dateString) {
+  const formatter = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  
+  return formatter.format(Date.parse(dateString));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const logoutButton = document.querySelector('#logout');
 
@@ -26,26 +34,20 @@ function generateUUID(qtde) {
 }
 
 /*
-  Função que retorna o ID da URL
+  Função que retorna o ID no query string da URL
 */
-function getIDFromURL() {
+function getUrlId() {
   const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get('id');
-  return id ? id : null;
+  return Number.parseInt(urlParams.get('id')) || null;
 }
 
 /*
   Função que verifica se o token existe no sessionStorage e realiza o logout do usuário caso nao exista
 */
 function getUserSession() {
-  const token = sessionStorage.getItem('token');
-
-  // early return
-  if (!token) return null;
-
-  const tipo = token ? decodeJwt(token).tipo : null;
-
-  return { token, tipo }
+  return sessionStorage.getItem('token') ?
+    sessionStorage.getItem('token') :
+    null;
 }
 
 /*

@@ -6,13 +6,12 @@ css:
 - assets/css/form.css
 - assets/css/modal.css
 js:
-- assets/js/consulta.js
 - assets/js/consultas-paciente.js
 - assets/js/modal.js
 ---
 
 <main>
-  <h2>Consultas do paciente <span>Fulano da Silva</span></h2>
+  <h2>Consultas do paciente <span class="name"></span></h2>
 
   <section class="order-filter ">
     <form class="order">
@@ -26,6 +25,10 @@ js:
     </form>
 
     <button type="button" id="open-modal">Nova consulta</button>
+  </section>
+
+  <section class="itens-list" id="consultas">
+    <ul></ul>
   </section>
 
   <section id="modal" class="modal-overlay">
@@ -62,34 +65,5 @@ js:
         <button type="submit">Adicionar consulta</button>
       </form>
     </div>
-  </section>
-
-  <section class="itens-list" id="consultas">
-    <ul>
-      <li>
-        <a href="./consulta?id=1">
-          <span class="title">Consulta XPTO</span>
-          <span class="doctor">Dr. Fulano Beltrano</span>
-          <span class="specialty">Cardiologista</span>
-          <span class="date">01/01/2024</span>
-        </a>
-      </li>
-      <li>
-        <a href="./consulta?id=2">
-          <span class="title">Consulta Y</span>
-          <span class="doctor">Dr. João da Silva</span>
-          <span class="specialty">Neuorologista</span>
-          <span class="date">12/12/2023</span>
-        </a>
-      </li>
-      <li>
-        <a href="./consulta?id=3">
-          <span class="title">Consulta Z</span>
-          <span class="doctor">Dr. Fulano da Silva</span>
-          <span class="specialty">Ortopedista</span>
-          <span class="date">01/01/2023</span>
-        </a>
-      </li>
-    </ul>
   </section>
 </main>

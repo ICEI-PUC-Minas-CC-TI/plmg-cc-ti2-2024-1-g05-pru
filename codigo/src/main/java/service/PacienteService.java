@@ -1,7 +1,9 @@
 package service;
 
 import model.Vinculo;
+import model.Consulta;
 import model.Paciente;
+import dao.ConsultaDAO;
 import dao.PacienteDAO;
 import dao.VinculoDAO;
 import util.GsonUtil;
@@ -14,10 +16,12 @@ import spark.Response;
 public class PacienteService {
   private PacienteDAO pacienteDAO;
   private VinculoDAO vinculoDAO;
+  private ConsultaDAO consultaDAO;
 
   public PacienteService() {
     pacienteDAO = new PacienteDAO();
     vinculoDAO = new VinculoDAO();
+    consultaDAO = new ConsultaDAO();
   }
 
   public Object readAll(Request request, Response response) {
@@ -92,5 +96,21 @@ public class PacienteService {
       response.status(404); // 404 Not found
       return "Paciente (" + id + ") não encontrado!";
     }
+  }
+
+  // Ver todas as consultas de um paciente
+  public Object readAllConsultas(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    List<Consulta> consultas = consultaDAO.getAllConsultasPaciente(id);
+
+    if (consultas == null) {
+      response.status(404); // 404 Not found
+      return "Paciente ID #" + id + " não encontrado.";
+    }
+
+    response.header("Content-Type", "application/json");
+    response.header("Content-Encoding", "UTF-8");
+
+    return GsonUtil.GSON.toJson(consultas);
   }
 }
