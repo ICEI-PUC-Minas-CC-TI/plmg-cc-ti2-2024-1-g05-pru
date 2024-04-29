@@ -43,6 +43,8 @@ public class App {
       post("/", (request, response) -> pacienteService.create(request, response));
       put("/:id", (request, response) -> pacienteService.update(request, response));
       delete("/:id", (request, response) -> pacienteService.delete(request, response));
+
+      get("/:id/consultas", (request, response) -> pacienteService.readAllConsultas(request, response));
     });
 
     // endpoints consulta

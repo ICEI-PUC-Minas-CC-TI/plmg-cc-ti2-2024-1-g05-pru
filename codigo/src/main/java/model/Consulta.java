@@ -8,20 +8,32 @@ public class Consulta {
     private String diagnostico;
     private LocalDateTime dataHora;
     private String urlAnexo;
+    private String paciente;
     private int pacienteId;
+    private String medico;
     private int medicoId;
 
-    public Consulta() {
-    }
+    public Consulta() { }
 
-    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo,
-            int idPaciente, int idMedico) {
+    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo, int idPaciente, int idMedico) {
         setId(id);
         setTitulo(titulo);
         setDiagnostico(diagnostico);
         setDataHora(dataHora);
         setUrlAnexo(urlAnexo);
         setPacienteId(idPaciente);
+        setMedicoId(idMedico);
+    }
+
+    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo, String paciente, int idPaciente, String medico, int idMedico) {
+        setId(id);
+        setTitulo(titulo);
+        setDiagnostico(diagnostico);
+        setDataHora(dataHora);
+        setUrlAnexo(urlAnexo);
+        setPaciente(paciente);
+        setPacienteId(idPaciente);
+        setMedico(medico);
         setMedicoId(idMedico);
     }
 
@@ -73,6 +85,14 @@ public class Consulta {
         this.pacienteId = pacienteId;
     }
 
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
+    }
+
     public int getMedicoId() {
         return medicoId;
     }
@@ -80,6 +100,15 @@ public class Consulta {
     public void setMedicoId(int medicoId) {
         this.medicoId = medicoId;
     }
+
+    public String getMedico() {
+        return medico;
+    }
+
+    public void setMedico(String medico) {
+        this.medico = medico;
+    }
+
 
     @Override
     public String toString() {
