@@ -9,6 +9,7 @@ public class App {
   private static MedicoService medicoService = new MedicoService();
   private static PacienteService pacienteService = new PacienteService();
   private static ConsultaService consultaService = new ConsultaService();
+  private static ExameService exameService = new ExameService();
 
   public static void main(String[] args) {
     port(6789);
@@ -54,5 +55,10 @@ public class App {
     });
 
     // endpoints exame
+    path("/exame", () -> {
+      get("/:id", (request, response) -> exameService.read(request, response));
+      put("/:id", (request, response) -> exameService.update(request, response));
+      delete("/:id", (request, response) -> exameService.delete(request, response));
+    });
   }
 }

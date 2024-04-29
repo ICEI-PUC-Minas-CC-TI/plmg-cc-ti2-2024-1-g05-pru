@@ -3,35 +3,31 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import model.Exames;
+import model.Exame;
 
-public class ExamesDAO extends DAO {
-  public ExamesDAO() {
+public class ExameDAO extends DAO {
+  public ExameDAO() {
     super();
   }
 
   public boolean insert(Exame exame) {
     boolean status = false;
 
-    // verifica0 se o usuario é nulo
+    // verifica se o exame é nulo
     if (exame == null) {
       return status;
     }
 
     try {
-      // no medicoDAO.java, de onde ele está pegando usuario? o equivalente é Exames?
-      String sql = "INSERT INTO exame (id, consultaId, titulo, data, urlArquivo, status) VALUES (?,?,?,?,?,?)";
+      String sql = "INSERT INTO exame (titulo, data, url_arquivo, status, consulta_id) VALUES (?, ?, ?, ?, ?)";
 
       PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-      st.setSting(1, exame.getId());
-      st.setSting(2, exame.getConsultaId());
-      st.setSting(3, exame.getTitulo());
-      st.setSting(4, exame.getData());
-      st.setSting(5, exame.getUrlArquivo());
-      st.setSting(6, exame.getStatus());
+      st.setString(1, exame.getTitulo());
+      st.setDate(2, java.sql.Date.valueOf(exame.getData()));
+      st.setString(3, exame.getUrlArquivo());
+      st.setString(4, exame.getStatus());
+      st.setInt(5, exame.getConsultaId());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao criar exame, nenhuma linha alterada.");
@@ -54,12 +50,13 @@ public class ExamesDAO extends DAO {
       ResultSet rs = st.executeQuery();
       if (rs.next()) {
         exame = new Exame(
-            rs.getId("id"),
-            rs.getConsultaId("consultaId"),
-            rs.getTitulo("titulo"),
-            rs.getData("data"),
-            rs.getUrlArquivo("urlArquivo"),
-            rs.getStatus("status"));
+          rs.getInt("id"),
+          rs.getString("titulo"),
+          rs.getDate("data").toLocalDate(),
+          rs.getString("url_arquivo"),
+          rs.getString("status"),
+          rs.getInt("consulta_id")
+        );
       }
     } catch (SQLException u) {
       throw new RuntimeException("Falha ao obter exame.", u);
@@ -68,31 +65,29 @@ public class ExamesDAO extends DAO {
     return exame;
   }
 
-  public boolean update(Consulta consulta) {
+  public boolean update(Exame exame) {
     boolean status = false;
 
-    if (consulta == null) {
+    if (exame == null) {
       return status;
     }
 
     try {
-      PreparedStatement st = conexao.prepareStatement(
-          "UPDATE exame SET id = ?, consultaId = ?, titulo = ?, data = ?, urlArquivo = ?, status = ? WHERE id = ?");
+      PreparedStatement st = conexao.prepareStatement("UPDATE exame SET titulo = ?, data = ?, url_arquivo = ?, status = ? WHERE id = ?");
 
-      st.setSting(1, exame.getId());
-      st.setSting(2, exame.getConsultaId());
-      st.setSting(3, exame.getTitulo());
-      st.setSting(4, exame.getData());
-      st.setSting(5, exame.getUrlArquivo());
-      st.setSting(6, exame.getStatus());
+      st.setString(1, exame.getTitulo());
+      st.setDate(2, java.sql.Date.valueOf(exame.getData()));
+      st.setString(3, exame.getUrlArquivo());
+      st.setString(4, exame.getStatus());
+      st.setInt(5, exame.getId());
 
       if (st.executeUpdate() == 0) {
-        throw new SQLException("Falha ao atualizar consulta, nenhuma linha alterada.");
+        throw new SQLException("Falha ao atualizar exame, nenhuma linha alterada.");
       }
 
       status = true;
     } catch (SQLException u) {
-      throw new RuntimeException("Falha ao atualizar consulta.", u);
+      throw new RuntimeException("Falha ao atualizar exame.", u);
     }
 
     return status;
@@ -102,7 +97,7 @@ public class ExamesDAO extends DAO {
 		boolean status = false;
 
 		try {
-			String sql = "DELETE FROM consulta WHERE id = ?";
+			String sql = "DELETE FROM exame WHERE id = ?";
 			PreparedStatement st = conexao.prepareStatement(sql);
 			st.setInt(1, id);
 
