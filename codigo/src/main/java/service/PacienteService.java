@@ -1,7 +1,9 @@
 package service;
 
+import model.Vinculo;
 import model.Paciente;
 import dao.PacienteDAO;
+import dao.VinculoDAO;
 import util.GsonUtil;
 
 import java.util.List;
@@ -11,9 +13,11 @@ import spark.Response;
 
 public class PacienteService {
   private PacienteDAO pacienteDAO;
+  private VinculoDAO vinculoDAO;
 
   public PacienteService() {
     pacienteDAO = new PacienteDAO();
+    vinculoDAO = new VinculoDAO();
   }
 
   public Object readAll(Request request, Response response) {
@@ -22,6 +26,15 @@ public class PacienteService {
     response.header("Content-Encoding", "UTF-8");
 
     return GsonUtil.GSON.toJson(pacientes);
+  }
+
+  public Object readAllMedicos(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    List<Vinculo> vinculos = vinculoDAO.getAllMedicos(id);
+    response.header("Content-Type", "application/json");
+    response.header("Content-Encoding", "UTF-8");
+
+    return GsonUtil.GSON.toJson(vinculos);
   }
 
   public Object read(Request request, Response response) {

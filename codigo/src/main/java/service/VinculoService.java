@@ -17,7 +17,6 @@ public class VinculoService {
   }
 
   public Object readAll(Request request, Response response) {
-    // int id = Integer.parseInt(request.params(":id"));
     List<Vinculo> vinculos = vinculoDAO.getAll();
     response.header("Content-Type", "application/json");
     response.header("Content-Encoding", "UTF-8");
