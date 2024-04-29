@@ -57,3 +57,13 @@ CREATE TABLE consulta (
   medico_id INTEGER
 );
 ```
+
+Criar tabela vinculo
+```sql
+CREATE TABLE consulta (
+  id SERIAL PRIMARY KEY,
+  paciente_id INTEGER,
+  medico_id INTEGER,
+  titulo VARCHAR(45),
+);
+```
