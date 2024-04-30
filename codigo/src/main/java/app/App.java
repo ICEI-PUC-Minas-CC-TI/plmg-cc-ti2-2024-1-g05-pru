@@ -54,6 +54,8 @@ public class App {
       post("/", (request, response) -> consultaService.create(request, response));
       put("/:id", (request, response) -> consultaService.update(request, response));
       delete("/:id", (request, response) -> consultaService.delete(request, response));
+
+      get("/:id/exames", (request, response) -> consultaService.readAllExames(request, response));
     });
 
     // endpoints exame
@@ -62,5 +64,11 @@ public class App {
       put("/:id", (request, response) -> exameService.update(request, response));
       delete("/:id", (request, response) -> exameService.delete(request, response));
     });
+
+    // endpoints medicamento
+
+    // endpoints vinculo
+
+    // endpoints especialidade
   }
 }

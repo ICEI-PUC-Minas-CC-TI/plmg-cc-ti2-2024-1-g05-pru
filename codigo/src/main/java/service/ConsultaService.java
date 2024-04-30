@@ -1,7 +1,12 @@
 package service;
 
 import model.Consulta;
+import model.Exame;
+
+import java.util.List;
+
 import dao.ConsultaDAO;
+import dao.ExameDAO;
 import util.GsonUtil;
 
 import spark.Request;
@@ -9,9 +14,11 @@ import spark.Response;
 
 public class ConsultaService {
 	private ConsultaDAO consultaDAO;
+	private ExameDAO exameDAO;
 
 	public ConsultaService() {
 		consultaDAO = new ConsultaDAO();
+		exameDAO = new ExameDAO();
 	}
 
 	public Object read(Request request, Response response) {
@@ -69,5 +76,21 @@ public class ConsultaService {
 			response.status(404); // 404 Not found
 			return "Consulta (" + id + ") não encontrada!";
 		}
+	}
+
+	// Ver todos os exames de uma consulta
+	public Object readAllExames(Request request, Response response) {
+		int id = Integer.parseInt(request.params(":id"));
+		List<Exame> exames = exameDAO.getAllExamesConsulta(id);
+
+		if (exames == null) {
+			response.status(404); // 404 Not found
+			return "Exames da consulta ID #" + id + " não encontrados.";
+		}
+
+		response.header("Content-Type", "application/json");
+		response.header("Content-Encoding", "UTF-8");
+
+		return GsonUtil.GSON.toJson(exames);
 	}
 }

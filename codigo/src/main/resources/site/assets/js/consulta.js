@@ -26,22 +26,55 @@ window.addEventListener('load', () => {
 
 
 async function fetchDataAndPopulate(consultaId) {
-  //const { id } = decodeJwt(token);
-  const consulta = await requestData(`${baseURLRequest}/consulta/${consultaId}`, 'GET');
+  try {
+    const consulta = await requestData(`${baseURLRequest}/consulta/${consultaId}`, 'GET');
 
-  // Header
-  document.querySelector('.info-header h1').textContent = consulta.titulo;
-  document.querySelector('.info-header .doctor a').textContent = consulta.medico;
-  document.querySelector('.info-header .doctor a').href = `${baseUrl}/medico/${consulta.medicoId}`;
+    // Header
+    document.querySelector('.info-header h1').textContent = consulta.titulo;
+    document.querySelector('.info-header .doctor a').textContent = consulta.medico;
+    document.querySelector('.info-header .doctor a').href = `${baseUrl}/medico/${consulta.medicoId}`;
 
-  document.querySelector('.info-header .date span').textContent = formatDate(consulta.dataHora);
+    document.querySelector('.info-header .date span').textContent = formatDate(consulta.dataHora);
 
-  document.querySelector('.diagnostic p').textContent = consulta.diagnostico;
+    document.querySelector('.diagnostic p').textContent = consulta.diagnostico;
 
-  // TODO - Adicionar lista de exames e medicamentos
-//   const exames = await requestData(`${baseURLRequest}/consulta/${consultaId}/exames`, 'GET');
+    // TODO - Adicionar lista de medicamentos
+    const exames = await requestData(`${baseURLRequest}/consulta/${consultaId}/exames`, 'GET');
 
-//   const medicamentos = await requestData(`${baseURLRequest}/consulta/${consultaId}/medicamentos`, 'GET');
+    let examesHtml = '';
+    exames.forEach(exame => {
+      const statusClass = () => {
+        switch (exame.status.toLowerCase()) {
+          case 'concluido':
+          case 'concluído':
+          case 'finalizado':
+            return 'done';
+          case 'pendente':
+          case 'aguardando':
+            return 'pending';
+          case 'cancelado':
+            return 'canceled';
+        }
+      };
+
+      console.log(statusClass);
+      examesHtml += `
+      <li>
+        <a href="${baseUrl}/exames/exame?id=${exame.id}">
+          <span class="id">#${exame.id}</span>
+          -
+          <span class="title">${exame.titulo}</span>
+          <span class="status ${statusClass()}">${exame.status}</span>
+        </a>
+      </li>`;
+    });
+
+    document.querySelector('.requested-exams ul').innerHTML = examesHtml;
+
+    // const medicamentos = await requestData(`${baseURLRequest}/consulta/${consultaId}/medicamentos`, 'GET');
+  } catch (error) {
+    window.location.href = baseUrl + '/404';
+  }
 }
 
 

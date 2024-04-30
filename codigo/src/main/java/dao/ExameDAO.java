@@ -3,6 +3,8 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Exame;
 
@@ -110,4 +112,31 @@ public class ExameDAO extends DAO {
 
 		return status;
 	}
+
+  // Obter todos os exames de uma consulta
+  public List<Exame> getAllExamesConsulta(int consultaId) {
+    List<Exame> exames = new ArrayList<Exame>();
+
+    try {
+      String sql = "SELECT * FROM exame WHERE consulta_id = ?";
+      PreparedStatement st = conexao.prepareStatement(sql);
+      st.setInt(1, consultaId);
+
+      ResultSet rs = st.executeQuery();
+      while (rs.next()) {
+        exames.add(new Exame(
+          rs.getInt("id"),
+          rs.getString("titulo"),
+          rs.getDate("data").toLocalDate(),
+          rs.getString("url_arquivo"),
+          rs.getString("status"),
+          rs.getInt("consulta_id")
+        ));
+      }
+    } catch (SQLException u) {
+      throw new RuntimeException("Falha ao obter exames da consulta.", u);
+    }
+
+    return exames;
+  }
 }
