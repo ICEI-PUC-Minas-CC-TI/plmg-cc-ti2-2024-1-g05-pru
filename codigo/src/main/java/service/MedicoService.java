@@ -7,6 +7,8 @@ import dao.VinculoDAO;
 import util.GsonUtil;
 
 import java.sql.SQLException;
+import java.util.List;
+
 import spark.Request;
 import spark.Response;
 
@@ -71,26 +73,22 @@ public class MedicoService {
 
       if (medico.getId() != id) {
         response.status(400); // 400 Bad request
-        response.body("ID do medico diferente do ID da URL!");
-
-        return response.body();
+        return "ID do medico diferente do ID da URL!";
       }
 
-      medico = medicoDAO.update(medico);
+      if (!medicoDAO.update(medico)) {
+        response.status(500); // 500 Internal Server Error
+        return "Erro ao atualizar medico.";
+      }
 
       response.status(200); // 200 OK
-      response.header("Content-Type", "application/json");
-      return GsonUtil.GSON.toJson(medico);
+      return "Medico atualizado com sucesso.";
     } catch (SQLException e) {
       response.status(500); // 500 Internal Server Error
-      response.body("Erro ao atualizar medico: " + e.getMessage());
-
-      return response.body();
+      return "Erro ao atualizar medico: " + e.getMessage();
     } catch (Exception e) {
       response.status(500); // 500 Internal Server Error
-      response.body("Erro ao atualizar medico: " + e.getMessage());
-
-      return response.body();
+      return "Erro ao atualizar medico: " + e.getMessage();
     }
   }
 

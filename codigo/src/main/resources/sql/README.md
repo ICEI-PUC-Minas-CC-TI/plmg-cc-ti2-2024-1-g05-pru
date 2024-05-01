@@ -132,13 +132,25 @@ Para criar médicos ou pacientes, é necessário inserir registros na tabela `us
     ('Exame 5', '2021-10-05', NULL, 5);
   ```
   
- ## Vínculo
- - **Criar tabela vinculo**
+## Vínculo
+- **Criar tabela vinculo**
   ```sql
-  CREATE TABLE consulta (
+  CREATE TABLE vinculo (
     id SERIAL PRIMARY KEY,
-    paciente_id INTEGER,
-    medico_id INTEGER,
-    titulo VARCHAR(45),
+    status VARCHAR(30),
+    paciente_id INT NOT NULL,
+    medico_id INT NOT NULL,
+    CONSTRAINT fk_paciente_id FOREIGN KEY (paciente_id) REFERENCES public.paciente (usuario_id),
+    CONSTRAINT fk_medico_id FOREIGN KEY (medico_id) REFERENCES public.medico (usuario_id)
   );
+  ```
+- **Inserir vínculo**
+  ```sql
+  INSERT INTO vinculo (status, paciente_id, medico_id)
+  VALUES
+    ('Ativo', 6, 1),
+    ('Ativo', 7, 2),
+    ('Pendente', 8, 3),
+    ('Ativo', 9, 4),
+    ('Revogado', 10, 5);
   ```

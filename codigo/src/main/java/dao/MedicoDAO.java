@@ -169,10 +169,10 @@ public class MedicoDAO extends DAO {
     return medicos;
   }
 
-  public Medico update(Medico medico) throws SQLException {
+  public boolean update(Medico medico) throws SQLException {
     // verifica se o usuario é nulo
     if (medico == null) {
-      return null;
+      return false;
     }
 
     try {
@@ -193,7 +193,7 @@ public class MedicoDAO extends DAO {
         throw new SQLException("Falha ao atualizar usuário, nenhuma linha alterada.");
       }
 
-      return medico;
+      return true;
     } catch (SQLException u) {
       throw new RuntimeException(u);
     }

@@ -74,26 +74,22 @@ public class PacienteService {
 
       if (paciente.getId() != id) {
         response.status(400); // 400 Bad request
-        response.body("ID do paciente diferente do ID da URL!");
-
-        return response.body();
+        return "ID do paciente diferente do ID da URL!";
       }
 
-      paciente = pacienteDAO.update(paciente);
+      if (!pacienteDAO.update(paciente)) {
+        response.status(500); // 500 Internal Server Error
+        return "Erro ao atualizar paciente.";
+      }
 
       response.status(200); // 200 OK
-      response.header("Content-Type", "application/json");
-      return GsonUtil.GSON.toJson(paciente);
+      return "Paciente atualizado com sucesso.";
     } catch (SQLException e) {
       response.status(500); // 500 Internal Server Error
-      response.body("Erro ao atualizar paciente: " + e.getMessage());
-
-      return response.body();
+      return "Erro ao atualizar paciente: " + e.getMessage();
     } catch (Exception e) {
       response.status(500); // 500 Internal Server Error
-      response.body("Erro ao atualizar paciente: " + e.getMessage());
-
-      return response.body();
+      return "Erro ao atualizar paciente: " + e.getMessage();
     }
   }
 
