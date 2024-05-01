@@ -30,7 +30,6 @@ public class App {
 
     // endpoints medico
     path("/medico", () -> {
-      get("/", (request, response) -> medicoService.readAll(request, response));
       get("/:id", (request, response) -> medicoService.read(request, response));
       post("/", (request, response) -> medicoService.create(request, response));
       put("/:id", (request, response) -> medicoService.update(request, response));
@@ -39,7 +38,6 @@ public class App {
 
     // endpoints paciente
     path("/paciente", () -> {
-      get("/", (request, response) -> pacienteService.readAll(request, response));
       get("/:id", (request, response) -> pacienteService.read(request, response));
       post("/", (request, response) -> pacienteService.create(request, response));
       put("/:id", (request, response) -> pacienteService.update(request, response));
