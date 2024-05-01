@@ -131,3 +131,14 @@ Para criar médicos ou pacientes, é necessário inserir registros na tabela `us
     ('Exame 4', '2021-10-04', NULL, 4),
     ('Exame 5', '2021-10-05', NULL, 5);
   ```
+  
+ ## Vínculo
+ - **Criar tabela vinculo**
+  ```sql
+  CREATE TABLE consulta (
+    id SERIAL PRIMARY KEY,
+    paciente_id INTEGER,
+    medico_id INTEGER,
+    titulo VARCHAR(45),
+  );
+  ```

@@ -1,7 +1,9 @@
 package service;
 
 import model.Medico;
+import model.Vinculo;
 import dao.MedicoDAO;
+import dao.VinculoDAO;
 import util.GsonUtil;
 
 import java.sql.SQLException;
@@ -11,9 +13,11 @@ import spark.Response;
 
 public class MedicoService {
   private MedicoDAO medicoDAO;
+  private VinculoDAO vinculoDAO;
 
   public MedicoService() {
     medicoDAO = new MedicoDAO();
+    vinculoDAO = new VinculoDAO();
   }
 
   public Object read(Request request, Response response) {
@@ -107,4 +111,12 @@ public class MedicoService {
   // Adicionar especialidade a um médico
 
   // Ver todos os pacientes de um médico
+  public Object readAllPacientes(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    List<Vinculo> vinculos = vinculoDAO.getAllPacientes(id);
+    response.header("Content-Type", "application/json");
+    response.header("Content-Encoding", "UTF-8");
+
+    return GsonUtil.GSON.toJson(vinculos);
+  }
 }
