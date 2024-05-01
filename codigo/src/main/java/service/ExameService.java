@@ -18,45 +18,40 @@ public class ExameService {
         int id = Integer.parseInt(request.params(":id"));
         Exame exame = exameDAO.get(id);
 
-        if (exame != null) {
-            response.header("Content-Type", "application/json");
-            response.header("Content-Encoding", "UTF-8");
-
-            return GsonUtil.GSON.toJson(exame);
-        } else {
+        if (exame == null) {
             response.status(404); // 404 Not found
-            return "Exame ID #" + id + " não encontrado.";
-        }
-    }
+            response.body("Exame ID #" + id + " não encontrado.");
 
-    public Object create(Request request, Response response) {
-        Exame exame = GsonUtil.GSON.fromJson(request.body(), Exame.class);
-
-        if (exameDAO.insert(exame)) {
-            response.status(201); // 201 Created
-            return "Exame (" + exame.getTitulo() + ") inserido!";
-        } else {
-            response.status(404); // 404 Not found
-            return "Exame (" + exame.getTitulo() + ") não inserido!";
+            return response.body();
         }
+
+        response.header("Content-Type", "application/json");
+        response.header("Content-Encoding", "UTF-8");
+
+        return GsonUtil.GSON.toJson(exame);
     }
 
     public Object update(Request request, Response response) {
-        int id = Integer.parseInt(request.params(":id"));
-        Exame exame = GsonUtil.GSON.fromJson(request.body(), Exame.class);
+        try {
+			int id = Integer.parseInt(request.params(":id"));
+			Exame exame = GsonUtil.GSON.fromJson(request.body(), Exame.class);
 
-        if (exame.getId() != id) {
-            response.status(400); // 400 Bad request
-            return "ID do Exame diferente do ID na URL!";
-        }
+			if (exame.getId() != id) {
+				response.status(400); // 400 Bad request
+				return "ID da exame diferente do ID na URL!";
+			}
 
-        if (exameDAO.update(exame)) {
-            response.status(200); // 200 OK
-            return "Exame (ID #" + exame.getId() + ") atualizado!";
-        } else {
-            response.status(404); // 404 Not found
-            return "Exame (ID #" + exame.getId() + ") não encontrado!";
-        }
+			if (exameDAO.update(exame)) {
+				response.status(200); // 200 OK
+				return "Exame (ID #" + exame.getId() + ") atualizada!";
+			} else {
+				response.status(404); // 404 Not found
+				return "Exame (ID #" + exame.getId() + ") não encontrada!";
+			}
+		} catch (Exception e) {
+			response.status(500); // 500 Internal Server Error
+			return "Erro ao atualizar exame: " + e.getMessage();
+		}
     }
 
     public Object delete(Request request, Response response) {

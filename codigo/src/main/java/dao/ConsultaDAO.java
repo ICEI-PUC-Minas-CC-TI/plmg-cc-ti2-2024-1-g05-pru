@@ -17,15 +17,13 @@ public class ConsultaDAO extends DAO {
 		close();
 	}
 
-	public boolean insert(Consulta consulta) {
-		boolean status = false;
-
+	public Consulta insert(Consulta consulta) throws SQLException {
 		if (consulta == null) {
-			return status;
+			return null;
 		}
 
 		try {
-			PreparedStatement st = conexao.prepareStatement("INSERT INTO consulta (titulo, diagnostico, data_hora, url_anexo, paciente_id, medico_id) VALUES (?, ?, ?, ?, ?, ?)");
+			PreparedStatement st = conexao.prepareStatement("INSERT INTO consulta (titulo, diagnostico, data_hora, url_anexo, paciente_id, medico_id) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, consulta.getTitulo());
 			st.setString(2, consulta.getDiagnostico());
@@ -38,7 +36,11 @@ public class ConsultaDAO extends DAO {
 				throw new SQLException("Falha ao criar consulta, nenhuma linha alterada.");
 			}
 
-			return true;
+			ResultSet generatedKeys = st.getGeneratedKeys();
+      if (generatedKeys.next())
+        consulta.setId(generatedKeys.getInt(1));
+
+			return consulta;
 		} catch (SQLException u) {
 			throw new RuntimeException("Falha ao criar consulta.", u);
 		}
@@ -73,11 +75,9 @@ public class ConsultaDAO extends DAO {
 		return consulta;
 	}
 
-	public boolean update(Consulta consulta) {
-		boolean status = false;
-
+	public boolean update(Consulta consulta) throws SQLException {
 		if (consulta == null) {
-			return status;
+			return false;
 		}
 
 		try {
@@ -95,12 +95,10 @@ public class ConsultaDAO extends DAO {
 				throw new SQLException("Falha ao atualizar consulta, nenhuma linha alterada.");
 			}
 
-			status = true;
+			return true;
 		} catch (SQLException u) {
 			throw new RuntimeException("Falha ao atualizar consulta.", u);
 		}
-
-		return status;
 	}
 
 	public boolean delete(int id) {

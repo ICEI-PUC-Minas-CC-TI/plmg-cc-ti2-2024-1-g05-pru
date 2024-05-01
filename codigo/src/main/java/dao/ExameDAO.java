@@ -13,12 +13,11 @@ public class ExameDAO extends DAO {
     super();
   }
 
-  public boolean insert(Exame exame) {
-    boolean status = false;
-
+	// Inserir registro de exame associado a consulta
+  public Exame insert(Exame exame) throws SQLException {
     // verifica se o exame é nulo
     if (exame == null) {
-      return status;
+      return null;
     }
 
     try {
@@ -35,7 +34,7 @@ public class ExameDAO extends DAO {
         throw new SQLException("Falha ao criar exame, nenhuma linha alterada.");
       }
 
-      return true;
+      return exame;
     } catch (SQLException u) {
       throw new RuntimeException("Falha ao criar exame.", u);
     }
@@ -67,11 +66,9 @@ public class ExameDAO extends DAO {
     return exame;
   }
 
-  public boolean update(Exame exame) {
-    boolean status = false;
-
+  public boolean update(Exame exame) throws SQLException {
     if (exame == null) {
-      return status;
+      return false;
     }
 
     try {
@@ -87,12 +84,10 @@ public class ExameDAO extends DAO {
         throw new SQLException("Falha ao atualizar exame, nenhuma linha alterada.");
       }
 
-      status = true;
+      return true;
     } catch (SQLException u) {
       throw new RuntimeException("Falha ao atualizar exame.", u);
     }
-
-    return status;
   }
 
   public boolean delete(int id) {

@@ -54,6 +54,7 @@ public class App {
       delete("/:id", (request, response) -> consultaService.delete(request, response));
 
       get("/:id/exames", (request, response) -> consultaService.readAllExames(request, response));
+      post("/:id/exames", (request, response) -> consultaService.createExame(request, response));
     });
 
     // endpoints exame
