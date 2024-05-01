@@ -115,6 +115,7 @@ Para criar médicos ou pacientes, é necessário inserir registros na tabela `us
     titulo VARCHAR(255) NOT NULL,
     "data" DATE,
     url_arquivo VARCHAR(255),
+    status VARCHAR(30) NOT NULL,
     consulta_id INT NOT NULL,
     CONSTRAINT fk_consulta_id FOREIGN KEY (consulta_id) REFERENCES public.consulta (id)
   );

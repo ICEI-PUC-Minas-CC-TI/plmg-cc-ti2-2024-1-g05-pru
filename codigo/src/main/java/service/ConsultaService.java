@@ -2,13 +2,12 @@ package service;
 
 import model.Consulta;
 import model.Exame;
-
-import java.util.List;
-
 import dao.ConsultaDAO;
 import dao.ExameDAO;
 import util.GsonUtil;
 
+import java.sql.SQLException;
+import java.util.List;
 import spark.Request;
 import spark.Response;
 
@@ -25,44 +24,66 @@ public class ConsultaService {
 		int id = Integer.parseInt(request.params(":id"));
 		Consulta consulta = consultaDAO.get(id);
 
-		if (consulta != null) {
-			response.header("Content-Type", "application/json");
-			response.header("Content-Encoding", "UTF-8");
-
-			return GsonUtil.GSON.toJson(consulta);
-		} else {
+		if (consulta == null) {
 			response.status(404); // 404 Not found
-			return "Consulta ID #" + id + " não encontrada.";
+			response.body("Consulta ID #" + id + " não encontrada.");
+
+			return response.body();
 		}
+
+		response.header("Content-Type", "application/json");
+		response.header("Content-Encoding", "UTF-8");
+
+		return GsonUtil.GSON.toJson(consulta);
 	}
 
 	public Object create(Request request, Response response) {
-		Consulta consulta = GsonUtil.GSON.fromJson(request.body(), Consulta.class);
+    response.header("Content-Type", "application/json");
 
-		if (consultaDAO.insert(consulta)) {
-			response.status(201); // 201 Created
-			return "Consulta (" + consulta.getTitulo() + ") inserida!";
-		} else {
-			response.status(404); // 404 Not found
-			return "Consulta (" + consulta.getTitulo() + ") não inserida!";
-		}
-	}
+    try {
+      Consulta consulta = GsonUtil.GSON.fromJson(request.body(), Consulta.class);
+      consulta = consultaDAO.insert(consulta);
+
+      response.status(201); // 201 Created
+      return GsonUtil.GSON.toJson(consulta);
+    } catch (IllegalArgumentException e) {
+      response.status(400); // 400 Bad request
+      response.body("Erro ao criar consulta: " + e.getMessage());
+
+      return response.body();
+    } catch (SQLException e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao criar consulta: " + e.getMessage());
+
+      return response.body();
+    } catch (Exception e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao criar consulta: " + e.getCause().getMessage());
+
+      return response.body();
+    }
+  }
 
 	public Object update(Request request, Response response) {
-		int id = Integer.parseInt(request.params(":id"));
-		Consulta consulta = GsonUtil.GSON.fromJson(request.body(), Consulta.class);
+		try {
+			int id = Integer.parseInt(request.params(":id"));
+			Consulta consulta = GsonUtil.GSON.fromJson(request.body(), Consulta.class);
 
-		if (consulta.getId() != id) {
-			response.status(400); // 400 Bad request
-			return "ID da consulta diferente do ID na URL!";
-		}
+			if (consulta.getId() != id) {
+				response.status(400); // 400 Bad request
+				return "ID da consulta diferente do ID na URL!";
+			}
 
-		if (consultaDAO.update(consulta)) {
-			response.status(200); // 200 OK
-			return "Consulta (ID #" + consulta.getId() + ") atualizada!";
-		} else {
-			response.status(404); // 404 Not found
-			return "Consulta (ID #" + consulta.getId() + ") não encontrada!";
+			if (consultaDAO.update(consulta)) {
+				response.status(200); // 200 OK
+				return "Consulta (ID #" + consulta.getId() + ") atualizada!";
+			} else {
+				response.status(404); // 404 Not found
+				return "Consulta (ID #" + consulta.getId() + ") não encontrada!";
+			}
+		} catch (Exception e) {
+			response.status(500); // 500 Internal Server Error
+			return "Erro ao atualizar consulta: " + e.getMessage();
 		}
 	}
 
@@ -83,11 +104,6 @@ public class ConsultaService {
 		int id = Integer.parseInt(request.params(":id"));
 		List<Exame> exames = exameDAO.getAllExamesConsulta(id);
 
-		if (exames == null) {
-			response.status(404); // 404 Not found
-			return "Exames da consulta ID #" + id + " não encontrados.";
-		}
-
 		response.header("Content-Type", "application/json");
 		response.header("Content-Encoding", "UTF-8");
 
@@ -96,28 +112,29 @@ public class ConsultaService {
 
 	// Cria um exame associado à uma consulta
 	public Object createExame(Request request, Response response) {
-		int idConsulta = Integer.parseInt(request.params(":id")); // pegando o ID da consulta específica
-		Consulta consulta = consultaDAO.get(idConsulta); // obtendo a consulta correspondente
-	
-		if (consulta == null) {
-			response.status(404); // 404 Not Found
-			return "Consulta ID #" + idConsulta + " não encontrada.";
-		}
-	
-		Exame exame = GsonUtil.GSON.fromJson(request.body(), Exame.class);
-	
-		// colocando o ID da consulta no exame
-		exame.setConsultaId(idConsulta);
-	
-		// inserindo o exame no bd
-		if (exameDAO.insert(exame, idConsulta)) {
-			response.status(201); // 201 Created
-			return "Exame criado e associado à consulta ID #" + idConsulta;
-		} else {
-			response.status(500); // 500 Internal Server Error
-			return "Erro ao criar o exame da consulta de ID #" + idConsulta;
-		}
+		response.header("Content-Type", "application/json");
+
+    try {
+      Exame exame = GsonUtil.GSON.fromJson(request.body(), Exame.class);
+      exame = exameDAO.insert(exame);
+
+      response.status(201); // 201 Created
+      return GsonUtil.GSON.toJson(exame);
+    } catch (IllegalArgumentException e) {
+      response.status(400); // 400 Bad request
+      response.body("Erro ao criar exame: " + e.getMessage());
+
+      return response.body();
+    } catch (SQLException e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao criar exame: " + e.getMessage());
+
+      return response.body();
+    } catch (Exception e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao criar exame: " + e.getCause().getMessage());
+
+      return response.body();
+    }
 	}
-	
-	
 }
