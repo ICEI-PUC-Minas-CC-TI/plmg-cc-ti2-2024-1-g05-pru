@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import org.mindrot.jbcrypt.BCrypt;
 
 public abstract class Usuario implements Serializable {
 	private int id;
@@ -47,8 +48,10 @@ public abstract class Usuario implements Serializable {
 	}
 
 	public void setNome(String nome) {
-		if (nome.length() >= 3)
-			this.nome = nome;
+		if (nome.length() < 3)
+      throw new IllegalArgumentException("O nome deve ter no mínimo 3 caracteres.");
+
+    this.nome = nome;
 	}
 
   // cpf
@@ -57,7 +60,14 @@ public abstract class Usuario implements Serializable {
   }
 
   public void setCpf(String cpf) {
-    // TODO - validar o cpf
+    if (cpf.length() != 11)
+      throw new IllegalArgumentException("CPF inválido.");
+
+    if (!cpf.matches("[0-9]+"))
+      throw new IllegalArgumentException("CPF deve conter apenas números.");
+
+    // Validações mais complexas do CPF ficam para revisões futuras
+
     this.cpf = cpf;
   }
 
@@ -67,8 +77,10 @@ public abstract class Usuario implements Serializable {
   }
 
   public void setEmail(String email) {
-    // TODO - validar email
-    this.email = email;
+    if (!email.contains("@") || !email.contains("."))
+      throw new IllegalArgumentException("E-mail inválido.");
+
+    this.email = email.toLowerCase();
   }
 
   // senha
@@ -77,8 +89,19 @@ public abstract class Usuario implements Serializable {
   }
 
   public void setSenha(String senha) {
-    // verificar e criptografar senha
+    if (senha.length() < 6)
+      throw new IllegalArgumentException("A senha deve ter no mínimo 6 caracteres.");
+
+    // Verifica se a senha já está criptografada
+    if (!senha.matches("\\$2[ayb]\\$.{56}")) {
+      senha = BCrypt.hashpw(senha, BCrypt.gensalt());
+    }
+
     this.senha = senha;
+  }
+
+  public boolean checkSenha(String senha) {
+    return BCrypt.checkpw(senha, getSenha());
   }
 
   // telefone
@@ -127,14 +150,12 @@ public abstract class Usuario implements Serializable {
   }
 
   // utils
-
   @Override
   public String toString() {
     return "Usuário #" + getId() +
       " - Nome: " + getNome() +
       " - CPF: " + getCpf() +
       " - E-mail: " + getEmail() +
-      " - Senha: " + getSenha() +  // TODO - remover essa senha
       " - Telefone: " + getTelefone() +
       " - Sexo: " + getSexo() +
       " - Nascimento: " + getNascimento() +

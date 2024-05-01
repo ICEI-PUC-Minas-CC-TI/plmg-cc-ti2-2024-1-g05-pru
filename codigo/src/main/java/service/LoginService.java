@@ -17,7 +17,7 @@ public class LoginService {
   public Object login(Request request, Response response) {
     JsonObject jsonBody = GsonUtil.GSON.fromJson(request.body(), JsonObject.class);
 
-    String email = jsonBody.get("email").getAsString();
+    String email = jsonBody.get("email").getAsString().toLowerCase();
     String senha = jsonBody.get("senha").getAsString();
     char tipo = jsonBody.get("tipo").getAsString().toUpperCase().charAt(0);
 
@@ -33,7 +33,7 @@ public class LoginService {
       return "Tipo de usuário inválido.";
     }
 
-    if (usuario != null && usuario.getSenha().equals(senha)) {
+    if (usuario != null && usuario.checkSenha(senha)) {
       String jwt = JWTUtil.generateToken(usuario);
 
       JsonObject jsonObject = new JsonObject();
