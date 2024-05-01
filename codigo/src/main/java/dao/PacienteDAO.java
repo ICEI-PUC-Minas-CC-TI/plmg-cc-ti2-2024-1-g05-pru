@@ -13,12 +13,10 @@ public class PacienteDAO extends DAO {
 		super();
 	}
 
-  public boolean insert(Paciente paciente) {
-    boolean status = false;
-
+  public Paciente insert(Paciente paciente) throws SQLException {
     // verifica se o usuario é nulo
     if (paciente == null) {
-      return status;
+      return null;
     }
 
     try {
@@ -58,7 +56,7 @@ public class PacienteDAO extends DAO {
         throw new SQLException("Falha ao criar paciente, nenhuma linha alterada.");
       }
 
-      return true;
+      return paciente;
     } catch (SQLException u) {
       throw new RuntimeException(u);
     }
@@ -167,34 +165,31 @@ public class PacienteDAO extends DAO {
     return pacientes;
   }
 
-  public boolean update(Paciente paciente) {
-    boolean status = false;
-
+  public Paciente update(Paciente paciente) throws SQLException {
     // verifica se o usuario é nulo
     if (paciente == null) {
-      return status;
+      return null;
     }
 
     try {
-      String sql = "UPDATE usuario SET nome = ?, cpf = ?, email = ?, senha = ?, telefone = ?, sexo = ?, nascimento = ?, url_foto = ?, cep = ? WHERE id = ?";
+      String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ?, telefone = ?, sexo = ?, nascimento = ?, url_foto = ?, cep = ? WHERE id = ?";
 
       PreparedStatement st = conexao.prepareStatement(sql);
       st.setString(1, paciente.getNome());
-      st.setString(2, paciente.getCpf());
-      st.setString(3, paciente.getEmail());
-      st.setString(4, paciente.getSenha());
-      st.setString(5, paciente.getTelefone());
-      st.setString(6, String.valueOf(paciente.getSexo()));
-      st.setDate(7, java.sql.Date.valueOf(paciente.getNascimento()));
-      st.setString(8, paciente.getUrlFoto());
-      st.setString(9, paciente.getCep());
-      st.setInt(10, paciente.getId());
+      st.setString(2, paciente.getEmail());
+      st.setString(3, paciente.getSenha());
+      st.setString(4, paciente.getTelefone());
+      st.setString(5, String.valueOf(paciente.getSexo()));
+      st.setDate(6, java.sql.Date.valueOf(paciente.getNascimento()));
+      st.setString(7, paciente.getUrlFoto());
+      st.setString(8, paciente.getCep());
+      st.setInt(9, paciente.getId());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao atualizar usuário, nenhuma linha alterada.");
       }
 
-      return true;
+      return paciente;
     } catch (SQLException u) {
       throw new RuntimeException(u);
     }

@@ -6,6 +6,7 @@ import dao.ConsultaDAO;
 import dao.PacienteDAO;
 import util.GsonUtil;
 
+import java.sql.SQLException;
 import java.util.List;
 import spark.Request;
 import spark.Response;
@@ -18,14 +19,6 @@ public class PacienteService {
   public PacienteService() {
     pacienteDAO = new PacienteDAO();
     consultaDAO = new ConsultaDAO();
-  }
-
-  public Object readAll(Request request, Response response) {
-    List<Paciente> pacientes = pacienteDAO.getAll();
-    response.header("Content-Type", "application/json");
-    response.header("Content-Encoding", "UTF-8");
-
-    return GsonUtil.GSON.toJson(pacientes);
   }
 
   public Object read(Request request, Response response) {
@@ -44,32 +37,59 @@ public class PacienteService {
   }
 
   public Object create(Request request, Response response) {
-    Paciente paciente = GsonUtil.GSON.fromJson(request.body(), Paciente.class);
+    response.header("Content-Type", "application/json");
 
-    if (pacienteDAO.insert(paciente)) {
+    try {
+      Paciente paciente = GsonUtil.GSON.fromJson(request.body(), Paciente.class);
+      paciente = pacienteDAO.insert(paciente);
+
       response.status(201); // 201 Created
-      return "Paciente (" + paciente.getNome() + ") inserido!";
-    } else {
-      response.status(404); // 404 Not found
-      return "Paciente (" + paciente.getNome() + ") não inserido!";
+      return GsonUtil.GSON.toJson(paciente);
+    } catch (IllegalArgumentException e) {
+      response.status(400); // 400 Bad request
+      response.body("Erro ao criar paciente: " + e.getMessage());
+
+      return response.body();
+    } catch (SQLException e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao criar paciente: " + e.getMessage());
+
+      return response.body();
+    } catch (Exception e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao criar paciente: " + e.getCause().getMessage());
+
+      return response.body();
     }
   }
 
   public Object update(Request request, Response response) {
-    int id = Integer.parseInt(request.params(":id"));
-    Paciente paciente = GsonUtil.GSON.fromJson(request.body(), Paciente.class);
+    try {
+      int id = Integer.parseInt(request.params(":id"));
+      Paciente paciente = GsonUtil.GSON.fromJson(request.body(), Paciente.class);
 
-    if (paciente.getId() != id) {
-      response.status(400); // 400 Bad request
-      return "ID do paciente diferente do ID da URL!";
-    }
+      if (paciente.getId() != id) {
+        response.status(400); // 400 Bad request
+        response.body("ID do paciente diferente do ID da URL!");
 
-    if (pacienteDAO.update(paciente)) {
+        return response.body();
+      }
+
+      paciente = pacienteDAO.update(paciente);
+
       response.status(200); // 200 OK
-      return "Paciente (ID #" + paciente.getId() + ") atualizado!";
-    } else {
-      response.status(404); // 404 Not found
-      return "Paciente (ID #" + paciente.getId() + ") não encontrado!";
+      response.header("Content-Type", "application/json");
+      return GsonUtil.GSON.toJson(paciente);
+    } catch (SQLException e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao atualizar paciente: " + e.getMessage());
+
+      return response.body();
+    } catch (Exception e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao atualizar paciente: " + e.getMessage());
+
+      return response.body();
     }
   }
 
@@ -100,4 +120,8 @@ public class PacienteService {
 
     return GsonUtil.GSON.toJson(consultas);
   }
+
+  // Ver todos os exames de um paciente
+
+  // Ver todos os médicos de um paciente
 }

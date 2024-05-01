@@ -13,12 +13,10 @@ public class MedicoDAO extends DAO {
 		super();
 	}
 
-  public boolean insert(Medico medico) {
-    boolean status = false;
-
+  public Medico insert(Medico medico) throws SQLException {
     // verifica se o usuario é nulo
     if (medico == null) {
-      return status;
+      return null;
     }
 
     try {
@@ -59,7 +57,7 @@ public class MedicoDAO extends DAO {
         throw new SQLException("Falha ao criar médico, nenhuma linha alterada.");
       }
 
-      return true;
+      return medico;
     } catch (SQLException u) {
       throw new RuntimeException(u);
     }
@@ -171,34 +169,31 @@ public class MedicoDAO extends DAO {
     return medicos;
   }
 
-  public boolean update(Medico medico) {
-    boolean status = false;
-
+  public Medico update(Medico medico) throws SQLException {
     // verifica se o usuario é nulo
     if (medico == null) {
-      return status;
+      return null;
     }
 
     try {
-      String sql = "UPDATE usuario SET nome = ?, cpf = ?, email = ?, senha = ?, telefone = ?, sexo = ?, nascimento = ?, url_foto = ?, cep = ? WHERE id = ?";
+      String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ?, telefone = ?, sexo = ?, nascimento = ?, url_foto = ?, cep = ? WHERE id = ?";
 
       PreparedStatement st = conexao.prepareStatement(sql);
       st.setString(1, medico.getNome());
-      st.setString(2, medico.getCpf());
-      st.setString(3, medico.getEmail());
-      st.setString(4, medico.getSenha());
-      st.setString(5, medico.getTelefone());
-      st.setString(6, String.valueOf(medico.getSexo()));
-      st.setDate(7, java.sql.Date.valueOf(medico.getNascimento()));
-      st.setString(8, medico.getUrlFoto());
-      st.setString(9, medico.getCep());
-      st.setInt(10, medico.getId());
+      st.setString(2, medico.getEmail());
+      st.setString(3, medico.getSenha());
+      st.setString(4, medico.getTelefone());
+      st.setString(5, String.valueOf(medico.getSexo()));
+      st.setDate(6, java.sql.Date.valueOf(medico.getNascimento()));
+      st.setString(7, medico.getUrlFoto());
+      st.setString(8, medico.getCep());
+      st.setInt(9, medico.getId());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao atualizar usuário, nenhuma linha alterada.");
       }
 
-      return true;
+      return medico;
     } catch (SQLException u) {
       throw new RuntimeException(u);
     }
