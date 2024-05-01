@@ -13,11 +13,10 @@ js: assets/js/exames.js
 
     <div class="requested">
       Exame solicitado na
-      <a id="consulta" href="{{ site.baseurl }}/consultas/consulta?id=1">Consulta XPTO</a>
-      pelo médico
+      <a href=""></a>
+      pelo médico:
       <div class="doctor">
-        <span>Dr. Fulano Beltrano</span>
-        <span class="specialty">Cardiologista</span>
+        <span class="name"></span>
       </div>
     </div>
 
@@ -36,8 +35,11 @@ js: assets/js/exames.js
     </div>
 
     <div class="upload">
-      <i class="nf nf-md-file_upload"></i>
-      Enviar resultado do exame
+      <label>
+        <i class="nf nf-md-file_upload"></i>
+        Enviar resultado do exame
+        <input type="file">
+      </label>
     </div>
   </section>
 </main>

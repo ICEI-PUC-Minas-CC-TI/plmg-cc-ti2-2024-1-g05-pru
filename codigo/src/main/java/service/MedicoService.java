@@ -6,7 +6,7 @@ import dao.MedicoDAO;
 import dao.VinculoDAO;
 import util.GsonUtil;
 
-import java.util.List;
+import java.sql.SQLException;
 import spark.Request;
 import spark.Response;
 
@@ -20,66 +20,77 @@ public class MedicoService {
     vinculoDAO = new VinculoDAO();
   }
 
-  public Object readAll(Request request, Response response) {
-    List<Medico> medicos = medicoDAO.getAll();
-    response.header("Content-Type", "application/json");
-    response.header("Content-Encoding", "UTF-8");
-
-    return GsonUtil.GSON.toJson(medicos);
-  }
-
-   public Object readAllPacientes(Request request, Response response) {
-    int id = Integer.parseInt(request.params(":id"));
-    List<Vinculo> vinculos = vinculoDAO.getAllPacientes(id);
-    response.header("Content-Type", "application/json");
-    response.header("Content-Encoding", "UTF-8");
-
-    return GsonUtil.GSON.toJson(vinculos);
-  }
-
-
   public Object read(Request request, Response response) {
     int id = Integer.parseInt(request.params(":id"));
     Medico medico = medicoDAO.get(id);
 
-    if (medico != null) {
-      response.header("Content-Type", "application/json");
-      response.header("Content-Encoding", "UTF-8");
-
-      return GsonUtil.GSON.toJson(medico);
-    } else {
+    if (medico == null) {
       response.status(404); // 404 Not found
-      return "Medico ID #" + id + " não encontrado.";
+      response.body("Medico ID #" + id + " não encontrado.");
+
+      return response.body();
     }
+
+    response.header("Content-Type", "application/json");
+    response.header("Content-Encoding", "UTF-8");
+
+    return GsonUtil.GSON.toJson(medico);
   }
 
   public Object create(Request request, Response response) {
-    Medico medico = GsonUtil.GSON.fromJson(request.body(), Medico.class);
+    response.header("Content-Type", "application/json");
 
-    if (medicoDAO.insert(medico)) {
+    try {
+      Medico medico = GsonUtil.GSON.fromJson(request.body(), Medico.class);
+      medico = medicoDAO.insert(medico);
+
       response.status(201); // 201 Created
-      return "Medico (" + medico.getNome() + ") inserido!";
-    } else {
-      response.status(404); // 404 Not found
-      return "Medico (" + medico.getNome() + ") não inserido!";
+      return GsonUtil.GSON.toJson(medico);
+    } catch (IllegalArgumentException e) {
+      response.status(400); // 400 Bad request
+      response.body("Erro ao criar medico: " + e.getMessage());
+
+      return response.body();
+    } catch (SQLException e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao criar medico: " + e.getMessage());
+
+      return response.body();
+    } catch (Exception e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao criar medico: " + e.getCause().getMessage());
+
+      return response.body();
     }
   }
 
   public Object update(Request request, Response response) {
-    int id = Integer.parseInt(request.params(":id"));
-    Medico medico = GsonUtil.GSON.fromJson(request.body(), Medico.class);
+    try {
+      int id = Integer.parseInt(request.params(":id"));
+      Medico medico = GsonUtil.GSON.fromJson(request.body(), Medico.class);
 
-    if (medico.getId() != id) {
-      response.status(400); // 400 Bad request
-      return "ID do medico diferente do ID da URL!";
-    }
+      if (medico.getId() != id) {
+        response.status(400); // 400 Bad request
+        response.body("ID do medico diferente do ID da URL!");
 
-    if (medicoDAO.update(medico)) {
+        return response.body();
+      }
+
+      medico = medicoDAO.update(medico);
+
       response.status(200); // 200 OK
-      return "Medico (ID #" + medico.getId() + ") atualizado!";
-    } else {
-      response.status(404); // 404 Not found
-      return "Medico (ID #" + medico.getId() + ") não encontrado!";
+      response.header("Content-Type", "application/json");
+      return GsonUtil.GSON.toJson(medico);
+    } catch (SQLException e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao atualizar medico: " + e.getMessage());
+
+      return response.body();
+    } catch (Exception e) {
+      response.status(500); // 500 Internal Server Error
+      response.body("Erro ao atualizar medico: " + e.getMessage());
+
+      return response.body();
     }
   }
 
@@ -93,5 +104,19 @@ public class MedicoService {
       response.status(404); // 404 Not found
       return "Medico (" + id + ") não encontrado!";
     }
+  }
+
+  // Ver todas as especialidades de um médico
+
+  // Adicionar especialidade a um médico
+
+  // Ver todos os pacientes de um médico
+  public Object readAllPacientes(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    List<Vinculo> vinculos = vinculoDAO.getAllPacientes(id);
+    response.header("Content-Type", "application/json");
+    response.header("Content-Encoding", "UTF-8");
+
+    return GsonUtil.GSON.toJson(vinculos);
   }
 }

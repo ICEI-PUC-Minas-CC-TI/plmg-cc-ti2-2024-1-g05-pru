@@ -78,12 +78,16 @@
     color: var(--primary);
     cursor: pointer;
 
-    &:hover {
+    & :hover {
       cursor: pointer;
     }
 
     & i {
       font-size: 2.5rem;
+    }
+
+    & input {
+      display: none;
     }
   }
 }

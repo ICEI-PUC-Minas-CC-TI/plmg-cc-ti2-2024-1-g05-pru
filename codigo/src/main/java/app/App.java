@@ -9,6 +9,7 @@ public class App {
   private static MedicoService medicoService = new MedicoService();
   private static PacienteService pacienteService = new PacienteService();
   private static ConsultaService consultaService = new ConsultaService();
+  private static ExameService exameService = new ExameService();
 
   public static void main(String[] args) {
     port(6789);
@@ -29,7 +30,6 @@ public class App {
 
     // endpoints medico
     path("/medico", () -> {
-      get("/", (request, response) -> medicoService.readAll(request, response));
       get("/:id", (request, response) -> medicoService.read(request, response));
       post("/", (request, response) -> medicoService.create(request, response));
       put("/:id", (request, response) -> medicoService.update(request, response));
@@ -38,7 +38,6 @@ public class App {
 
     // endpoints paciente
     path("/paciente", () -> {
-      get("/", (request, response) -> pacienteService.readAll(request, response));
       get("/:id", (request, response) -> pacienteService.read(request, response));
       post("/", (request, response) -> pacienteService.create(request, response));
       put("/:id", (request, response) -> pacienteService.update(request, response));
@@ -53,8 +52,22 @@ public class App {
       post("/", (request, response) -> consultaService.create(request, response));
       put("/:id", (request, response) -> consultaService.update(request, response));
       delete("/:id", (request, response) -> consultaService.delete(request, response));
+
+      get("/:id/exames", (request, response) -> consultaService.readAllExames(request, response));
+      post("/:id/exames", (request, response) -> consultaService.createExame(request, response));
     });
 
     // endpoints exame
+    path("/exame", () -> {
+      get("/:id", (request, response) -> exameService.read(request, response));
+      put("/:id", (request, response) -> exameService.update(request, response));
+      delete("/:id", (request, response) -> exameService.delete(request, response));
+    });
+
+    // endpoints medicamento
+
+    // endpoints vinculo
+
+    // endpoints especialidade
   }
 }
