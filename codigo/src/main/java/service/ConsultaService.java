@@ -93,4 +93,31 @@ public class ConsultaService {
 
 		return GsonUtil.GSON.toJson(exames);
 	}
+
+	// Cria um exame associado à uma consulta
+	public Object createExame(Request request, Response response) {
+		int idConsulta = Integer.parseInt(request.params(":id")); // pegando o ID da consulta específica
+		Consulta consulta = consultaDAO.get(idConsulta); // obtendo a consulta correspondente
+	
+		if (consulta == null) {
+			response.status(404); // 404 Not Found
+			return "Consulta ID #" + idConsulta + " não encontrada.";
+		}
+	
+		Exame exame = GsonUtil.GSON.fromJson(request.body(), Exame.class);
+	
+		// colocando o ID da consulta no exame
+		exame.setConsultaId(idConsulta);
+	
+		// inserindo o exame no bd
+		if (exameDAO.insert(exame, idConsulta)) {
+			response.status(201); // 201 Created
+			return "Exame criado e associado à consulta ID #" + idConsulta;
+		} else {
+			response.status(500); // 500 Internal Server Error
+			return "Erro ao criar o exame da consulta de ID #" + idConsulta;
+		}
+	}
+	
+	
 }

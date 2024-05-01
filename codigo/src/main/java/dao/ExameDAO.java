@@ -13,7 +13,7 @@ public class ExameDAO extends DAO {
     super();
   }
 
-  public boolean insert(Exame exame) {
+  public boolean insert(Exame exame, int idConsulta) {
     boolean status = false;
 
     // verifica se o exame é nulo
@@ -29,7 +29,8 @@ public class ExameDAO extends DAO {
       st.setDate(2, java.sql.Date.valueOf(exame.getData()));
       st.setString(3, exame.getUrlArquivo());
       st.setString(4, exame.getStatus());
-      st.setInt(5, exame.getConsultaId());
+      st.setInt(5, idConsulta); // definindo o id da consulta no exame
+
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao criar exame, nenhuma linha alterada.");

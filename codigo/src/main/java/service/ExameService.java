@@ -32,7 +32,11 @@ public class ExameService {
     public Object create(Request request, Response response) {
         Exame exame = GsonUtil.GSON.fromJson(request.body(), Exame.class);
 
-        if (exameDAO.insert(exame)) {
+        // pegando o id da consulta
+        int consultaId = Integer.parseInt(request.params(":id"));
+
+        // inserindo o exame com o id da consulta como parâmetro
+        if (exameDAO.insert(exame, consultaId)) {
             response.status(201); // 201 Created
             return "Exame (" + exame.getTitulo() + ") inserido!";
         } else {
