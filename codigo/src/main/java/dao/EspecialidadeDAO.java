@@ -23,7 +23,7 @@ public class EspecialidadeDAO extends DAO{
       if (rs.next()) {
         especialidade = new Especialidade(
             rs.getInt("medico_id"),
-            rs.getInt("especialidade_id")
+            rs.getString("especialidade")
         );
       }
     } catch (SQLException u) {
@@ -43,11 +43,11 @@ public class EspecialidadeDAO extends DAO{
     }
 
     try {
-      String sql = "INSERT INTO especialidade (medico_id, especialidade_id) VALUES (?, ?)";
+      String sql = "INSERT INTO especialidade (medico_id, especialidade) VALUES (?, ?)";
      
       PreparedStatement st = conexao.prepareStatement(sql);
       st.setInt(1, especialidade.getMedicoId());
-      st.setInt(2, especialidade.getEspecialidadeId());
+      st.setString(2, especialidade.getEspecialidade());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao criar relacao entre medico e especialidade, nenhuma linha alterada.");
@@ -67,8 +67,8 @@ public class EspecialidadeDAO extends DAO{
 		}
 
 		try {
-			PreparedStatement st = conexao.prepareStatement("UPDATE especialidade SET especialidade_id = ? WHERE medico_id = ?");
-      st.setInt(1, especialidade.getEspecialidadeId());
+			PreparedStatement st = conexao.prepareStatement("UPDATE especialidade SET especialidade = ? WHERE medico_id = ?");
+      st.setString(1, especialidade.getEspecialidade());
       st.setInt(2, especialidade.getMedicoId());
 
 			if (st.executeUpdate() == 0) {

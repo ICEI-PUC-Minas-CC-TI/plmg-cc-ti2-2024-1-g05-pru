@@ -2,14 +2,14 @@ package model;
 
 public class Especialidade {
     private int medicoId;
-    private int especialidadeId;
+    private String especialidade;
 
     public Especialidade() {
     }
 
-    public Especialidade(int medicoId, int especialidadeId) {
+    public Especialidade(int medicoId, String especialidade) {
         setMedicoId(medicoId);
-        setEspecialidadeId(especialidadeId);
+        setEspecialidade(especialidade);
     }
 
     public int getMedicoId() {
@@ -20,19 +20,19 @@ public class Especialidade {
         this.medicoId = medicoId;
     }
 
-    public int getEspecialidadeId() {
-        return especialidadeId;
+    public String getEspecialidade() {
+        return especialidade;
     }
 
-    public void setEspecialidadeId(int especialidadeId) {
-        this.especialidadeId = especialidadeId;
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
     }
 
     @Override
     public String toString() {
         return "Especialidade{" +
                 "idMedico=" + medicoId +
-                ", idEspecialidade=" + especialidadeId +
+                ",Especialidade=" + especialidade +
                 '}';
     }
 }
