@@ -2,8 +2,11 @@ package service;
 
 import model.Medico;
 import model.Vinculo;
+import model.Especialidade;
+
 import dao.MedicoDAO;
 import dao.VinculoDAO;
+import dao.EspecialidadeDAO;
 import util.GsonUtil;
 
 import java.sql.SQLException;
