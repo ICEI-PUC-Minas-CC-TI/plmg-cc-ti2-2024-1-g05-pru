@@ -76,7 +76,7 @@
     color: var(--gray-darker);
     font-weight: bold;
     padding: .2rem .5rem;
-    border-radius: 1vmax;
+    border-radius: 1rem;
     text-transform: capitalize;
 
     &.done {

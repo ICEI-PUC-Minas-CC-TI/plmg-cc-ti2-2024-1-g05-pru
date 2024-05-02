@@ -10,7 +10,7 @@ const baseURLRequest= 'http://localhost:6789';
 // Date formater
 function formatDate(dateString) {
   const formatter = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  
+
   return formatter.format(Date.parse(dateString));
 }
 
@@ -45,16 +45,18 @@ function getUrlId() {
   Função que verifica se o token existe no sessionStorage e realiza o logout do usuário caso nao exista
 */
 function getUserSession() {
-  return sessionStorage.getItem('token') ?
-    sessionStorage.getItem('token') :
-    null;
+  return sessionStorage.getItem('token') || null;
 }
 
 /*
   Função que decodifica o token JWT
 */
 function decodeJwt (token) {
-  return JSON.parse(atob(token.split('.')[1]));
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
 }
 
 /*
@@ -84,5 +86,7 @@ async function requestData(url, method, body) {
     throw new Error('Network response was not ok');
   }
 
-  return await response.json();
+  if (response.status !== 204) {
+    return await response.json();
+  }
 };

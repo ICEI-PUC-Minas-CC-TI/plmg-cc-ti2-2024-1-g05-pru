@@ -7,6 +7,7 @@ css:
 - assets/css/modal.css
 js:
 - assets/js/modal.js
+- assets/js/pacientes.js
 ---
 
 <main>
@@ -28,77 +29,7 @@ js:
   </section>
 
   <section class="itens-list" id="pacientes">
-    <ul>
-      <li>
-        <div class="user-info">
-          <div class="user-image">
-            <i class="nf nf-fa-user_circle"></i>
-          </div>
-          <span class="paciente">Beltrano da Silva</span>
-          <div class="date">
-            <i class="nf nf-md-calendar"></i>
-            <span>01/01/2023</span>
-          </div>
-        </div>
-        <div class="actions">
-          <a href="#">
-            <i class="nf nf-fa-stethoscope"></i>
-          </a>
-
-          <a href="#">
-            <i class="nf nf-fa-file_text"></i>
-          </a>
-
-          <button class="delete"><i class="nf nf-fa-trash"></i></button>
-        </div>
-      </li>
-      <li>
-        <div class="user-info">
-          <div class="user-image">
-            <i class="nf nf-fa-user_circle"></i>
-          </div>
-          <span class="paciente">Fulano Beltrano</span>
-          <div class="date">
-            <i class="nf nf-md-calendar"></i>
-            <span>01/01/2023</span>
-          </div>
-        </div>
-        <div class="actions">
-          <a href="#">
-            <i class="nf nf-fa-stethoscope"></i>
-          </a>
-
-          <a href="#">
-            <i class="nf nf-fa-file_text"></i>
-          </a>
-
-          <button class="delete"><i class="nf nf-fa-trash"></i></button>
-        </div>
-      </li>
-      <li>
-        <div class="user-info">
-          <div class="user-image">
-            <i class="nf nf-fa-user_circle"></i>
-          </div>
-          <span class="paciente">João da Silva</span>
-          <div class="date">
-            <i class="nf nf-md-calendar"></i>
-            <span>01/01/2023</span>
-          </div>
-        </div>
-        <div class="actions">
-          <a href="#">
-            <i class="nf nf-fa-stethoscope"></i>
-          </a>
-
-          <a href="#">
-            <i class="nf nf-fa-file_text"></i>
-          </a>
-
-          <button class="delete"><i class="nf nf-fa-trash"></i></button>
-        </div>
-      </li>
-    </ul>
+    <ul></ul>
   </section>
 
   <section id="modal" class="modal-overlay">
@@ -110,9 +41,9 @@ js:
       <form action="" id="form-add-paciente">
         {%include input-field.html type="text" label="Paciente" id="paciente" name="paciente"%}
 
-        <button>Solicitar código de confirmação</button>
+        <!-- <button>Solicitar código de confirmação</button>
 
-        {%include input-field.html type="text" label="Código" id="cod" name="cod" placeholder="XXX-XXX"%}
+        {%include input-field.html type="text" label="Código" id="cod" name="cod" placeholder="XXX-XXX"%} -->
 
         <button type="submit">Adicionar paciente</button>
       </form>

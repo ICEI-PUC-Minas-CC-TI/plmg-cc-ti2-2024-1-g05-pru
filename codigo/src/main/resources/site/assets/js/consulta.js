@@ -32,7 +32,6 @@ async function fetchDataAndPopulate(consultaId) {
     // Header
     document.querySelector('.info-header h1').textContent = consulta.titulo;
     document.querySelector('.info-header .doctor a').textContent = consulta.medico;
-    document.querySelector('.info-header .doctor a').href = `${baseUrl}/medico/${consulta.medicoId}`;
 
     document.querySelector('.info-header .date span').textContent = formatDate(consulta.dataHora);
 

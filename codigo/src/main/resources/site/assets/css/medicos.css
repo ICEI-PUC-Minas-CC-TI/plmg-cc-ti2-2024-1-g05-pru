@@ -1,5 +1,4 @@
-#pacientes {
-
+#medicos {
   & ul {
     margin: 2rem 0;
     display: flex;
@@ -66,18 +65,12 @@
     gap: .5rem;
     font-size: 1rem;
 
-    & a,
+    & .aprove,
     & .delete {
       padding: 1rem;
       border-radius: 1rem;
       color: var(--white);
       background-color: var(--primary);
-    }
-
-    &.Pendente a,
-    &.Cancelado a {
-      pointer-events: none;
-      background-color: var(--gray-dark);
     }
 
     & .delete {

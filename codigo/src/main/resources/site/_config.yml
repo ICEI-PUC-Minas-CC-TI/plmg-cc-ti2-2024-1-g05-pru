@@ -4,6 +4,9 @@ title: Prontuário Universal
 
 # PRU CONFIGS
 header_pages:
+  - title: Medicos
+    url: medicos
+    role: paciente
   - title: Consultas
     url: consultas
     role: paciente
