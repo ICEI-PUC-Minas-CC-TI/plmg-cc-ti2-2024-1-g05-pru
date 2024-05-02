@@ -26,41 +26,34 @@ public class ConsultaService {
 
 		if (consulta == null) {
 			response.status(404); // 404 Not found
-			response.body("Consulta ID #" + id + " não encontrada.");
-
-			return response.body();
+			return "Consulta ID #" + id + " não encontrada.";
 		}
 
 		response.header("Content-Type", "application/json");
-		response.header("Content-Encoding", "UTF-8");
-
 		return GsonUtil.GSON.toJson(consulta);
 	}
 
 	public Object create(Request request, Response response) {
-    response.header("Content-Type", "application/json");
+		try {
+			Consulta consulta = GsonUtil.GSON.fromJson(request.body(), Consulta.class);
 
-    try {
-      Consulta consulta = GsonUtil.GSON.fromJson(request.body(), Consulta.class);
       consulta = consultaDAO.insert(consulta);
-
       response.status(201); // 201 Created
+			response.header("Content-Type", "application/json");
+
       return GsonUtil.GSON.toJson(consulta);
-    } catch (IllegalArgumentException e) {
+    }
+		catch (IllegalArgumentException e) {
       response.status(400); // 400 Bad request
-      response.body("Erro ao criar consulta: " + e.getMessage());
-
-      return response.body();
-    } catch (SQLException e) {
+      return "Erro ao criar consulta: " + e.getMessage();
+    }
+		catch (SQLException e) {
       response.status(500); // 500 Internal Server Error
-      response.body("Erro ao criar consulta: " + e.getMessage());
-
-      return response.body();
-    } catch (Exception e) {
+			return "Erro ao criar consulta: " + e.getMessage();
+    }
+		catch (Exception e) {
       response.status(500); // 500 Internal Server Error
-      response.body("Erro ao criar consulta: " + e.getCause().getMessage());
-
-      return response.body();
+			return "Erro ao criar consulta: " + e.getCause().getMessage();
     }
   }
 
@@ -75,13 +68,14 @@ public class ConsultaService {
 			}
 
 			if (consultaDAO.update(consulta)) {
-				response.status(200); // 200 OK
-				return "Consulta (ID #" + consulta.getId() + ") atualizada!";
+				response.status(204); // 204 No content
+				return response;
 			} else {
 				response.status(404); // 404 Not found
-				return "Consulta (ID #" + consulta.getId() + ") não encontrada!";
+				return "Consulta ID #" + consulta.getId() + " não encontrada!";
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			response.status(500); // 500 Internal Server Error
 			return "Erro ao atualizar consulta: " + e.getMessage();
 		}
@@ -91,11 +85,11 @@ public class ConsultaService {
 		int id = Integer.parseInt(request.params(":id"));
 
 		if (consultaDAO.delete(id)) {
-			response.status(200); // 200 OK
-			return "Consulta (" + id + ") excluída!";
+			response.status(204); // 204 No content
+      return response;
 		} else {
 			response.status(404); // 404 Not found
-			return "Consulta (" + id + ") não encontrada!";
+			return "Consulta ID #" + id + " não encontrada!";
 		}
 	}
 
@@ -106,35 +100,6 @@ public class ConsultaService {
 
 		response.header("Content-Type", "application/json");
 		response.header("Content-Encoding", "UTF-8");
-
 		return GsonUtil.GSON.toJson(exames);
-	}
-
-	// Cria um exame associado à uma consulta
-	public Object createExame(Request request, Response response) {
-		response.header("Content-Type", "application/json");
-
-    try {
-      Exame exame = GsonUtil.GSON.fromJson(request.body(), Exame.class);
-      exame = exameDAO.insert(exame);
-
-      response.status(201); // 201 Created
-      return GsonUtil.GSON.toJson(exame);
-    } catch (IllegalArgumentException e) {
-      response.status(400); // 400 Bad request
-      response.body("Erro ao criar exame: " + e.getMessage());
-
-      return response.body();
-    } catch (SQLException e) {
-      response.status(500); // 500 Internal Server Error
-      response.body("Erro ao criar exame: " + e.getMessage());
-
-      return response.body();
-    } catch (Exception e) {
-      response.status(500); // 500 Internal Server Error
-      response.body("Erro ao criar exame: " + e.getCause().getMessage());
-
-      return response.body();
-    }
 	}
 }

@@ -17,59 +17,36 @@ public class VinculoDAO extends DAO{
     Vinculo vinculo = null;
 
     try {
-      String sql = "SELECT * FROM vinculo WHERE id = ?";
+      String sql = "SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE v.id = ?";
       PreparedStatement st = conexao.prepareStatement(sql);
       st.setInt(1, id);
 
       ResultSet rs = st.executeQuery();
       if (rs.next()) {
         vinculo = new Vinculo(
-            rs.getInt("id"),
-            rs.getInt("paciente_id"),
-            rs.getInt("medico_id"),
-            rs.getString("status")
+          rs.getInt("id"),
+          rs.getString("status"),
+          rs.getString("paciente"),
+          rs.getInt("paciente_id"),
+          rs.getString("medico"),
+          rs.getInt("medico_id")
         );
       }
     } catch (SQLException u) {
-      throw new RuntimeException("Falha ao obter consulta.", u);
+      throw new RuntimeException("Falha ao obter vinculo.", u);
     }
 
     return vinculo;
 	}
 
-  public List<Vinculo> getAll() {
-    List<Vinculo> vinculos = new ArrayList<Vinculo>();
-    PreparedStatement st = null;
-    ResultSet rs = null;
-
-    try {
-      String sql = "SELECT * FROM vinculo";
-      st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE);
-      rs = st.executeQuery();
-      while(rs.next()) {
-        Vinculo vinculo = new Vinculo(
-          rs.getInt("id"),
-          rs.getInt("paciente_id"),
-          rs.getInt("medico_id"),
-          rs.getString("status")
-        );
-
-        vinculos.add(vinculo);
-      }
-    } catch (SQLException u) {
-      throw new RuntimeException(u);
-    }
-
-    return vinculos;
-  }
-
+  // retorna todos os vinculos de um paciente
   public List<Vinculo> getAllMedicos(int pacienteId) {
     List<Vinculo> vinculos = new ArrayList<Vinculo>();
     PreparedStatement st = null;
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT * FROM vinculo WHERE paciente_id = ?";
+      String sql = "SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE pac.id = ?";
       st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE);
       st.setInt(1, pacienteId);
 
@@ -77,9 +54,11 @@ public class VinculoDAO extends DAO{
       while(rs.next()) {
         Vinculo vinculo = new Vinculo(
           rs.getInt("id"),
+          rs.getString("status"),
+          rs.getString("paciente"),
           rs.getInt("paciente_id"),
-          rs.getInt("medico_id"),
-          rs.getString("status")
+          rs.getString("medico"),
+          rs.getInt("medico_id")
         );
 
         vinculos.add(vinculo);
@@ -91,13 +70,14 @@ public class VinculoDAO extends DAO{
     return vinculos;
   }
 
+  // retorna todos os vinculos de um medico
   public List<Vinculo> getAllPacientes(int medicoId) {
     List<Vinculo> vinculos = new ArrayList<Vinculo>();
     PreparedStatement st = null;
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT * FROM vinculo WHERE medico_id = ?";
+      String sql = "SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE med.id = ?";
       st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE);
       st.setInt(1, medicoId);
 
@@ -105,9 +85,11 @@ public class VinculoDAO extends DAO{
       while(rs.next()) {
         Vinculo vinculo = new Vinculo(
           rs.getInt("id"),
+          rs.getString("status"),
+          rs.getString("paciente"),
           rs.getInt("paciente_id"),
-          rs.getInt("medico_id"),
-          rs.getString("status")
+          rs.getString("medico"),
+          rs.getInt("medico_id")
         );
 
         vinculos.add(vinculo);
@@ -119,7 +101,6 @@ public class VinculoDAO extends DAO{
     return vinculos;
   }
 
-  //TODO DEVO CHECAR SE O PACIENTE E O MEDICO EXISTEM ANTES DE INSERIR O VINCULO ?
   public boolean insert(Vinculo vinculo) {
     boolean status = false;
 
@@ -129,20 +110,20 @@ public class VinculoDAO extends DAO{
     }
 
     try {
-      String sql = "INSERT INTO vinculo (paciente_id, medico_id, status) VALUES (?, ?, ?)";
-     
+      String sql = "INSERT INTO vinculo (status, paciente_id, medico_id) VALUES (?, ?, ?)";
+
       PreparedStatement st = conexao.prepareStatement(sql);
-      st.setInt(1, vinculo.getPacienteId()); // Change setString to setInt
-      st.setInt(2, vinculo.getMedicoId()); // Change setString to setInt
       st.setString(3, vinculo.getStatus());
+      st.setInt(1, vinculo.getPacienteId());
+      st.setInt(2, vinculo.getMedicoId());
 
       if (st.executeUpdate() == 0) {
-        throw new SQLException("Falha ao criar vinculo entre usuario e medico, nenhuma linha alterada.");
+        throw new SQLException("Falha ao criar vinculo entre paciente e médico, nenhuma linha alterada.");
       }
       return true;
 
     } catch (SQLException u) {
-      throw new RuntimeException("Falha ao criar vinculo entre usuario e medico/", u);
+      throw new RuntimeException("Falha ao criar vinculo entre paciente e médico.", u);
     }
   }
 
@@ -176,7 +157,7 @@ public class VinculoDAO extends DAO{
 		boolean status = false;
 
 		try {
-			String sql = "DELETE FROM consulta WHERE id = ?";
+			String sql = "DELETE FROM vinculo WHERE id = ?";
 			PreparedStatement st = conexao.prepareStatement(sql);
 			st.setInt(1, id);
 
@@ -184,9 +165,32 @@ public class VinculoDAO extends DAO{
 				status = true;
 			}
 		} catch (SQLException u) {
-			throw new RuntimeException("Falha ao deletar consulta, nenhuma linha alterada.", u);
+			throw new RuntimeException("Falha ao deletar vinculo, nenhuma linha alterada.", u);
 		}
 
 		return status;
 	}
+
+  // verifica se o vinculo existe
+  public boolean exists(Vinculo vinculo) {
+    boolean status = false;
+    int medicoId = vinculo.getMedicoId();
+    int pacienteId = vinculo.getPacienteId();
+
+    try {
+      String sql = "SELECT * FROM vinculo WHERE medico_id = ? AND paciente_id = ?";
+      PreparedStatement st = conexao.prepareStatement(sql);
+      st.setInt(1, medicoId);
+      st.setInt(2, pacienteId);
+
+      ResultSet rs = st.executeQuery();
+      if (rs.next()) {
+        status = true;
+      }
+    } catch (SQLException u) {
+      throw new RuntimeException("Falha ao verificar se o vinculo existe.", u);
+    }
+
+    return status;
+  }
 }

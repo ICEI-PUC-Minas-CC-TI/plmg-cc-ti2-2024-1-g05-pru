@@ -32,7 +32,6 @@ public abstract class Usuario implements Serializable {
     setCep(cep);
   }
 
-
   // id
 	public int getId() {
 		return id;

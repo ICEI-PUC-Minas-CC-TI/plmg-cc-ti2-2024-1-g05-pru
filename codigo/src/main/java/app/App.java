@@ -10,6 +10,7 @@ public class App {
   private static PacienteService pacienteService = new PacienteService();
   private static ConsultaService consultaService = new ConsultaService();
   private static ExameService exameService = new ExameService();
+  private static VinculoService vinculoService = new VinculoService();
 
   public static void main(String[] args) {
     port(6789);
@@ -34,6 +35,11 @@ public class App {
       post("/", (request, response) -> medicoService.create(request, response));
       put("/:id", (request, response) -> medicoService.update(request, response));
       delete("/:id", (request, response) -> medicoService.delete(request, response));
+
+      // pacientes do medico
+      get("/:id/pacientes", (request, response) -> medicoService.readAllPacientes(request, response));
+
+      // especialidades do medico
     });
 
     // endpoints paciente
@@ -43,7 +49,14 @@ public class App {
       put("/:id", (request, response) -> pacienteService.update(request, response));
       delete("/:id", (request, response) -> pacienteService.delete(request, response));
 
+      // consultas do paciente
       get("/:id/consultas", (request, response) -> pacienteService.readAllConsultas(request, response));
+      // get("/:id/consultas/:qtde", (request, response) -> pacienteService.readAllConsultas(request, response));
+
+      // exames do paciente
+
+      // medicos do paciente
+      get("/:id/medicos", (request, response) -> pacienteService.readAllMedicos(request, response));
     });
 
     // endpoints consulta
@@ -54,12 +67,12 @@ public class App {
       delete("/:id", (request, response) -> consultaService.delete(request, response));
 
       get("/:id/exames", (request, response) -> consultaService.readAllExames(request, response));
-      post("/:id/exames", (request, response) -> consultaService.createExame(request, response));
     });
 
     // endpoints exame
     path("/exame", () -> {
       get("/:id", (request, response) -> exameService.read(request, response));
+      post("/", (request, response) -> consultaService.create(request, response));
       put("/:id", (request, response) -> exameService.update(request, response));
       delete("/:id", (request, response) -> exameService.delete(request, response));
     });
@@ -67,6 +80,11 @@ public class App {
     // endpoints medicamento
 
     // endpoints vinculo
+    path("/vinculo", () -> {
+      post("/", (request, response) -> vinculoService.create(request, response));
+      put("/:id", (request, response) -> vinculoService.update(request, response));
+      delete("/:id", (request, response) -> vinculoService.delete(request, response));
+    });
 
     // endpoints especialidade
   }

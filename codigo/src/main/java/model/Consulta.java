@@ -15,28 +15,29 @@ public class Consulta {
 
     public Consulta() { }
 
-    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo, int idPaciente, int idMedico) {
+    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo, int pacienteId, int medicoId) {
         setId(id);
         setTitulo(titulo);
         setDiagnostico(diagnostico);
         setDataHora(dataHora);
         setUrlAnexo(urlAnexo);
-        setPacienteId(idPaciente);
-        setMedicoId(idMedico);
+        setPacienteId(pacienteId);
+        setMedicoId(medicoId);
     }
 
-    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo, String paciente, int idPaciente, String medico, int idMedico) {
+    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo, String paciente, int pacienteId, String medico, int medicoId) {
         setId(id);
         setTitulo(titulo);
         setDiagnostico(diagnostico);
         setDataHora(dataHora);
         setUrlAnexo(urlAnexo);
         setPaciente(paciente);
-        setPacienteId(idPaciente);
+        setPacienteId(pacienteId);
         setMedico(medico);
-        setMedicoId(idMedico);
+        setMedicoId(medicoId);
     }
 
+    // id
     public int getId() {
         return id;
     }
@@ -45,6 +46,7 @@ public class Consulta {
         this.id = id;
     }
 
+    // titulo
     public String getTitulo() {
         return titulo;
     }
@@ -53,6 +55,7 @@ public class Consulta {
         this.titulo = titulo;
     }
 
+    // diagnostico / resumo
     public String getDiagnostico() {
         return diagnostico;
     }
@@ -61,6 +64,7 @@ public class Consulta {
         this.diagnostico = diagnostico;
     }
 
+    // dataHora
     public LocalDateTime getDataHora() {
         return dataHora;
     }
@@ -69,6 +73,7 @@ public class Consulta {
         this.dataHora = dataHora;
     }
 
+    // urlAnexo
     public String getUrlAnexo() {
         return urlAnexo;
     }
@@ -77,6 +82,7 @@ public class Consulta {
         this.urlAnexo = urlAnexo;
     }
 
+    // pacienteId
     public int getPacienteId() {
         return pacienteId;
     }
@@ -85,6 +91,7 @@ public class Consulta {
         this.pacienteId = pacienteId;
     }
 
+    // paciente (nome)
     public String getPaciente() {
         return paciente;
     }
@@ -93,6 +100,7 @@ public class Consulta {
         this.paciente = paciente;
     }
 
+    // medicoId
     public int getMedicoId() {
         return medicoId;
     }
@@ -101,6 +109,7 @@ public class Consulta {
         this.medicoId = medicoId;
     }
 
+    // medico (nome)
     public String getMedico() {
         return medico;
     }
@@ -109,17 +118,15 @@ public class Consulta {
         this.medico = medico;
     }
 
-
+    // utils
     @Override
     public String toString() {
-        return "Consulta{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", diagnostico='" + diagnostico + '\'' +
-                ", data e hora=" + dataHora +
-                ", urlAnexo='" + urlAnexo + '\'' +
-                ", idPaciente=" + pacienteId +
-                ", idMedico=" + medicoId +
-                '}';
+        return "Consulta #" + getId() +
+            " - Título: " + getTitulo() +
+            " - Diagnóstico: " + getDiagnostico() +
+            " - Data e Hora: " + getDataHora() +
+            " - URL Anexo: " + getUrlAnexo() +
+            " - Paciente: " + getPacienteId() +
+            " - Médico: " + getMedicoId();
     }
 }

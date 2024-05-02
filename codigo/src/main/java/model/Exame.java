@@ -37,37 +37,33 @@ public class Exame implements Serializable {
     }
 
     public void setTitulo(String titulo) {
-        // 18.04 | TODO - FAZER VALIDAÇÃO DOS PARAMS
         this.titulo = titulo;
     }
 
-    // id
+    // data
     public LocalDate getData() {
         return data;
     }
 
     public void setData(LocalDate data) {
-        // 18.04 | TODO - FAZER VALIDAÇÃO DOS PARAMS
         this.data = data;
     }
 
-    // titulo
+    // urlArquivo
     public String getUrlArquivo() {
         return urlArquivo;
     }
 
     public void setUrlArquivo(String url) {
-        // 18.04 | TODO - FAZER VALIDAÇÃO DOS PARAMS
         this.urlArquivo = url;
     }
 
-    // titulo
+    // status
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
-        // 18.04 | TODO - FAZER VALIDAÇÃO DOS PARAMS
         this.status = status;
     }
 
@@ -80,6 +76,7 @@ public class Exame implements Serializable {
         this.consultaId = consultaId;
     }
 
+    // utils
     @Override
     public String toString() {
         return "Exame #" + getId() +

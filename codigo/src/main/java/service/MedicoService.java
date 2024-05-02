@@ -28,41 +28,33 @@ public class MedicoService {
 
     if (medico == null) {
       response.status(404); // 404 Not found
-      response.body("Medico ID #" + id + " não encontrado.");
-
-      return response.body();
+      return "Medico ID #" + id + " não encontrado!";
     }
 
     response.header("Content-Type", "application/json");
-    response.header("Content-Encoding", "UTF-8");
-
     return GsonUtil.GSON.toJson(medico);
   }
 
   public Object create(Request request, Response response) {
-    response.header("Content-Type", "application/json");
-
     try {
       Medico medico = GsonUtil.GSON.fromJson(request.body(), Medico.class);
       medico = medicoDAO.insert(medico);
 
       response.status(201); // 201 Created
+      response.header("Content-Type", "application/json");
       return GsonUtil.GSON.toJson(medico);
-    } catch (IllegalArgumentException e) {
+    }
+    catch (IllegalArgumentException e) {
       response.status(400); // 400 Bad request
-      response.body("Erro ao criar medico: " + e.getMessage());
-
-      return response.body();
-    } catch (SQLException e) {
+      return "Erro ao criar medico: " + e.getMessage();
+    }
+    catch (SQLException e) {
       response.status(500); // 500 Internal Server Error
-      response.body("Erro ao criar medico: " + e.getMessage());
-
-      return response.body();
-    } catch (Exception e) {
+      return "Erro ao criar medico: " + e.getMessage();
+    }
+    catch (Exception e) {
       response.status(500); // 500 Internal Server Error
-      response.body("Erro ao criar medico: " + e.getCause().getMessage());
-
-      return response.body();
+      return "Erro ao criar medico: " + e.getCause().getMessage();
     }
   }
 
@@ -76,17 +68,19 @@ public class MedicoService {
         return "ID do medico diferente do ID da URL!";
       }
 
-      if (!medicoDAO.update(medico)) {
-        response.status(500); // 500 Internal Server Error
-        return "Erro ao atualizar medico.";
+      if (medicoDAO.update(medico)) {
+        response.status(204); // 204 No content
+        return response;
+      } else {
+        response.status(404); // 404 Not found
+				return "Médico ID #" + medico.getId() + " não encontrado!";
       }
-
-      response.status(200); // 200 OK
-      return "Medico atualizado com sucesso.";
-    } catch (SQLException e) {
+    }
+    catch (SQLException e) {
       response.status(500); // 500 Internal Server Error
       return "Erro ao atualizar medico: " + e.getMessage();
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       response.status(500); // 500 Internal Server Error
       return "Erro ao atualizar medico: " + e.getMessage();
     }
@@ -96,11 +90,11 @@ public class MedicoService {
     int id = Integer.parseInt(request.params(":id"));
 
     if (medicoDAO.delete(id)) {
-      response.status(200); // 200 OK
-      return "Medico (" + id + ") excluído!";
+      response.status(204); // 204 No content
+      return response;
     } else {
       response.status(404); // 404 Not found
-      return "Medico (" + id + ") não encontrado!";
+      return "Médico ID #" + id + " não encontrado!";
     }
   }
 
@@ -112,9 +106,8 @@ public class MedicoService {
   public Object readAllPacientes(Request request, Response response) {
     int id = Integer.parseInt(request.params(":id"));
     List<Vinculo> vinculos = vinculoDAO.getAllPacientes(id);
-    response.header("Content-Type", "application/json");
-    response.header("Content-Encoding", "UTF-8");
 
+    response.header("Content-Type", "application/json");
     return GsonUtil.GSON.toJson(vinculos);
   }
 }

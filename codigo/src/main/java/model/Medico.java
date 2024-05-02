@@ -35,6 +35,7 @@ public class Medico extends Usuario {
 
     this.crm = crm;
   }
+
   // utils
   @Override
   public String toString() {
