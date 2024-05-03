@@ -2,8 +2,10 @@ package service;
 
 import model.Consulta;
 import model.Exame;
+import model.Medicamento;
 import dao.ConsultaDAO;
 import dao.ExameDAO;
+import dao.MedicamentoDAO;
 import util.GsonUtil;
 
 import java.sql.SQLException;
@@ -14,10 +16,12 @@ import spark.Response;
 public class ConsultaService {
 	private ConsultaDAO consultaDAO;
 	private ExameDAO exameDAO;
+	private MedicamentoDAO medicamentoDAO;
 
 	public ConsultaService() {
 		consultaDAO = new ConsultaDAO();
 		exameDAO = new ExameDAO();
+		medicamentoDAO = new MedicamentoDAO();
 	}
 
 	public Object read(Request request, Response response) {
@@ -53,7 +57,7 @@ public class ConsultaService {
     }
 		catch (Exception e) {
       response.status(500); // 500 Internal Server Error
-			return "Erro ao criar consulta: " + e.getCause().getMessage();
+			return "Erro ao criar consulta: " + e.getMessage();
     }
   }
 
@@ -101,5 +105,15 @@ public class ConsultaService {
 		response.header("Content-Type", "application/json");
 		response.header("Content-Encoding", "UTF-8");
 		return GsonUtil.GSON.toJson(exames);
+	}
+
+	// Ver todos os medicamento de uma consulta
+	public Object readAllMedicamentos(Request request, Response response) {
+		int id = Integer.parseInt(request.params(":id"));
+		List<Medicamento> medicamentos = medicamentoDAO.getAllMedicamentosConsulta(id);
+
+		response.header("Content-Type", "application/json");
+		response.header("Content-Encoding", "UTF-8");
+		return GsonUtil.GSON.toJson(medicamentos);
 	}
 }

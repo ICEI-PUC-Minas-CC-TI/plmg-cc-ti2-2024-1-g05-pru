@@ -11,6 +11,7 @@ public class App {
   private static ConsultaService consultaService = new ConsultaService();
   private static ExameService exameService = new ExameService();
   private static VinculoService vinculoService = new VinculoService();
+  private static MedicamentoService medicamentoService = new MedicamentoService();
 
   public static void main(String[] args) {
     port(6789);
@@ -67,6 +68,8 @@ public class App {
       delete("/:id", (request, response) -> consultaService.delete(request, response));
 
       get("/:id/exames", (request, response) -> consultaService.readAllExames(request, response));
+
+      get("/:id/medicamentos", (request, response) -> consultaService.readAllMedicamentos(request, response));
     });
 
     // endpoints exame
@@ -78,6 +81,11 @@ public class App {
     });
 
     // endpoints medicamento
+    path("/medicamento", () -> {
+      post("/", (request, response) -> medicamentoService.create(request, response));
+      put("/:id", (request, response) -> medicamentoService.update(request, response));
+      delete("/:id", (request, response) -> medicamentoService.delete(request, response));
+    });
 
     // endpoints vinculo
     path("/vinculo", () -> {

@@ -51,8 +51,18 @@ CREATE TABLE public.exame (
   CONSTRAINT fk_consulta_id FOREIGN KEY (consulta_id) REFERENCES public.consulta (id)
 );
 
+--medicamento
+CREATE TABLE public.medicamento (
+  id INT PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL,
+  dias INT,
+  controlado BOOLEAN,
+  consulta_id INT NOT NULL,
+  CONSTRAINT fk_consulta_id FOREIGN KEY (consulta_id) REFERENCES public.consulta (id)
+);
+
 --vinculo
-CREATE TABLE vinculo (
+CREATE TABLE public.vinculo (
   id SERIAL PRIMARY KEY,
   status VARCHAR(30),
   paciente_id INT NOT NULL,
