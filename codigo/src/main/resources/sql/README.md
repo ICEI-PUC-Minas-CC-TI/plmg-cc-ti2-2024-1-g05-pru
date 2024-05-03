@@ -131,6 +131,29 @@ Para criar médicos ou pacientes, é necessário inserir registros na tabela `us
     ('Exame 4', '2021-10-04', NULL, 4),
     ('Exame 5', '2021-10-05', NULL, 5);
   ```
+
+## Medicamentos
+- **Criar tabela medicamento**
+  ```sql
+  CREATE TABLE public.medicamento (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    dias INT,
+    controlado BOOLEAN,
+    consulta_id INT NOT NULL,
+    CONSTRAINT fk_consulta_id FOREIGN KEY (consulta_id) REFERENCES public.consulta (id)
+  );
+  ```
+- **Inserir medicamento**
+  ```sql
+  INSERT INTO public.medicamento (nome, dias, controlado, consulta_id)
+  VALUES
+    ('Medicamento 1', 7, FALSE, 1),
+    ('Medicamento 2', 14, TRUE, 2),
+    ('Medicamento 3', 21, FALSE, 3),
+    ('Medicamento 4', 28, TRUE, 4),
+    ('Medicamento 5', 30, FALSE, 5);
+  ```
   
 ## Vínculo
 - **Criar tabela vinculo**
