@@ -17,7 +17,7 @@ public class ConsultaDAO extends DAO {
 		close();
 	}
 
-	public Consulta insert(Consulta consulta) throws SQLException {
+	public Consulta insert(Consulta consulta) {
 		if (consulta == null) {
 			return null;
 		}

@@ -8,7 +8,6 @@ import dao.ExameDAO;
 import dao.MedicamentoDAO;
 import util.GsonUtil;
 
-import java.sql.SQLException;
 import java.util.List;
 import spark.Request;
 import spark.Response;
@@ -50,10 +49,6 @@ public class ConsultaService {
 		catch (IllegalArgumentException e) {
       response.status(400); // 400 Bad request
       return "Erro ao criar consulta: " + e.getMessage();
-    }
-		catch (SQLException e) {
-      response.status(500); // 500 Internal Server Error
-			return "Erro ao criar consulta: " + e.getMessage();
     }
 		catch (Exception e) {
       response.status(500); // 500 Internal Server Error

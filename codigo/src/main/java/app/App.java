@@ -1,8 +1,7 @@
 package app;
 
-import static spark.Spark.*;
-
 import service.*;
+import static spark.Spark.*;
 
 public class App {
   private static LoginService loginService = new LoginService();
@@ -12,6 +11,7 @@ public class App {
   private static ExameService exameService = new ExameService();
   private static VinculoService vinculoService = new VinculoService();
   private static MedicamentoService medicamentoService = new MedicamentoService();
+  private static EspecialidadeService especialidadeService = new EspecialidadeService();
 
   public static void main(String[] args) {
     port(6789);
@@ -41,6 +41,7 @@ public class App {
       get("/:id/pacientes", (request, response) -> medicoService.readAllPacientes(request, response));
 
       // especialidades do medico
+      get("/:id/especialidades", (request, response) -> medicoService.readAllEspecialidades(request, response));
     });
 
     // endpoints paciente
@@ -96,5 +97,10 @@ public class App {
     });
 
     // endpoints especialidade
+    path("/especialidade", () -> {
+      post("/", (request, response) -> especialidadeService.create(request, response));
+      put("/:id", (request, response) -> especialidadeService.update(request, response));
+      delete("/:id", (request, response) -> especialidadeService.delete(request, response));
+    });
   }
 }

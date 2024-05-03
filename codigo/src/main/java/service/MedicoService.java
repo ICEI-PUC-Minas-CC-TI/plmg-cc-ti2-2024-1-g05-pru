@@ -3,7 +3,6 @@ package service;
 import model.Medico;
 import model.Vinculo;
 import model.Especialidade;
-
 import dao.MedicoDAO;
 import dao.VinculoDAO;
 import dao.EspecialidadeDAO;
@@ -102,8 +101,13 @@ public class MedicoService {
   }
 
   // Ver todas as especialidades de um médico
+  public Object readAllEspecialidades(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    List<Especialidade> especialidades = new EspecialidadeDAO().getAll(id);
 
-  // Adicionar especialidade a um médico
+    response.header("Content-Type", "application/json");
+    return GsonUtil.GSON.toJson(especialidades);
+  }
 
   // Ver todos os pacientes de um médico
   public Object readAllPacientes(Request request, Response response) {

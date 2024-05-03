@@ -7,103 +7,92 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Especialidade;
-import model.Vinculo;
 
-public class EspecialidadeDAO extends DAO{
+public class EspecialidadeDAO extends DAO {
   public EspecialidadeDAO() {
     super();
   }
 
+  // Obter todas as especialidades de um médico
   public List<Especialidade> getAll(int medicoId) {
-    List<Especialidade> especialidades = new ArrayList<>();
+    List<Especialidade> especialidades = new ArrayList<Especialidade>();
 
     try {
-      String sql = "SELECT * FROM vinculo WHERE medico_id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE);
+      PreparedStatement st = conexao.prepareStatement("SELECT * FROM especialidade WHERE medico_id = ?");
       st.setInt(1, medicoId);
 
-      ResultSet rs = st.executeQuery(); // Declare and initialize the ResultSet variable rs
+      ResultSet rs = st.executeQuery();
 
       while(rs.next()) {
-        Especialidade esp = new Especialidade(
-          rs.getInt("medico_id"),
-          rs.getString("especialidade")
-        );
-
-        especialidades.add(esp);
+        especialidades.add(new Especialidade(
+          rs.getInt("id"),
+          rs.getString("titulo"),
+          rs.getInt("medico_id")
+        ));
       }
+
+      return especialidades;
     } catch (SQLException u) {
       throw new RuntimeException(u);
     }
-
-    return especialidades;
 	}
-  
-  // SO EXISTE O INSERT UNITARIO, NAO EXISTE O INSERT EM LOTE
-  public boolean insert(Especialidade especialidade) {
-    boolean status = false;
 
-    // Verifica se o vinculo é nulo
+  public Especialidade insert(Especialidade especialidade) {
+    // Verifica se a especialidade é nulo
     if (especialidade == null) {
-      return status;
+      return null;
     }
 
     try {
-      String sql = "INSERT INTO especialidade (medico_id, especialidade) VALUES (?, ?)";
-     
-      PreparedStatement st = conexao.prepareStatement(sql);
-      st.setInt(1, especialidade.getMedicoId());
-      st.setString(2, especialidade.getEspecialidade());
+      PreparedStatement st = conexao.prepareStatement("INSERT INTO especialidade (titulo, medico_id) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+
+      st.setString(1, especialidade.getTitulo());
+      st.setInt(2, especialidade.getMedicoId());
 
       if (st.executeUpdate() == 0) {
-        throw new SQLException("Falha ao criar relacao entre medico e especialidade, nenhuma linha alterada.");
+        throw new SQLException("Falha ao adicionar especialidade, nenhuma linha alterada.");
       }
-      return true;
 
+      // retorna o id gerado
+      ResultSet generatedKeys = st.getGeneratedKeys();
+      if (generatedKeys.next())
+        especialidade.setId(generatedKeys.getInt(1));
+
+      return especialidade;
     } catch (SQLException u) {
-      throw new RuntimeException("Falha ao criar relacao entre medico e especialidade, nenhuma linha alterada.", u);
+      throw new RuntimeException("Falha ao adicionar especialidade.", u);
     }
   }
 
   public boolean update(Especialidade especialidade) {
-		boolean status = false;
-
 		if (especialidade == null) {
-			return status;
+			return false;
 		}
 
 		try {
-			PreparedStatement st = conexao.prepareStatement("UPDATE especialidade SET especialidade = ? WHERE medico_id = ?");
-      st.setString(1, especialidade.getEspecialidade());
-      st.setInt(2, especialidade.getMedicoId());
+			PreparedStatement st = conexao.prepareStatement("UPDATE especialidade SET titulo = ? WHERE id = ?");
+      st.setString(1, especialidade.getTitulo());
+      st.setInt(2, especialidade.getId());
 
 			if (st.executeUpdate() == 0) {
 				throw new SQLException("Falha ao atualizar a especialidade do medico, nenhuma linha alterada.");
 			}
 
-			status = true;
+			return true;
 		} catch (SQLException u) {
 			throw new RuntimeException("Falha ao atualizar a especialidade do medico.", u);
 		}
-
-		return status;
 	}
 
-  public boolean delete(int medicoId) {
-		boolean status = false;
+  public boolean delete(int id) {
+    try {
+      PreparedStatement st = conexao.prepareStatement("DELETE FROM especialidade WHERE id = ?");
+      st.setInt(1, id);
 
-		try {
-			String sql = "DELETE FROM especialidade WHERE medico_id = ?";
-			PreparedStatement st = conexao.prepareStatement(sql);
-			st.setInt(1, medicoId);
-
-			if (st.executeUpdate() > 0) {
-				status = true;
-			}
-		} catch (SQLException u) {
-			throw new RuntimeException("Falha ao deletar a relacao medico-especialidade, nenhuma linha alterada.", u);
-		}
-
-		return status;
-	}
+      return st.executeUpdate() > 0;
+    }
+    catch (SQLException u) {
+      throw new RuntimeException("Falha ao deletar a especialidade, nenhuma linha alterada.", u);
+    }
+  }
 }

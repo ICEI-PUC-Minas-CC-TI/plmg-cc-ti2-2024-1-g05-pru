@@ -1,38 +1,50 @@
 package model;
 
 public class Especialidade {
-    private int medicoId;
-    private String especialidade;
+	private int id;
+	private String titulo;
+	private int medicoId;
 
-    public Especialidade() {
-    }
+	public Especialidade() { }
 
-    public Especialidade(int medicoId, String especialidade) {
-        setMedicoId(medicoId);
-        setEspecialidade(especialidade);
-    }
+	public Especialidade(int id, String titulo, int medicoId) {
+		setId(id);
+		setTitulo(titulo);
+		setMedicoId(medicoId);
+	}
 
-    public int getMedicoId() {
-        return medicoId;
-    }
+	// id
+	public int getId() {
+		return id;
+	}
 
-    public void setMedicoId(int medicoId) {
-        this.medicoId = medicoId;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getEspecialidade() {
-        return especialidade;
-    }
+	// titulo
+	public String getTitulo() {
+		return titulo;
+	}
 
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
-    @Override
-    public String toString() {
-        return "Especialidade{" +
-                "idMedico=" + medicoId +
-                ",Especialidade=" + especialidade +
-                '}';
-    }
+	// medicoId
+	public int getMedicoId() {
+		return medicoId;
+	}
+
+	public void setMedicoId(int medicoId) {
+		this.medicoId = medicoId;
+	}
+
+	// utils
+	@Override
+	public String toString() {
+		return "Especialidade #" + getId() +
+			" - Título: " + getTitulo() +
+			" - Médico: " + getMedicoId();
+	}
 }
