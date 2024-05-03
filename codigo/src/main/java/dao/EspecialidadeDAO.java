@@ -3,37 +3,43 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Especialidade;
+import model.Vinculo;
 
 public class EspecialidadeDAO extends DAO{
   public EspecialidadeDAO() {
     super();
   }
 
-  public Especialidade get(int medicoId) {
-    Especialidade especialidade = null;
+  public List<Especialidade> getAll(int medicoId) {
+    List<Especialidade> especialidades = new ArrayList<>();
 
     try {
       String sql = "SELECT * FROM vinculo WHERE medico_id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE);
       st.setInt(1, medicoId);
 
-      ResultSet rs = st.executeQuery();
-      if (rs.next()) {
-        especialidade = new Especialidade(
-            rs.getInt("medico_id"),
-            rs.getInt("especialidade_id")
+      ResultSet rs = st.executeQuery(); // Declare and initialize the ResultSet variable rs
+
+      while(rs.next()) {
+        Especialidade esp = new Especialidade(
+          rs.getInt("medico_id"),
+          rs.getString("especialidade")
         );
+
+        especialidades.add(esp);
       }
     } catch (SQLException u) {
-      throw new RuntimeException("Falha ao obter especialidade do Medico.", u);
+      throw new RuntimeException(u);
     }
 
-    return especialidade;
+    return especialidades;
 	}
-
-  //TODO DEVO CHECAR SE O PACIENTE E O MEDICO EXISTEM ANTES DE INSERIR O VINCULO ?
+  
+  // SO EXISTE O INSERT UNITARIO, NAO EXISTE O INSERT EM LOTE
   public boolean insert(Especialidade especialidade) {
     boolean status = false;
 
@@ -43,11 +49,11 @@ public class EspecialidadeDAO extends DAO{
     }
 
     try {
-      String sql = "INSERT INTO especialidade (medico_id, especialidade_id) VALUES (?, ?)";
+      String sql = "INSERT INTO especialidade (medico_id, especialidade) VALUES (?, ?)";
      
       PreparedStatement st = conexao.prepareStatement(sql);
       st.setInt(1, especialidade.getMedicoId());
-      st.setInt(2, especialidade.getEspecialidadeId());
+      st.setString(2, especialidade.getEspecialidade());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao criar relacao entre medico e especialidade, nenhuma linha alterada.");
@@ -67,8 +73,8 @@ public class EspecialidadeDAO extends DAO{
 		}
 
 		try {
-			PreparedStatement st = conexao.prepareStatement("UPDATE especialidade SET especialidade_id = ? WHERE medico_id = ?");
-      st.setInt(1, especialidade.getEspecialidadeId());
+			PreparedStatement st = conexao.prepareStatement("UPDATE especialidade SET especialidade = ? WHERE medico_id = ?");
+      st.setString(1, especialidade.getEspecialidade());
       st.setInt(2, especialidade.getMedicoId());
 
 			if (st.executeUpdate() == 0) {
