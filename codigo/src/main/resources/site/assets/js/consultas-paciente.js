@@ -26,7 +26,9 @@ async function fetchDataAndPopulate(usuarioId) {
   // /paciente/:id/consultas -> retorna um lista de consultas do paciente
   const consultas = await requestData(`${baseURLRequest}/paciente/${usuarioId}/consultas`, 'GET');
 
-  document.querySelector('h2 span.name').innerHTML = consultas[0].paciente;
+  const paciente = await requestData(`${baseURLRequest}/paciente/${usuarioId}`, 'GET');
+
+  document.querySelector('h2 span.name').innerHTML = paciente.nome;
 
   // FIX - Especialidade
   const consultasHtml = consultas.map(consulta => `
@@ -34,7 +36,7 @@ async function fetchDataAndPopulate(usuarioId) {
       <a href="./consulta?id=${consulta.id}">
         <span class="title">${consulta.titulo}</span>
         <span class="doctor">${consulta.medico}</span>
-        <span class="specialty">Cardiologista</span>
+        <span class="specialty">Especialidade*</span>
         <div class="date">
           <i class="nf nf-md-calendar"></i>
           <span>${formatDate(consulta.dataHora)}</span>
@@ -45,7 +47,6 @@ async function fetchDataAndPopulate(usuarioId) {
 
   document.querySelector('#consultas').innerHTML = consultasHtml;
 }
-
 
 // FORM ADD CONSULTA
 // Event Listeners para adicionar campos de exames e medicamentos
@@ -74,12 +75,41 @@ function createChildField(childName, id = generateUUID(8)) {
 }
 
 // Código base para ler os campos do formulário
-document.querySelector('#form-add-consulta').addEventListener('submit', (event) => {
-  event.preventDefault();
+document.querySelector('#form-add-consulta').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-  const formData = new FormData(event.target);
+  const formData = new FormData(e.target);
 
+  data = {
+    titulo: formData.get('titulo'),
+    diagnostico: formData.get('diagnostico'),
+    dataHora: getTimeStamp(),
+    urlAnexo: " ",
+    medicoId: decodeJwt(getUserSession()).id,
+    pacienteId: getUrlId(),
+  }
+
+  const { id } = await requestData(`${baseURLRequest}/consulta/`, 'POST', data);
+
+  let exames = [];
+  let medicamentos = [];
   for (let [name, value] of formData) {
-    console.log(`${name} = ${value}`);
+    if (name.includes('exame')) {
+      requestData(`${baseURLRequest}/exame/`, 'POST', {
+        titulo: value,
+        data: null,
+        urlArquivo: null,
+        status: "Pendente",
+        consultaId: id,
+      });
+    }
+    else if (name.includes('medicamento') && name.includes('dias') === false) {
+      requestData(`${baseURLRequest}/medicamento/`, 'POST', {
+        nome: value,
+        dias: formData.get(`${name}-dias-${name.split('-')[1]}`),
+        controlado: false,
+        consultaId: id
+      });
+    }
   }
 });

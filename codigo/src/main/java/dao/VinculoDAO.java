@@ -113,9 +113,9 @@ public class VinculoDAO extends DAO{
       String sql = "INSERT INTO vinculo (status, paciente_id, medico_id) VALUES (?, ?, ?)";
 
       PreparedStatement st = conexao.prepareStatement(sql);
-      st.setString(3, vinculo.getStatus());
-      st.setInt(1, vinculo.getPacienteId());
-      st.setInt(2, vinculo.getMedicoId());
+      st.setString(1, vinculo.getStatus());
+      st.setInt(2, vinculo.getPacienteId());
+      st.setInt(3, vinculo.getMedicoId());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao criar vinculo entre paciente e médico, nenhuma linha alterada.");
@@ -135,11 +135,9 @@ public class VinculoDAO extends DAO{
 		}
 
 		try {
-			PreparedStatement st = conexao.prepareStatement("UPDATE vinculo SET paciente_id = ?, medico_id = ?, status = ? WHERE id = ?");
-			st.setInt(1, vinculo.getPacienteId());
-			st.setInt(2, vinculo.getMedicoId());
-			st.setString(3, vinculo.getStatus());
-      st.setInt(4, vinculo.getId());
+			PreparedStatement st = conexao.prepareStatement("UPDATE vinculo SET status = ? WHERE id = ?");
+			st.setString(1, vinculo.getStatus());
+      st.setInt(2, vinculo.getId());
 
 			if (st.executeUpdate() == 0) {
 				throw new SQLException("Falha ao atualizar o vinculo, nenhuma linha alterada.");

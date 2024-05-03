@@ -25,7 +25,7 @@ async function fetchDataAndPopulate(usuarioId) {
       <a href="./consulta?id=${consulta.id}">
         <span class="title">${consulta.titulo}</span>
         <span class="doctor">${consulta.medico}</span>
-        <span class="specialty">Cardiologista</span>
+        <span class="specialty">Especialidade*</span>
         <div class="date">
           <i class="nf nf-md-calendar"></i>
           <span>${formatDate(consulta.dataHora)}</span>

@@ -53,7 +53,7 @@ CREATE TABLE public.exame (
 
 --medicamento
 CREATE TABLE public.medicamento (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
   dias INT,
   controlado BOOLEAN,

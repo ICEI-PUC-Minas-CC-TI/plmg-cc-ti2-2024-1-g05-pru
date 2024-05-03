@@ -7,18 +7,20 @@ const baseUrl = window.location.origin + (window.location.hostname !== "localhos
 const baseURLRequest= 'http://localhost:6789';
 
 
-// Date formater
-function formatDate(dateString) {
-  const formatter = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-
-  return formatter.format(Date.parse(dateString));
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   const logoutButton = document.querySelector('#logout');
 
   logoutButton ? logoutButton.addEventListener('click', logout) : null;
 });
+
+/*
+  Função que realiza o logout do usuário e redireciona para a página de login
+*/
+function logout() {
+  sessionStorage.removeItem('token');
+
+  window.location.href = baseUrl + '/login';
+}
 
 /*
   Função que gera um UUID para uma quantidade de caracteres
@@ -59,13 +61,23 @@ function decodeJwt (token) {
   }
 }
 
-/*
-  Função que realiza o logout do usuário e redireciona para a página de login
-*/
-function logout() {
-  sessionStorage.removeItem('token');
+// Date formater
+function formatDate(dateString) {
+  const formatter = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
-  window.location.href = baseUrl + '/login';
+  return formatter.format(Date.parse(dateString));
+}
+
+function getTimeStamp() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 }
 
 async function requestData(url, method, body) {

@@ -3,7 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 import model.Exame;
@@ -25,7 +27,12 @@ public class ExameDAO extends DAO {
 
       PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
       st.setString(1, exame.getTitulo());
-      st.setDate(2, java.sql.Date.valueOf(exame.getData()));
+
+      if (exame.getData() != null)
+        st.setDate(2, java.sql.Date.valueOf(exame.getData()));
+      else
+        st.setNull(2, java.sql.Types.DATE);
+
       st.setString(3, exame.getUrlArquivo());
       st.setString(4, exame.getStatus());
       st.setInt(5, exame.getConsultaId());
@@ -50,10 +57,13 @@ public class ExameDAO extends DAO {
 
       ResultSet rs = st.executeQuery();
       if (rs.next()) {
+        Date date = rs.getDate("data");
+        LocalDate localDate = date != null ? date.toLocalDate() : null;
+
         exame = new Exame(
           rs.getInt("id"),
           rs.getString("titulo"),
-          rs.getDate("data").toLocalDate(),
+          localDate,
           rs.getString("url_arquivo"),
           rs.getString("status"),
           rs.getInt("consulta_id")
@@ -119,10 +129,14 @@ public class ExameDAO extends DAO {
 
       ResultSet rs = st.executeQuery();
       while (rs.next()) {
+
+        Date date = rs.getDate("data");
+        LocalDate localDate = date != null ? date.toLocalDate() : null;
+
         exames.add(new Exame(
           rs.getInt("id"),
           rs.getString("titulo"),
-          rs.getDate("data").toLocalDate(),
+          localDate,
           rs.getString("url_arquivo"),
           rs.getString("status"),
           rs.getInt("consulta_id")

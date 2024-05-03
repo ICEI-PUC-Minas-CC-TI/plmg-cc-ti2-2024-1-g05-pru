@@ -2,13 +2,16 @@ package service;
 
 import model.Vinculo;
 import model.Consulta;
+import model.Exame;
 import model.Paciente;
 import dao.ConsultaDAO;
 import dao.PacienteDAO;
 import dao.VinculoDAO;
+import dao.ExameDAO;
 import util.GsonUtil;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import spark.Request;
 import spark.Response;
@@ -18,11 +21,13 @@ public class PacienteService {
   private PacienteDAO pacienteDAO;
   private VinculoDAO vinculoDAO;
   private ConsultaDAO consultaDAO;
+  private ExameDAO exameDAO;
 
   public PacienteService() {
     pacienteDAO = new PacienteDAO();
     vinculoDAO = new VinculoDAO();
     consultaDAO = new ConsultaDAO();
+    exameDAO = new ExameDAO();
   }
 
   public Object read(Request request, Response response) {
@@ -41,6 +46,8 @@ public class PacienteService {
   public Object create(Request request, Response response) {
     try {
       Paciente paciente = GsonUtil.GSON.fromJson(request.body(), Paciente.class);
+      System.out.println(paciente);
+      
       paciente = pacienteDAO.insert(paciente);
 
       response.status(201); // 201 Created
@@ -116,12 +123,25 @@ public class PacienteService {
   }
 
   // Ver todos os exames de um paciente
+  public Object readAllExames(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    List<Consulta> consultas = consultaDAO.getAllConsultasPaciente(id);
+    List<Exame> exames = new ArrayList<Exame>();
+
+    for (Consulta consulta : consultas) {
+      List<Exame> examesConsulta = exameDAO.getAllExamesConsulta(consulta.getId());
+      exames.addAll(examesConsulta);
+    }
+
+    response.header("Content-Type", "application/json");
+    return GsonUtil.GSON.toJson(exames);
+  }
 
   // Ver todos os médicos de um paciente
   public Object readAllMedicos(Request request, Response response) {
     int id = Integer.parseInt(request.params(":id"));
     List<Vinculo> vinculos = vinculoDAO.getAllMedicos(id);
-    
+
     response.header("Content-Type", "application/json");
     return GsonUtil.GSON.toJson(vinculos);
   }

@@ -32,12 +32,12 @@ async function fetchDataAndPopulate(consultaId) {
     // Header
     document.querySelector('.info-header h1').textContent = consulta.titulo;
     document.querySelector('.info-header .doctor a').textContent = consulta.medico;
+    document.querySelector('.info-header .doctor span').textContent = 'Especialidade*';
 
     document.querySelector('.info-header .date span').textContent = formatDate(consulta.dataHora);
 
     document.querySelector('.diagnostic p').textContent = consulta.diagnostico;
 
-    // TODO - Adicionar lista de medicamentos
     const exames = await requestData(`${baseURLRequest}/consulta/${consultaId}/exames`, 'GET');
 
     let examesHtml = '';
@@ -56,7 +56,6 @@ async function fetchDataAndPopulate(consultaId) {
         }
       };
 
-      console.log(statusClass);
       examesHtml += `
       <li>
         <a href="${baseUrl}/exames/exame?id=${exame.id}">
@@ -70,7 +69,22 @@ async function fetchDataAndPopulate(consultaId) {
 
     document.querySelector('.requested-exams ul').innerHTML = examesHtml;
 
-    // const medicamentos = await requestData(`${baseURLRequest}/consulta/${consultaId}/medicamentos`, 'GET');
+    const medicamentos = await requestData(`${baseURLRequest}/consulta/${consultaId}/medicamentos`, 'GET');
+
+
+    let medicamentoHtml = '';
+    medicamentos.forEach(medicamento => {
+      medicamentoHtml += `
+      <li>
+        <span>${medicamento.nome}</span>
+        ${medicamento.dias === 0 ? '' : ' - <span>' + medicamento.dias + ' dias</span>'}
+      </li>`;
+    });
+
+    console.log(medicamentoHtml);
+
+    document.querySelector('.remedy ul').innerHTML = medicamentoHtml;
+
   } catch (error) {
     window.location.href = baseUrl + '/404';
   }

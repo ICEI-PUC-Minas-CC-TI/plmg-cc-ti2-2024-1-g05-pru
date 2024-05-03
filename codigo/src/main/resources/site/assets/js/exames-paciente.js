@@ -7,17 +7,28 @@ window.addEventListener('load', () => {
 
   const { tipo, id:usuarioId } = decodeJwt(token);
 
-  if (tipo !== 'Paciente') {
-    // se não for paciente, redireciona o médico para a página de paciente
-    window.location.href = baseUrl + '/paciente';
+  if (tipo !== 'Medico') {
+    // se não for medico, redireciona para a página de consultas
+    window.location.href = baseUrl + '/exames';
   }
 
-  fetchDataAndPopulate(usuarioId);
+  const pacienteId = getUrlId();
+  if (!pacienteId) {
+    window.location.href = `${baseUrl}/pacientes`;
+  }
+
+  // TODO Validar se esse paciente está vinculado ao médico
+
+  fetchDataAndPopulate(pacienteId);
 }, false);
 
 async function fetchDataAndPopulate(usuarioId) {
   // /paciente/:id/exames -> retorna um lista de exames do paciente
   const exames = await requestData(`${baseURLRequest}/paciente/${usuarioId}/exames`, 'GET');
+
+  const paciente = await requestData(`${baseURLRequest}/paciente/${usuarioId}`, 'GET');
+
+  document.querySelector('h2 span').innerHTML = paciente.nome;
 
   let examesHtml = '';
   exames.forEach(exame => {

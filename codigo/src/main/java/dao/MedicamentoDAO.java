@@ -20,7 +20,7 @@ public class MedicamentoDAO extends DAO {
     }
 
     try {
-      String sql = "INSERT INTO medicamento (nome, dias, controlado, consulta_id) VALUES (?, ?, ?, ?, ?)";
+      String sql = "INSERT INTO medicamento (nome, dias, controlado, consulta_id) VALUES (?, ?, ?, ?)";
 
       PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
       st.setString(1, medicamento.getNome());

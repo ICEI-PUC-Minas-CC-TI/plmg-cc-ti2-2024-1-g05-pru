@@ -52,9 +52,10 @@ public class App {
 
       // consultas do paciente
       get("/:id/consultas", (request, response) -> pacienteService.readAllConsultas(request, response));
-      // get("/:id/consultas/:qtde", (request, response) -> pacienteService.readAllConsultas(request, response));
+      //get("/:id/consultas/:qtde", (request, response) -> pacienteService.readAllConsultas(request, response));
 
       // exames do paciente
+      get("/:id/exames", (request, response) -> pacienteService.readAllExames(request, response));
 
       // medicos do paciente
       get("/:id/medicos", (request, response) -> pacienteService.readAllMedicos(request, response));
@@ -75,7 +76,7 @@ public class App {
     // endpoints exame
     path("/exame", () -> {
       get("/:id", (request, response) -> exameService.read(request, response));
-      post("/", (request, response) -> consultaService.create(request, response));
+      post("/", (request, response) -> exameService.create(request, response));
       put("/:id", (request, response) -> exameService.update(request, response));
       delete("/:id", (request, response) -> exameService.delete(request, response));
     });

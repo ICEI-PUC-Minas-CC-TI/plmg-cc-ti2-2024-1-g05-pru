@@ -65,7 +65,7 @@ function registerDoctor() {
     telefone,
     sexo,
     nascimento,
-    urlFoto: null,
+    urlFoto: "",
     cep,
     crm
   };
@@ -108,6 +108,7 @@ function registerPatient() {
     telefone,
     sexo,
     nascimento,
+    urlFoto: "",
     cep,
   };
 
