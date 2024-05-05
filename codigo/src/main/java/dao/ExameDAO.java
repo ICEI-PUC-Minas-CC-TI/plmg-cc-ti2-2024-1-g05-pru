@@ -148,4 +148,36 @@ public class ExameDAO extends DAO {
 
     return exames;
   }
+
+    public List<Exame> getLastExamesConsulta(int consultaId) {
+      List<Exame> exames = new ArrayList<>();
+      
+      try {
+          String sql = "SELECT e.* FROM exame e INNER JOIN consulta c ON c.id = e.consulta_id WHERE c.paciente_id = 2 ORDER BY e.data LIMIT 5";
+          PreparedStatement st = conexao.prepareStatement(sql);
+          st.setInt(1, consultaId);
+
+          ResultSet rs = st.executeQuery();
+          while (rs.next()) {
+              Date date = rs.getDate("data");
+              LocalDate localDate = date != null ? date.toLocalDate() : null;
+
+              Exame exame = new Exame(
+                  rs.getInt("id"),
+                  rs.getString("titulo"),
+                  localDate,
+                  rs.getString("url_arquivo"),
+                  rs.getString("status"),
+                  rs.getInt("consulta_id")
+              );
+              exames.add(exame);
+          }
+      } catch (SQLException u) {
+          throw new RuntimeException("Falha ao obter os últimos exames da consulta.", u);
+      }
+
+      return exames;
+  }
+
+  
 }

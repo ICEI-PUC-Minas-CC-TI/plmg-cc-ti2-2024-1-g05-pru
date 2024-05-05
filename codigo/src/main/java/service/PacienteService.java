@@ -5,13 +5,17 @@ import model.Consulta;
 import model.Exame;
 import model.Paciente;
 import dao.ConsultaDAO;
+import dao.DAO;
 import dao.PacienteDAO;
 import dao.VinculoDAO;
 import dao.ExameDAO;
 import util.GsonUtil;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import spark.Request;
 import spark.Response;
@@ -122,6 +126,20 @@ public class PacienteService {
     return GsonUtil.GSON.toJson(consultas);
   }
 
+  // Ver todas as últimas 5 consultas de um paciente
+  public Object readLastConsultas(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    List<Consulta> consultas = consultaDAO.getLastConsultas(id);
+  
+    if (consultas == null) {
+      response.status(404); // 404 Not found
+      return "Paciente ID #" + id + " não encontrado.";
+    }
+  
+    response.header("Content-Type", "application/json");
+    return GsonUtil.GSON.toJson(consultas);
+  }
+
   // Ver todos os exames de um paciente
   public Object readAllExames(Request request, Response response) {
     int id = Integer.parseInt(request.params(":id"));
@@ -133,6 +151,19 @@ public class PacienteService {
       exames.addAll(examesConsulta);
     }
 
+    response.header("Content-Type", "application/json");
+    return GsonUtil.GSON.toJson(exames);
+  }
+
+  // Ver os últimos exames de um paciente
+  public Object readLastExames(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    List<Consulta> consultas = consultaDAO.getLastConsultas(id);
+    List<Exame> exames = new ArrayList<Exame>();
+    for (Consulta consulta : consultas) {
+      List<Exame> examesConsulta = exameDAO.getLastExamesConsulta(consulta.getId());
+      exames.addAll(examesConsulta);
+    }
     response.header("Content-Type", "application/json");
     return GsonUtil.GSON.toJson(exames);
   }
