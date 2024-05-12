@@ -123,8 +123,7 @@ public class ExameDAO extends DAO {
     List<Exame> exames = new ArrayList<Exame>();
 
     try {
-      String sql = "SELECT * FROM exame WHERE consulta_id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("SELECT * FROM exame WHERE consulta_id = ?");
       st.setInt(1, consultaId);
 
       ResultSet rs = st.executeQuery();
@@ -149,35 +148,33 @@ public class ExameDAO extends DAO {
     return exames;
   }
 
-    public List<Exame> getLastExamesConsulta(int consultaId) {
-      List<Exame> exames = new ArrayList<>();
-      
-      try {
-          String sql = "SELECT e.* FROM exame e INNER JOIN consulta c ON c.id = e.consulta_id WHERE c.paciente_id = 2 ORDER BY e.data LIMIT 5";
-          PreparedStatement st = conexao.prepareStatement(sql);
-          st.setInt(1, consultaId);
+  public List<Exame> getLastExames(int pacienteId, int qtde) {
+    List<Exame> exames = new ArrayList<Exame>();
 
-          ResultSet rs = st.executeQuery();
-          while (rs.next()) {
-              Date date = rs.getDate("data");
-              LocalDate localDate = date != null ? date.toLocalDate() : null;
+    try {
+      PreparedStatement st = conexao.prepareStatement("SELECT e.* FROM exame e INNER JOIN consulta c ON c.id = e.consulta_id WHERE c.paciente_id = ? ORDER BY e.data LIMIT ?");
+      st.setInt(1, pacienteId);
+      st.setInt(2, qtde);
 
-              Exame exame = new Exame(
-                  rs.getInt("id"),
-                  rs.getString("titulo"),
-                  localDate,
-                  rs.getString("url_arquivo"),
-                  rs.getString("status"),
-                  rs.getInt("consulta_id")
-              );
-              exames.add(exame);
-          }
-      } catch (SQLException u) {
-          throw new RuntimeException("Falha ao obter os últimos exames da consulta.", u);
+      ResultSet rs = st.executeQuery();
+      while (rs.next()) {
+        Date date = rs.getDate("data");
+        LocalDate localDate = date != null ? date.toLocalDate() : null;
+
+        Exame exame = new Exame(
+          rs.getInt("id"),
+          rs.getString("titulo"),
+          localDate,
+          rs.getString("url_arquivo"),
+          rs.getString("status"),
+          rs.getInt("consulta_id")
+        );
+        exames.add(exame);
       }
+    } catch (SQLException u) {
+      throw new RuntimeException("Falha ao obter os últimos exames do paciente.", u);
+    }
 
-      return exames;
+    return exames;
   }
-
-  
 }

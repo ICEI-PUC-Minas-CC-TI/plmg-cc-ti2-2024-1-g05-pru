@@ -149,33 +149,31 @@ public class ConsultaDAO extends DAO {
 		return consultas;
 	}
 
-	public List<Consulta> getLastConsultas(int pacienteId) {
-		List<Consulta> consultas = new ArrayList<>();
-	
+	public List<Consulta> getLastConsultas(int pacienteId, int qtde) {
+		List<Consulta> consultas = new ArrayList<Consulta>();
+
 		try {
-			String sql = "SELECT * FROM Consulta WHERE paciente_id = ? ORDER BY data_hora DESC LIMIT 5";
+			String sql = "SELECT * FROM consulta WHERE paciente_id = ? ORDER BY data_hora DESC LIMIT ?";
 			PreparedStatement st = conexao.prepareStatement(sql);
 			st.setInt(1, pacienteId);
+			st.setInt(2, qtde);
 
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
-				Consulta consulta = new Consulta(
+				consultas.add(new Consulta(
 					rs.getInt("id"),
 					rs.getString("titulo"),
 					rs.getString("diagnostico"),
 					rs.getTimestamp("data_hora").toLocalDateTime(),
 					rs.getString("url_anexo"),
-					rs.getString("paciente"),
 					rs.getInt("paciente_id"),
-					rs.getString("medico"),
 					rs.getInt("medico_id")
-				);
-				consultas.add(consulta);
+				));
 			}
 		} catch (SQLException u) {
-			throw new RuntimeException("Falha ao obter as últimas cinco consultas do paciente.", u);
+			throw new RuntimeException("Falha ao obter as últimas consultas do paciente.", u);
 		}
 
 		return consultas;
-	  }
+	}
 }

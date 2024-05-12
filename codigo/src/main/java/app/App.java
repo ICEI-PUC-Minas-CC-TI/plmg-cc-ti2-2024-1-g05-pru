@@ -62,10 +62,10 @@ public class App {
       get("/:id/medicos", (request, response) -> pacienteService.readAllMedicos(request, response));
 
       // Ver as últimas consultas de um paciente
-      get("/:id/ultimasConsultas", (request, response) -> pacienteService.readLastConsultas(request, response));
+      get("/:id/consultas/:qtde", (request, response) -> pacienteService.readLastConsultas(request, response));
 
       // Ver os últimos exames de um paciente
-      get("/:id/ultimosExames", (request, response) -> pacienteService.readLastExames(request, response));
+      get("/:id/exames/:qtde", (request, response) -> pacienteService.readLastExames(request, response));
     });
 
     // endpoints consulta
