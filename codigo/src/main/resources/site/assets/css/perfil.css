@@ -1,7 +1,3 @@
-/* .doctor-info {
-  display: none;
-} */
-
 .user-info {
   display: flex;
   flex-direction: column;
@@ -37,8 +33,7 @@
   }
 }
 
-.patient-info,
-.doctor-info {
+.patient-info {
   margin: 2rem 0;
   display: flex;
   flex-direction: row;
@@ -66,5 +61,45 @@
         color: var(--primary);
       }
     }
+
+    & li {
+      margin: .2rem 0;
+
+      & a {
+        color: var(--primary);
+      }
+
+      & .date {
+        font-weight: bold;
+      }
+
+      & .status {
+        display: inline-flex;
+        align-items: center;
+        font-size: .8rem;
+        color: var(--gray-darker);
+        font-weight: bold;
+        padding: .1rem .5rem;
+        border-radius: 1rem;
+        text-transform: capitalize;
+
+        &.done {
+          background-color: var(--green);
+        }
+
+        &.pending {
+          background-color: var(--yellow);
+        }
+
+        &.canceled {
+          background-color: var(--red);
+        }
+      }
+    }
   }
+}
+
+.doctor-info
+.patient-info{
+  display: none;
 }
