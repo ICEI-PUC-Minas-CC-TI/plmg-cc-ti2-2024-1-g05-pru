@@ -40,7 +40,6 @@ async function fetchDataAndPopulate(token) {
     if (consultas.length === 0) {
       lastConsultas.innerHTML = '<li>Nenhuma consulta encontrada</li>';
     } else {
-      console.log(consultas);
       lastConsultas.innerHTML = consultas.map(consulta => {
         return `
         <li>

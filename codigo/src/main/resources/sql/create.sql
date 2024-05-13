@@ -31,7 +31,7 @@ CREATE TABLE public.paciente (
 CREATE TABLE public.consulta (
   id SERIAL PRIMARY KEY,
   titulo VARCHAR(255) NOT NULL,
-  diagnostico VARCHAR(1023) NOT NULL,
+  diagnostico VARCHAR(1000) NOT NULL,
   data_hora TIMESTAMP NOT NULL,
   url_anexo VARCHAR(255),
   paciente_id INT NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE public.vinculo (
 --especialidade
 CREATE TABLE public.especialidade (
   id SERIAL PRIMARY KEY,
-  titulo VARCHAR(255) NOT NULL
+  titulo VARCHAR(255) NOT NULL,
   medico_id INT NOT NULL,
   CONSTRAINT fk_medico_id FOREIGN KEY (medico_id) REFERENCES public.medico (usuario_id)
 );

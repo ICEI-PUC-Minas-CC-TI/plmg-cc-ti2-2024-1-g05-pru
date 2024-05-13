@@ -1,12 +1,17 @@
 services:
-  # db:
-  #   image: postgres:latest
-  #   environment:
-  #     POSTGRES_PASSWORD: example
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data/
-  #   networks:
-  #     - appNetwork
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: pru
+      POSTGRES_USER: pru
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ./codigo/src/main/resources/sql/create.sql:/docker-entrypoint-initdb.d/create.sql
+    ports:
+      - 5432:5432
+    networks:
+      - appNetwork
 
   jekyll:
     image: bretfisher/jekyll-serve
@@ -16,17 +21,6 @@ services:
       - 4000:4000
     networks:
       - appNetwork
-
-  # app:
-  #   image: maven:3.6.3-openjdk-11
-  #   volumes:
-  #     - .:/usr/src/mymaven
-  #   working_dir: /usr/src/mymaven
-  #   command: mvn clean install
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - appNetwork
 
 volumes:
   postgres_data:
