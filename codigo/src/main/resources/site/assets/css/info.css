@@ -3,6 +3,7 @@
 
   & h1 {
     font-size: 2rem;
+    text-transform: capitalize;
   }
 
   & a {
@@ -10,20 +11,32 @@
   }
 
   & .doctor {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .7rem;
     margin: .5rem 0;
 
-    a {
+    & span.name {
+      font-weight: bold;
       font-size: 1.2rem;
-      color: var(--primary);
     }
 
     & span.specialty {
-      font-size: .8rem;
-      background-color: var(--green);
-      padding: .2rem .4rem;
-      border-radius: 1vmax;
-      margin-left: .2rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: .5rem;
+
+      & span {
+        text-transform: capitalize;
+        display: inline-flex;
+        align-items: center;
+        font-size: .8rem;
+        background-color: var(--green);
+        padding: .2rem .5rem;
+        border-radius: 1rem;
+      }
     }
   }
 

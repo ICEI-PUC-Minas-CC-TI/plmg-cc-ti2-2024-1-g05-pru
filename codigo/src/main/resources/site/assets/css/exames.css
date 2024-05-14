@@ -5,7 +5,7 @@
     margin: 1rem;
     font-size: 1.2rem;
     background-color: var(--gray-light);
-    border-radius: 1vmax;
+    border-radius: 1rem;
     padding: 1rem 2rem;
 
     a {
@@ -27,7 +27,7 @@
       background-color: var(--gray-darker);
       color: var(--white);
       padding: .2rem .5rem;
-      border-radius: 1vmax;
+      border-radius: 1rem;
 
       & i {
         margin-right: .3rem;
@@ -41,7 +41,7 @@
       color: var(--gray-darker);
       font-weight: bold;
       padding: .2rem .5rem;
-      border-radius: 1vmax;
+      border-radius: 1rem;
 
       &.done {
         background-color: var(--green);
@@ -60,7 +60,7 @@
 
 .result {
   background-color: var(--gray-light);
-  border-radius: 1vmax;
+  border-radius: 1rem;
   padding: 2rem 3rem;
   margin: 1rem 0;
   font-size: 1.1rem;

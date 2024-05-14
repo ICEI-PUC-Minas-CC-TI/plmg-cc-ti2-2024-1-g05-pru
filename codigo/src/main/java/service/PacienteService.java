@@ -45,7 +45,6 @@ public class PacienteService {
   public Object create(Request request, Response response) {
     try {
       Paciente paciente = GsonUtil.GSON.fromJson(request.body(), Paciente.class);
-      System.out.println(paciente);
 
       paciente = pacienteDAO.insert(paciente);
 

@@ -46,6 +46,6 @@
     margin: 3rem auto;
     padding: 1.5em;
     border: 1px solid var(--black);
-    border-radius: .5vmax;
+    border-radius: .5rem;
   }
 }

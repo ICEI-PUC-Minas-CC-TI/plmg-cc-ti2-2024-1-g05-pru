@@ -71,7 +71,7 @@ nav {
       &.login {
         background-color: var(--white);
         color: var(--black);
-        border-radius: 1vmax;
+        border-radius: 1rem;
         display: none;
 
         @media (max-width: 768px) {
