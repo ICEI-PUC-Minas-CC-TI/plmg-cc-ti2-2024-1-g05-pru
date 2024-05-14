@@ -176,18 +176,15 @@ public class MedicoDAO extends DAO {
     }
 
     try {
-      String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ?, telefone = ?, sexo = ?, nascimento = ?, url_foto = ?, cep = ? WHERE id = ?";
+      String sql = "UPDATE usuario SET nome = ?, email = ?, telefone = ?, url_foto = ?, cep = ? WHERE id = ?";
 
       PreparedStatement st = conexao.prepareStatement(sql);
       st.setString(1, medico.getNome());
       st.setString(2, medico.getEmail());
-      st.setString(3, medico.getSenha());
-      st.setString(4, medico.getTelefone());
-      st.setString(5, String.valueOf(medico.getSexo()));
-      st.setDate(6, java.sql.Date.valueOf(medico.getNascimento()));
-      st.setString(7, medico.getUrlFoto());
-      st.setString(8, medico.getCep());
-      st.setInt(9, medico.getId());
+      st.setString(3, medico.getTelefone());
+      st.setString(4, medico.getUrlFoto());
+      st.setString(5, medico.getCep());
+      st.setInt(6, medico.getId());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao atualizar usuário, nenhuma linha alterada.");

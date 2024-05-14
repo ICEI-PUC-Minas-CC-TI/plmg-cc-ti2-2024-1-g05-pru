@@ -1,0 +1,34 @@
+---
+layout: default
+permalink: /perfil/editar
+css:
+- assets/css/editar-perfil.css
+- assets/css/form.css
+js:
+- assets/js/editar-perfil.js
+---
+
+<main>
+  <section class="user-info">
+    <form action="" id="form-edit-perfil">
+      {%include input-field.html type="text" name="nome" label="Nome" id="nome"%}
+      {%include input-field.html type="email" name="email" label="E-mail" id="email"%}
+      {%include input-field.html type="text" name="foto" label="URL da foto de perfil" id="foto"%}
+      {%include input-field.html type="tel" name="telefone" label="Telefone" id="telefone" placeholder="(XX) X XXXX-XXXX"%}
+      {%include input-field.html type="text" name="cep" label="CEP" id="cep" placeholder="XXXXX-XXX"%}
+
+      <div class="doctor-info">
+        <section id="especialidades" class="input-field">
+          <div class="head-info">
+            <h3>Especialidades</h3>
+            <button type="button" id="addEspecialidade">
+              <i class="nf nf-fa-plus"></i>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <button type="submit" id="save">Salvar</button>
+    </form>
+  </section>
+</main>

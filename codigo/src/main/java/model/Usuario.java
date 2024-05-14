@@ -32,6 +32,15 @@ public abstract class Usuario implements Serializable {
     setCep(cep);
   }
 
+  public Usuario(int id, String nome, String email, String telefone, String urlFoto, String cep) {
+    setId(id);
+    setNome(nome);
+    setEmail(email);
+    setTelefone(telefone);
+    setUrlFoto(urlFoto);
+    setCep(cep);
+  }
+
   // id
 	public int getId() {
 		return id;

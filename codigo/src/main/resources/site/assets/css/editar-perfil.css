@@ -1,0 +1,54 @@
+.user-info {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  color: var(--gray-darker);
+
+  & > * {
+    min-width: 500px;
+  }
+}
+
+#especialidades {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  & .head-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .2rem;
+
+    & button {
+      width: 3rem;
+      display: inline;
+      margin: 0;
+      color: var(--white);
+    }
+  }
+
+  & .especialidade {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    & input {
+      display: inline-block;
+      width: 85%;
+    }
+
+    & .remove {
+      width: 3rem;
+      display: inline;
+      margin: 0;
+      color: var(--white);
+      background-color: var(--red);
+    }
+  }
+}

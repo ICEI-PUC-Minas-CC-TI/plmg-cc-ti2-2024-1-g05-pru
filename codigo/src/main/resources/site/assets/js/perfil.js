@@ -5,17 +5,17 @@ window.addEventListener('load', () => {
     window.location.href = `${baseUrl}/login`;
   }
 
-  const crmDoctor = document.querySelector('#crm');
+  const doctorInfo = document.querySelector('.doctor-info');
   const patientInfo = document.querySelector('.patient-info');
 
   const { tipo } = decodeJwt(token);
 
   if (tipo === 'Paciente') {
-    crmDoctor.style.display = 'none';
     patientInfo.style.display = 'flex';
+    doctorInfo.style.display = 'none';
   } else if (tipo === 'Medico') {
+    doctorInfo.style.display = 'flex';
     patientInfo.style.display = 'none';
-    crmDoctor.style.display = 'block';
   }
 
   fetchDataAndPopulate(token);
@@ -89,6 +89,8 @@ async function fetchDataAndPopulate(token) {
   } else if (tipo === 'Medico') {
     const { nome, urlFoto, crm } = await requestData(`${baseURLRequest}/medico/${id}`, 'GET');
 
+    const especialidades = await requestData(`${baseURLRequest}/medico/${id}/especialidades`, 'GET');
+
     if (urlFoto) {
       document.querySelector('.user-image').innerHTML =
         `<img src="${urlFoto}" alt="${nome}">`;
@@ -99,5 +101,8 @@ async function fetchDataAndPopulate(token) {
 
     document.querySelector('.user-name').innerHTML = nome;
     document.querySelector('#crm').innerHTML = crm;
+    document.querySelector('#specialty').innerHTML = especialidades.map(esp => {
+      return `<span class="specialty">${esp.titulo}</span>`;
+    }).join('');
   }
 }
