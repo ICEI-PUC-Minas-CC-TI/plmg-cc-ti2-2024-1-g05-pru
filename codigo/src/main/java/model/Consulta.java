@@ -7,7 +7,6 @@ public class Consulta {
     private String titulo;
     private String diagnostico;
     private LocalDateTime dataHora;
-    private String urlAnexo;
     private String paciente;
     private int pacienteId;
     private String medico;
@@ -15,22 +14,20 @@ public class Consulta {
 
     public Consulta() { }
 
-    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo, int pacienteId, int medicoId) {
+    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, int pacienteId, int medicoId) {
         setId(id);
         setTitulo(titulo);
         setDiagnostico(diagnostico);
         setDataHora(dataHora);
-        setUrlAnexo(urlAnexo);
         setPacienteId(pacienteId);
         setMedicoId(medicoId);
     }
 
-    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String urlAnexo, String paciente, int pacienteId, String medico, int medicoId) {
+    public Consulta(int id, String titulo, String diagnostico, LocalDateTime dataHora, String paciente, int pacienteId, String medico, int medicoId) {
         setId(id);
         setTitulo(titulo);
         setDiagnostico(diagnostico);
         setDataHora(dataHora);
-        setUrlAnexo(urlAnexo);
         setPaciente(paciente);
         setPacienteId(pacienteId);
         setMedico(medico);
@@ -71,15 +68,6 @@ public class Consulta {
 
     public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
-    }
-
-    // urlAnexo
-    public String getUrlAnexo() {
-        return urlAnexo;
-    }
-
-    public void setUrlAnexo(String urlAnexo) {
-        this.urlAnexo = urlAnexo;
     }
 
     // pacienteId
@@ -125,7 +113,6 @@ public class Consulta {
             " - Título: " + getTitulo() +
             " - Diagnóstico: " + getDiagnostico() +
             " - Data e Hora: " + getDataHora() +
-            " - URL Anexo: " + getUrlAnexo() +
             " - Paciente: " + getPacienteId() +
             " - Médico: " + getMedicoId();
     }

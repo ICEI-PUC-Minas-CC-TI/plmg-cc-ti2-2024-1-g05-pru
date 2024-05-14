@@ -23,14 +23,13 @@ public class ConsultaDAO extends DAO {
 		}
 
 		try {
-			PreparedStatement st = conexao.prepareStatement("INSERT INTO consulta (titulo, diagnostico, data_hora, url_anexo, paciente_id, medico_id) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement st = conexao.prepareStatement("INSERT INTO consulta (titulo, diagnostico, data_hora, paciente_id, medico_id) VALUES (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, consulta.getTitulo());
 			st.setString(2, consulta.getDiagnostico());
 			st.setTimestamp(3, java.sql.Timestamp.valueOf(consulta.getDataHora()));
-			st.setString(4, consulta.getUrlAnexo());
-			st.setInt(5, consulta.getPacienteId());
-			st.setInt(6, consulta.getMedicoId());
+			st.setInt(4, consulta.getPacienteId());
+			st.setInt(5, consulta.getMedicoId());
 
 			if (st.executeUpdate() == 0) {
 				throw new SQLException("Falha ao criar consulta, nenhuma linha alterada.");
@@ -61,7 +60,6 @@ public class ConsultaDAO extends DAO {
 					rs.getString("titulo"),
 					rs.getString("diagnostico"),
 					rs.getTimestamp("data_hora").toLocalDateTime(),
-					rs.getString("url_anexo"),
 					rs.getString("paciente"),
 					rs.getInt("paciente_id"),
 					rs.getString("medico"),
@@ -81,15 +79,11 @@ public class ConsultaDAO extends DAO {
 		}
 
 		try {
-			PreparedStatement st = conexao.prepareStatement("UPDATE consulta SET titulo = ?, diagnostico = ?, data_hora = ?, url_anexo = ?, paciente_id = ?, medico_id = ? WHERE id = ?");
+			PreparedStatement st = conexao.prepareStatement("UPDATE consulta SET titulo = ?, diagnostico = ? WHERE id = ?");
 
 			st.setString(1, consulta.getTitulo());
 			st.setString(2, consulta.getDiagnostico());
-			st.setTimestamp(3, java.sql.Timestamp.valueOf(consulta.getDataHora()));
-			st.setString(4, consulta.getUrlAnexo());
-			st.setInt(5, consulta.getPacienteId());
-			st.setInt(6, consulta.getMedicoId());
-			st.setInt(7, consulta.getId());
+			st.setInt(3, consulta.getId());
 
 			if (st.executeUpdate() == 0) {
 				throw new SQLException("Falha ao atualizar consulta, nenhuma linha alterada.");
@@ -135,7 +129,6 @@ public class ConsultaDAO extends DAO {
 					rs.getString("titulo"),
 					rs.getString("diagnostico"),
 					rs.getTimestamp("data_hora").toLocalDateTime(),
-					rs.getString("url_anexo"),
 					rs.getString("paciente"),
 					rs.getInt("paciente_id"),
 					rs.getString("medico"),
@@ -165,7 +158,6 @@ public class ConsultaDAO extends DAO {
 					rs.getString("titulo"),
 					rs.getString("diagnostico"),
 					rs.getTimestamp("data_hora").toLocalDateTime(),
-					rs.getString("url_anexo"),
 					rs.getInt("paciente_id"),
 					rs.getInt("medico_id")
 				));

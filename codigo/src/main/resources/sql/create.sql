@@ -33,7 +33,6 @@ CREATE TABLE public.consulta (
   titulo VARCHAR(255) NOT NULL,
   diagnostico VARCHAR(1000) NOT NULL,
   data_hora TIMESTAMP NOT NULL,
-  url_anexo VARCHAR(255),
   paciente_id INT NOT NULL,
   medico_id INT NOT NULL,
   CONSTRAINT fk_paciente_id FOREIGN KEY (paciente_id) REFERENCES public.paciente (usuario_id),
@@ -56,7 +55,6 @@ CREATE TABLE public.medicamento (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
   dias INT,
-  controlado BOOLEAN,
   consulta_id INT NOT NULL,
   CONSTRAINT fk_consulta_id FOREIGN KEY (consulta_id) REFERENCES public.consulta (id)
 );

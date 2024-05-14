@@ -20,13 +20,12 @@ public class MedicamentoDAO extends DAO {
     }
 
     try {
-      String sql = "INSERT INTO medicamento (nome, dias, controlado, consulta_id) VALUES (?, ?, ?, ?)";
+      String sql = "INSERT INTO medicamento (nome, dias, consulta_id) VALUES (?, ?, ?)";
 
       PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
       st.setString(1, medicamento.getNome());
       st.setInt(2, medicamento.getDias());
-      st.setBoolean(3, medicamento.isControlado());
-      st.setInt(4, medicamento.getConsultaId());
+      st.setInt(3, medicamento.getConsultaId());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao adicionar medicamento, nenhuma linha alterada.");
@@ -45,12 +44,11 @@ public class MedicamentoDAO extends DAO {
     }
 
     try {
-      String sql = "UPDATE medicamento SET nome = ?, dias = ?, controlado = ? WHERE id = ?";
+      String sql = "UPDATE medicamento SET nome = ?, dias = ? WHERE id = ?";
       PreparedStatement st = conexao.prepareStatement(sql);
       st.setString(1, medicamento.getNome());
       st.setInt(2, medicamento.getDias());
-      st.setBoolean(3, medicamento.isControlado());
-      st.setInt(4, medicamento.getConsultaId());
+      st.setInt(3, medicamento.getConsultaId());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao atualizar medicamento, nenhuma linha alterada.");
@@ -89,7 +87,6 @@ public class MedicamentoDAO extends DAO {
           rs.getInt("id"),
           rs.getString("nome"),
           rs.getInt("dias"),
-          rs.getBoolean("controlado"),
           rs.getInt("consulta_id")
         ));
       }
