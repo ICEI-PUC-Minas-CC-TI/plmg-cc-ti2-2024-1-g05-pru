@@ -139,20 +139,19 @@ Para criar médicos ou pacientes, é necessário inserir registros na tabela `us
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     dias INT,
-    controlado BOOLEAN,
     consulta_id INT NOT NULL,
     CONSTRAINT fk_consulta_id FOREIGN KEY (consulta_id) REFERENCES public.consulta (id)
   );
   ```
 - **Inserir medicamento**
   ```sql
-  INSERT INTO public.medicamento (nome, dias, controlado, consulta_id)
+  INSERT INTO public.medicamento (nome, dias, consulta_id)
   VALUES
-    ('Medicamento 1', 7, FALSE, 1),
-    ('Medicamento 2', 14, TRUE, 2),
-    ('Medicamento 3', 21, FALSE, 3),
-    ('Medicamento 4', 28, TRUE, 4),
-    ('Medicamento 5', 30, FALSE, 5);
+    ('Medicamento 1', 7, 1),
+    ('Medicamento 2', 14, 2),
+    ('Medicamento 3', 21, 3),
+    ('Medicamento 4', 28, 4),
+    ('Medicamento 5', 30, 5);
   ```
   
 ## Vínculo
