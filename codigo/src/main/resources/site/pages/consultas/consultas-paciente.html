@@ -1,0 +1,69 @@
+---
+layout: default
+permalink: /consultas/paciente
+css:
+- assets/css/consultas.css
+- assets/css/form.css
+- assets/css/modal.css
+js:
+- assets/js/consultas-paciente.js
+- assets/js/modal.js
+---
+
+<main>
+  <h2>Consultas do paciente <span class="name"></span></h2>
+
+  <section class="order-filter ">
+    <form class="order">
+      <section class="input-field-select">
+        <label for="date">Ordenar por:</label>
+        <select name="date" id="date">
+          <option value="new" selected>Mais recentes</option>
+          <option value="old">Mais antigos</option>
+        </select>
+      </section>
+    </form>
+
+    <button type="button" id="open-modal">Nova consulta</button>
+  </section>
+
+  <section class="itens-list" id="consultas">
+    <ul></ul>
+  </section>
+
+  <section id="modal" class="modal-overlay">
+    <div class="modal-content">
+      <span id="close-modal"><i class="nf nf-md-close_circle"></i></span>
+
+      <h2>Nova Consulta</h2>
+
+      <form action="" id="form-add-consulta">
+        {%include input-field.html type="text" label="Título" id="titulo" name="titulo"%}
+        <section class="input-field">
+          <label for="diagnostico">Diagnóstico / Resumo</label>
+          <textarea id="diagnostico" name="diagnostico"></textarea>
+        </section>
+
+        <section id="exames">
+          <div class="head-info">
+            <h3>Exames</h3>
+            <button type="button" id="addExame">
+              <i class="nf nf-fa-plus"></i>
+            </button>
+          </div>
+        </section>
+
+        <section id="medicamentos">
+          <div class="head-info">
+            <h3>Medicamentos</h3>
+            <button type="button" id="addMedicamento">
+              <i class="nf nf-fa-plus"></i>
+            </button>
+          </div>
+        </section>
+
+        <button type="submit">Adicionar consulta</button>
+      </form>
+    </div>
+  </section>
+</main>

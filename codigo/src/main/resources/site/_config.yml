@@ -1,0 +1,21 @@
+baseurl: ""
+
+title: Prontuário Universal
+
+# PRU CONFIGS
+header_pages:
+  - title: Medicos
+    url: medicos
+    role: paciente
+  - title: Consultas
+    url: consultas
+    role: paciente
+  - title: Exames
+    url: exames
+    role: paciente
+  - title: Pacientes
+    url: pacientes
+    role: medico
+  - title: Sobre
+    url: sobre
+    role: all

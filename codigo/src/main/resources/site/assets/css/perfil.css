@@ -1,0 +1,127 @@
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  color: var(--gray-darker);
+
+  & .user-image {
+    & img {
+      box-shadow: .2rem .2rem 1rem var(--gray-darker);
+      width: 10rem;
+      border-radius: 100%;
+    }
+
+    & i {
+      font-size: 10rem;
+    }
+  }
+
+  & .user-name {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  & .doctor-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & #crm {
+      font-size: 1.2rem;
+    }
+
+    & #specialty {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: .5rem;
+
+      & span {
+        text-transform: capitalize;
+        display: inline-flex;
+        align-items: center;
+        font-size: .8rem;
+        background-color: var(--green);
+        padding: .2rem .5rem;
+        border-radius: 1rem;
+      }
+    }
+  }
+
+  & .edit-user {
+    font-size: 1.2rem;
+    color: var(--primary);
+  }
+}
+
+.patient-info {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1rem;
+
+  & section {
+    background-color: var(--gray-light);
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+
+    & h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+
+      & a {
+        color: var(--primary);
+      }
+    }
+
+    & li {
+      margin: .2rem 0;
+
+      & a {
+        color: var(--primary);
+      }
+
+      & .date {
+        font-weight: bold;
+      }
+
+      & .status {
+        display: inline-flex;
+        align-items: center;
+        font-size: .8rem;
+        color: var(--gray-darker);
+        font-weight: bold;
+        padding: .1rem .5rem;
+        border-radius: 1rem;
+        text-transform: capitalize;
+
+        &.done {
+          background-color: var(--green);
+        }
+
+        &.pending {
+          background-color: var(--yellow);
+        }
+
+        &.canceled {
+          background-color: var(--red);
+        }
+      }
+    }
+  }
+}
+
+.doctor-info .patient-info {
+  display: none;
+}

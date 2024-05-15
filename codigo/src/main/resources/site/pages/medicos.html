@@ -1,0 +1,30 @@
+---
+layout: default
+permalink: /medicos
+css:
+- assets/css/medicos.css
+- assets/css/form.css
+js:
+- assets/js/medicos.js
+---
+
+<main>
+  <h2>Médicos</h2>
+
+  <section class="order-filter ">
+    <form class="order">
+      <section class="input-field-select">
+        <label for="date">Ordenar por:</label>
+        <select name="date" id="date">
+          <option value="alfab" selected>A-Z</option>
+          <option value="alfab-rev">Z-A</option>
+        </select>
+        <!-- TO DO! PESQUISA POR NOME -->
+      </section>
+    </form>
+  </section>
+
+  <section class="itens-list" id="medicos">
+    <ul></ul>
+  </section>
+</main>

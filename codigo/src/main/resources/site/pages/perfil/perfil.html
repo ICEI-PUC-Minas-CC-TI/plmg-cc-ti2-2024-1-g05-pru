@@ -1,0 +1,37 @@
+---
+layout: default
+permalink: /perfil/
+css:
+- assets/css/perfil.css
+js:
+- assets/js/perfil.js
+---
+
+<main>
+  <section class="user-info">
+    <div class="user-image"></div>
+    <span class="user-name"></span>
+
+    <section class="doctor-info">
+      <span id="crm"></span>
+      <span id="specialty"></span>
+    </section>
+
+    <a class="edit-user" href="{{ site.baseurl }}/perfil/editar">
+      Editar perfil
+      <i class="nf nf-md-account_edit"></i>
+    </a>
+  </section>
+
+  <section class="patient-info">
+    <section class="consultas-recentes">
+      <h2><a href="{{ site.baseurl }}/consultas">Consultas recentes</a></h2>
+      <ul></ul>
+    </section>
+
+    <section class="exames-recentes">
+      <h2><a href="{{ site.baseurl }}/exames">Exames recentes</a></h2>
+      <ul></ul>
+    </section>
+  </section>
+</main>

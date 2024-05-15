@@ -1,0 +1,29 @@
+---
+layout: default
+permalink: /consultas/
+css:
+- assets/css/consultas.css
+- assets/css/form.css
+js:
+- assets/js/consultas.js
+---
+
+<main>
+  <h2>Consultas</h2>
+
+  <section class="order-filter ">
+    <form class="order">
+      <section class="input-field-select">
+        <label for="date">Ordenar por:</label>
+        <select name="date" id="date">
+          <option value="new" selected>Mais recentes</option>
+          <option value="old">Mais antigos</option>
+        </select>
+      </section>
+    </form>
+  </section>
+
+  <section class="itens-list" id="consultas">
+    <ul></ul>
+  </section>
+</main>

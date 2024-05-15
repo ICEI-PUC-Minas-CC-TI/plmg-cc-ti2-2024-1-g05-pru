@@ -1,0 +1,26 @@
+---
+layout: no-header
+permalink: /login/
+css:
+- assets/css/form.css
+js:
+- assets/js/login.js
+---
+
+<main>
+  <h1>Faça login no PrU</h1>
+
+  <section class="form-container">
+    <form action="" class="login">
+      {%include input-field.html type="email" label="E-mail" id="email"%}
+      {%include input-field.html type="password" label="Senha" id="senha"%}
+      <div class="radio-input">
+        {%include input-field.html name="account-type" type="radio" label="Paciente" id="paciente" value="P"%}
+        {%include input-field.html name="account-type" type="radio" label="Médico" id="medico" value="M"%}
+      </div>
+      <button id="login">Login</button>
+    </form>
+
+    <p>Ainda não tem uma conta? <a href="{{ site.baseurl }}/register">Criar conta</a></p>
+  </section>
+</main>
