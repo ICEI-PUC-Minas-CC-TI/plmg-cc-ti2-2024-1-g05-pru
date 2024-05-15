@@ -68,8 +68,6 @@ async function deletePaciente(e) {
   const vinculo = e.currentTarget.dataset.id;
   const paciente = e.currentTarget.dataset.name;
 
-  console.log(`${baseURLRequest}/vinculo/${vinculo}`);
-
   if (!confirm(`Tem certeza que deseja deletar o paciente ${paciente}?`))
     return;
 

@@ -1,6 +1,4 @@
-document.querySelector('.radio-input').addEventListener('click', typeSelect);
-
-function typeSelect() {
+document.querySelector('.radio-input').addEventListener('click', () => {
   const infoPessoal = document.querySelector('.personal-info');
   const infoMedico = document.querySelector('.doctor-info');
   const tipo = document.querySelector('.radio-input [name="account-type"]:checked')?.value;
@@ -11,7 +9,7 @@ function typeSelect() {
 
   infoPessoal.style.display = 'block';
   infoMedico.style.display = ehMedico;
-}
+});
 
 document.querySelector('.register').addEventListener('submit', (event) => {
   event.preventDefault();
@@ -22,10 +20,8 @@ document.querySelector('.register').addEventListener('submit', (event) => {
 
   if (tipo === 'P') {
     registerPatient();
-    console.log('registerPatient');
-  } else if (tipo === 'M'){
+  } else if (tipo === 'M') {
     registerDoctor();
-    console.log('registerDoctor');
   } else {
     alert('É necessário selecionar um tipo de conta!');
   }
@@ -34,7 +30,7 @@ document.querySelector('.register').addEventListener('submit', (event) => {
 /*
   Registra Medico
 */
-function registerDoctor() {
+async function registerDoctor() {
   const nome = document.querySelector('#nome').value;
   const email = document.querySelector('#email').value;
   const emailConfirm = document.querySelector('#email-confirme').value;
@@ -70,15 +66,19 @@ function registerDoctor() {
     crm
   };
 
-  requestData('http://localhost:6789/medico/', 'POST', data);
+  const res = await requestData('http://localhost:6789/medico/', 'POST', data);
 
-  window.location.href = `${baseUrl}/login`;
+  if (res.status === 200) {
+    window.location.href = `${baseUrl}/login`;
+  } else {
+    alert(res);
+  }
 }
 
 /*
   Registra Medico
 */
-function registerPatient() {
+async function registerPatient() {
   const nome = document.querySelector('#nome').value;
   const email = document.querySelector('#email').value;
   const emailConfirm = document.querySelector('#email-confirme').value;
@@ -112,7 +112,11 @@ function registerPatient() {
     cep,
   };
 
-  requestData('http://localhost:6789/paciente/', 'POST', data);
+  const res = await requestData('http://localhost:6789/paciente/', 'POST', data);
 
-  window.location.href = `${baseUrl}/login`;
+  if (res.status === 200) {
+    window.location.href = `${baseUrl}/login`;
+  } else {
+    alert(res);
+  }
 }

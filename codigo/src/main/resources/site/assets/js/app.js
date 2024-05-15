@@ -94,11 +94,13 @@ async function requestData(url, method, body) {
 
   const response = await fetch(url, options);
 
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
   if (response.status !== 204) {
-    return await response.json();
+    const contentType = response.headers.get("content-type");
+
+    if (contentType && contentType.includes("application/json")) {
+      return response.json();
+    } else {
+      return response.text();
+    }
   }
 };

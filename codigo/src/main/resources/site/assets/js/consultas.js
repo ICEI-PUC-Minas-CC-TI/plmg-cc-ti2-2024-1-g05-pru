@@ -19,20 +19,27 @@ async function fetchDataAndPopulate(usuarioId) {
   // /paciente/:id/consultas -> retorna um lista de consultas
   const consultas = await requestData(`${baseURLRequest}/paciente/${usuarioId}/consultas`, 'GET');
 
-  // FIX - especialidade
-  const consultasHtml = consultas.map(consulta => `
-    <li>
-      <a href="./consulta?id=${consulta.id}">
-        <span class="title">${consulta.titulo}</span>
-        <span class="doctor">${consulta.medico}</span>
-        <span class="specialty">Especialidade*</span>
-        <div class="date">
-          <i class="nf nf-md-calendar"></i>
-          <span>${formatDate(consulta.dataHora)}</span>
-        </div>
-      </a>
-    </li>
-  `).join('');
+  let consultasHtml = '';
+  for (const consulta of consultas) {
+    const especialidades = await requestData(`${baseURLRequest}/medico/${consulta.medicoId}/especialidades`, 'GET');
+
+    const especialidadesHtml = especialidades.map(esp => `<span class="specialty">${esp.titulo}</span>`).join('');
+
+    consultasHtml += `
+      <li>
+        <a href="./consulta?id=${consulta.id}">
+          <span class="title">${consulta.titulo}</span>
+          <span class="doctor">Dr(a) ${consulta.medico}
+            <span class="specialty">${especialidadesHtml}</span>
+          </span>
+          <div class="date">
+            <i class="nf nf-md-calendar"></i>
+            <span>${formatDate(consulta.dataHora)}</span>
+          </div>
+        </a>
+      </li>
+    `;
+  }
 
   document.querySelector('#consultas').innerHTML = consultasHtml;
 }

@@ -62,8 +62,6 @@ async function fetchDataAndPopulate(usuarioId) {
     </li>`;
   });
 
-  console.log(vinculos)
-
   document.querySelector('#medicos ul').innerHTML = medicosHtml;
 
   // Adiciona event listener a cada botão de aprovação
