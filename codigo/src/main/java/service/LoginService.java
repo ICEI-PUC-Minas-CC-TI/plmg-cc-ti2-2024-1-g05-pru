@@ -38,6 +38,8 @@ public class LoginService {
 
       JsonObject jsonObject = new JsonObject();
       jsonObject.addProperty("token", jwt);
+      response.status(200);
+      response.type("application/json");
       return GsonUtil.GSON.toJson(jsonObject);
     } else {
       response.status(401);

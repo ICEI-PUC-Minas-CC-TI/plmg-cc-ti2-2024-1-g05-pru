@@ -24,7 +24,10 @@ public class Paciente extends Usuario {
   public static Paciente deserialize(JsonElement json, Type TypeOfT, JsonDeserializationContext context) {
     JsonObject jsonObject = json.getAsJsonObject();
 
-    int id = jsonObject.get("id").getAsInt();
+    int id = 0;
+    if (jsonObject.has("id"))
+      id = jsonObject.get("id").getAsInt() != 0 ? jsonObject.get("id").getAsInt() : 0;
+
     String nome = jsonObject.get("nome").getAsString();
     String email = jsonObject.get("email").getAsString();
     String telefone = jsonObject.get("telefone").getAsString();
@@ -32,7 +35,6 @@ public class Paciente extends Usuario {
     String cep = jsonObject.get("cep").getAsString();
 
     if (jsonObject.has("cpf") && jsonObject.has("senha") && jsonObject.has("sexo") && jsonObject.has("nascimento")) {
-      id = 0;
       String cpf = jsonObject.get("cpf").getAsString();
       String senha = jsonObject.get("senha").getAsString();
       char sexo = jsonObject.get("sexo").getAsString().charAt(0);
