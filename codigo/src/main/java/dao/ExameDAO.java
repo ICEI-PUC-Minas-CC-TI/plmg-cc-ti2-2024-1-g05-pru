@@ -23,9 +23,7 @@ public class ExameDAO extends DAO {
     }
 
     try {
-      String sql = "INSERT INTO exame (titulo, data, url_arquivo, status, consulta_id) VALUES (?, ?, ?, ?, ?)";
-
-      PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement st = conexao.prepareStatement("INSERT INTO exame (titulo, data, url_arquivo, status, consulta_id) VALUES (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
       st.setString(1, exame.getTitulo());
 
       if (exame.getData() != null)
@@ -51,8 +49,7 @@ public class ExameDAO extends DAO {
     Exame exame = null;
 
     try {
-      String sql = "SELECT * FROM exame WHERE id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("SELECT * FROM exame WHERE id = ?");
       st.setInt(1, id);
 
       ResultSet rs = st.executeQuery();
@@ -85,8 +82,10 @@ public class ExameDAO extends DAO {
       PreparedStatement st = conexao.prepareStatement("UPDATE exame SET titulo = ?, data = ?, url_arquivo = ?, status = ? WHERE id = ?");
 
       st.setString(1, exame.getTitulo());
-      st.setDate(2, java.sql.Date.valueOf(exame.getData()));
-      st.setString(3, exame.getUrlArquivo());
+      if (exame.getData() != null)
+        st.setDate(2, java.sql.Date.valueOf(exame.getData()));
+      else
+        st.setNull(2, java.sql.Types.DATE);      st.setString(3, exame.getUrlArquivo());
       st.setString(4, exame.getStatus());
       st.setInt(5, exame.getId());
 
@@ -104,8 +103,7 @@ public class ExameDAO extends DAO {
 		boolean status = false;
 
 		try {
-			String sql = "DELETE FROM exame WHERE id = ?";
-			PreparedStatement st = conexao.prepareStatement(sql);
+			PreparedStatement st = conexao.prepareStatement("DELETE FROM exame WHERE id = ?");
 			st.setInt(1, id);
 
 			if (st.executeUpdate() > 0) {

@@ -20,9 +20,7 @@ public class MedicamentoDAO extends DAO {
     }
 
     try {
-      String sql = "INSERT INTO medicamento (nome, dias, consulta_id) VALUES (?, ?, ?)";
-
-      PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement st = conexao.prepareStatement("INSERT INTO medicamento (nome, dias, consulta_id) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
       st.setString(1, medicamento.getNome());
       st.setInt(2, medicamento.getDias());
       st.setInt(3, medicamento.getConsultaId());
@@ -44,11 +42,10 @@ public class MedicamentoDAO extends DAO {
     }
 
     try {
-      String sql = "UPDATE medicamento SET nome = ?, dias = ? WHERE id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("UPDATE medicamento SET nome = ?, dias = ? WHERE id = ?");
       st.setString(1, medicamento.getNome());
       st.setInt(2, medicamento.getDias());
-      st.setInt(3, medicamento.getConsultaId());
+      st.setInt(3, medicamento.getId());
 
       if (st.executeUpdate() == 0) {
         throw new SQLException("Falha ao atualizar medicamento, nenhuma linha alterada.");
@@ -62,8 +59,7 @@ public class MedicamentoDAO extends DAO {
 
   public boolean delete(int id) {
     try {
-      String sql = "DELETE FROM medicamento WHERE id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("DELETE FROM medicamento WHERE id = ?");
       st.setInt(1, id);
 
       return st.executeUpdate() != 0;
@@ -77,8 +73,7 @@ public class MedicamentoDAO extends DAO {
     List<Medicamento> medicamentos = new ArrayList<Medicamento>();
 
     try {
-      String sql = "SELECT * FROM medicamento WHERE consulta_id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("SELECT * FROM medicamento WHERE consulta_id = ?");
       st.setInt(1, consultaId);
 
       ResultSet rs = st.executeQuery();
