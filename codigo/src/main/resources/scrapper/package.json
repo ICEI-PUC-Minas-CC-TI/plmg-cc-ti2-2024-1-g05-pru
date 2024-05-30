@@ -1,0 +1,25 @@
+{
+    "name": "plmg-cc-ti2-2024-1-g05-pru",
+    "version": "1.0.0",
+    
+    "description": "O objetivo do sistema é reunir num único local as informações de saúde de indivíduos pacientes de determinados profissionais e/ou organizações e criar um vínculo entre eles e as possibilidades oferecidas pelo respectivo consultório ou profissional, de maneira a facilitar atendimentos e mitigar comuns redundâncias vistas nos atuais sistemas médicos.",
+    "main": "index.js",
+    "scripts": {
+      "start": "node ."
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/ICEI-PUC-Minas-CC-TI/plmg-cc-ti2-2024-1-g05-pru.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "puppeteer": "^21.10.0",
+      "express": "^4.17.1"
+    },
+    "bugs": {
+      "url": "https://github.com/ICEI-PUC-Minas-CC-TI/plmg-cc-ti2-2024-1-g05-pru/issues"
+    },
+    "homepage": "https://github.com/ICEI-PUC-Minas-CC-TI/plmg-cc-ti2-2024-1-g05-pru#readme"
+  }

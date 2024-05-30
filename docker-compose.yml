@@ -22,6 +22,20 @@ services:
     networks:
       - appNetwork
 
+  scrapper:
+    image: scrapper
+    volumes:
+      - ./codigo/src/main/resources/scrapper:/app
+    build: 
+      context: ./codigo/src/main/resources/scrapper
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - appNetwork
+
+
+
 volumes:
   postgres_data:
 
