@@ -8,6 +8,7 @@ import dao.ExameDAO;
 import dao.MedicamentoDAO;
 import util.GsonUtil;
 
+import java.sql.Connection;
 import java.util.List;
 import spark.Request;
 import spark.Response;
@@ -21,6 +22,12 @@ public class ConsultaService {
 		consultaDAO = new ConsultaDAO();
 		exameDAO = new ExameDAO();
 		medicamentoDAO = new MedicamentoDAO();
+	}
+
+	public ConsultaService(Connection conexao) {
+		consultaDAO = new ConsultaDAO(conexao);
+		exameDAO = new ExameDAO(conexao);
+		medicamentoDAO = new MedicamentoDAO(conexao);
 	}
 
 	public Object read(Request request, Response response) {

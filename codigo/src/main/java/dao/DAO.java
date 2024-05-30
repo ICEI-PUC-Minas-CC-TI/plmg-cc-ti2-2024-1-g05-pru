@@ -10,6 +10,10 @@ public class DAO {
 		conectar();
 	}
 
+	public Connection getConexao() {
+		return conexao;
+	}
+
 	public boolean conectar() {
 		String driverName = "org.postgresql.Driver";
 		String serverName = "localhost";

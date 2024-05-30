@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,10 @@ import model.Consulta;
 public class ConsultaDAO extends DAO {
 	public ConsultaDAO() {
 		super();
+	}
+
+	public ConsultaDAO(Connection conexao) {
+		this.conexao = conexao;
 	}
 
 	public void finalize() {

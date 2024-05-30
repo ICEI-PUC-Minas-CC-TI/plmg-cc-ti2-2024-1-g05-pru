@@ -6,6 +6,7 @@ import dao.MedicoDAO;
 import dao.EspecialidadeDAO;
 import util.GsonUtil;
 
+import java.sql.Connection;
 import java.util.List;
 import spark.Request;
 import spark.Response;
@@ -17,6 +18,11 @@ public class EspecialidadeService {
   public EspecialidadeService() {
     medicoDAO = new MedicoDAO();
     especialidadeDAO = new EspecialidadeDAO();
+  }
+
+  public EspecialidadeService(Connection conexao) {
+    medicoDAO = new MedicoDAO(conexao);
+    especialidadeDAO = new EspecialidadeDAO(conexao);
   }
 
   public Object create(Request request, Response response) {

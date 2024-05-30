@@ -8,6 +8,7 @@ import dao.VinculoDAO;
 import dao.EspecialidadeDAO;
 import util.GsonUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,6 +23,11 @@ public class MedicoService {
   public MedicoService() {
     medicoDAO = new MedicoDAO();
     vinculoDAO = new VinculoDAO();
+  }
+
+  public MedicoService(Connection conexao) {
+    medicoDAO = new MedicoDAO(conexao);
+    vinculoDAO = new VinculoDAO(conexao);
   }
 
   public Object read(Request request, Response response) {

@@ -10,9 +10,11 @@ import dao.VinculoDAO;
 import dao.ExameDAO;
 import util.GsonUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import spark.Request;
 import spark.Response;
 
@@ -27,6 +29,13 @@ public class PacienteService {
     vinculoDAO = new VinculoDAO();
     consultaDAO = new ConsultaDAO();
     exameDAO = new ExameDAO();
+  }
+
+  public PacienteService(Connection conexao) {
+    pacienteDAO = new PacienteDAO(conexao);
+    vinculoDAO = new VinculoDAO(conexao);
+    consultaDAO = new ConsultaDAO(conexao);
+    exameDAO = new ExameDAO(conexao);
   }
 
   public Object read(Request request, Response response) {

@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,10 @@ import model.Vinculo;
 public class VinculoDAO extends DAO{
   public VinculoDAO() {
     super();
+  }
+
+  public VinculoDAO(Connection conexao) {
+    this.conexao = conexao;
   }
 
   public Vinculo get(int id) {

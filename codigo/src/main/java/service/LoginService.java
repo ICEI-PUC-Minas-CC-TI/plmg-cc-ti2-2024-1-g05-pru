@@ -6,13 +6,26 @@ import dao.PacienteDAO;
 import util.GsonUtil;
 import util.JWTUtil;
 
+import java.sql.Connection;
+
 import com.google.gson.JsonObject;
 
 import spark.Request;
 import spark.Response;
 
 public class LoginService {
-  public LoginService() { }
+  MedicoDAO medicoDAO;
+  PacienteDAO pacienteDAO;
+
+  public LoginService() {
+    medicoDAO = new MedicoDAO();
+    pacienteDAO = new PacienteDAO();
+  }
+
+  public LoginService(Connection conexao) {
+    medicoDAO = new MedicoDAO(conexao);
+    pacienteDAO = new PacienteDAO(conexao);
+  }
 
   public Object login(Request request, Response response) {
     JsonObject jsonBody = GsonUtil.GSON.fromJson(request.body(), JsonObject.class);
@@ -23,10 +36,8 @@ public class LoginService {
 
     Usuario usuario = null;
     if (tipo == 'M') {
-      MedicoDAO medicoDAO = new MedicoDAO();
       usuario = medicoDAO.get(email);
     } else if (tipo == 'P') {
-      PacienteDAO pacienteDAO = new PacienteDAO();
       usuario = pacienteDAO.get(email);
     } else {
       response.status(400);

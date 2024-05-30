@@ -4,6 +4,7 @@ import model.Medicamento;
 import dao.MedicamentoDAO;
 import util.GsonUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import spark.Request;
 import spark.Response;
@@ -14,6 +15,10 @@ public class MedicamentoService {
   public MedicamentoService() {
     medicamentoDAO = new MedicamentoDAO();
   }
+
+	public MedicamentoService(Connection conexao) {
+		medicamentoDAO = new MedicamentoDAO(conexao);
+	}
 
   public Object create(Request request, Response response) {
     try {

@@ -4,6 +4,7 @@ import model.Exame;
 import dao.ExameDAO;
 import util.GsonUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import spark.Request;
 import spark.Response;
@@ -13,6 +14,10 @@ public class ExameService {
 
 	public ExameService() {
 		exameDAO = new ExameDAO();
+	}
+
+	public ExameService(Connection conexao) {
+		exameDAO = new ExameDAO(conexao);
 	}
 
 	public Object read(Request request, Response response) {

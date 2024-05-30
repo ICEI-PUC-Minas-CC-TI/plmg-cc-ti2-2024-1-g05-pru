@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,10 @@ public class MedicoDAO extends DAO {
 	public MedicoDAO() {
 		super();
 	}
+
+  public MedicoDAO(Connection conexao) {
+    this.conexao = conexao;
+  }
 
   public Medico insert(Medico medico) throws SQLException {
     // verifica se o usuario é nulo

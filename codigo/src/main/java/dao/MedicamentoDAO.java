@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,10 @@ import model.Medicamento;
 public class MedicamentoDAO extends DAO {
   public MedicamentoDAO() {
     super();
+  }
+
+  public MedicamentoDAO(Connection conexao) {
+    this.conexao = conexao;
   }
 
   public Medicamento insert(Medicamento medicamento) throws SQLException {

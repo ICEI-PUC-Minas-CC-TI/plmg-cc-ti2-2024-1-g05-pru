@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
@@ -13,6 +14,10 @@ import model.Exame;
 public class ExameDAO extends DAO {
   public ExameDAO() {
     super();
+  }
+
+  public ExameDAO(Connection conexao) {
+    this.conexao = conexao;
   }
 
 	// Inserir registro de exame associado a consulta

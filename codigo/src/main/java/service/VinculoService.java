@@ -1,6 +1,9 @@
 package service;
 
 import model.Vinculo;
+
+import java.sql.Connection;
+
 import dao.VinculoDAO;
 import util.GsonUtil;
 
@@ -12,6 +15,10 @@ public class VinculoService {
 
   public VinculoService() {
     vinculoDAO = new VinculoDAO();
+  }
+
+  public VinculoService(Connection conexao) {
+    vinculoDAO = new VinculoDAO(conexao);
   }
 
   public Object read(Request request, Response response) {

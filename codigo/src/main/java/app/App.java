@@ -3,15 +3,20 @@ package app;
 import service.*;
 import static spark.Spark.*;
 
+import java.sql.Connection;
+import dao.DAO;
+
 public class App {
-  private static LoginService loginService = new LoginService();
-  private static MedicoService medicoService = new MedicoService();
-  private static PacienteService pacienteService = new PacienteService();
-  private static ConsultaService consultaService = new ConsultaService();
-  private static ExameService exameService = new ExameService();
-  private static VinculoService vinculoService = new VinculoService();
-  private static MedicamentoService medicamentoService = new MedicamentoService();
-  private static EspecialidadeService especialidadeService = new EspecialidadeService();
+  private static Connection conexao = new DAO().getConexao();
+
+  private static LoginService loginService = new LoginService(conexao);
+  private static MedicoService medicoService = new MedicoService(conexao);
+  private static PacienteService pacienteService = new PacienteService(conexao);
+  private static ConsultaService consultaService = new ConsultaService(conexao);
+  private static ExameService exameService = new ExameService(conexao);
+  private static VinculoService vinculoService = new VinculoService(conexao);
+  private static MedicamentoService medicamentoService = new MedicamentoService(conexao);
+  private static EspecialidadeService especialidadeService = new EspecialidadeService(conexao);
 
   public static void main(String[] args) {
     port(6789);
@@ -42,6 +47,9 @@ public class App {
 
       // especialidades do medico
       get("/:id/especialidades", (request, response) -> medicoService.readAllEspecialidades(request, response));
+
+      // verificação do medico
+      //get("/:id/verificacao", (request, response) -> medicoService.verificacao(request, response));
     });
 
     // endpoints paciente
@@ -53,19 +61,14 @@ public class App {
 
       // consultas do paciente
       get("/:id/consultas", (request, response) -> pacienteService.readAllConsultas(request, response));
-      //get("/:id/consultas/:qtde", (request, response) -> pacienteService.readAllConsultas(request, response));
+      get("/:id/consultas/:qtde", (request, response) -> pacienteService.readLastConsultas(request, response));
 
       // exames do paciente
       get("/:id/exames", (request, response) -> pacienteService.readAllExames(request, response));
+      get("/:id/exames/:qtde", (request, response) -> pacienteService.readLastExames(request, response));
 
       // medicos do paciente
       get("/:id/medicos", (request, response) -> pacienteService.readAllMedicos(request, response));
-
-      // Ver as últimas consultas de um paciente
-      get("/:id/consultas/:qtde", (request, response) -> pacienteService.readLastConsultas(request, response));
-
-      // Ver os últimos exames de um paciente
-      get("/:id/exames/:qtde", (request, response) -> pacienteService.readLastExames(request, response));
     });
 
     // endpoints consulta

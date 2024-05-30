@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,10 @@ public class EspecialidadeDAO extends DAO {
   public EspecialidadeDAO() {
     super();
   }
+
+  public EspecialidadeDAO(Connection conexao) {
+		this.conexao = conexao;
+	}
 
   // Obter todas as especialidades de um médico
   public List<Especialidade> getAll(int medicoId) {
