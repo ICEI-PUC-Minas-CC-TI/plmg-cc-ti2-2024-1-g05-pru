@@ -24,13 +24,6 @@ public class PacienteService {
   private ConsultaDAO consultaDAO;
   private ExameDAO exameDAO;
 
-  public PacienteService() {
-    pacienteDAO = new PacienteDAO();
-    vinculoDAO = new VinculoDAO();
-    consultaDAO = new ConsultaDAO();
-    exameDAO = new ExameDAO();
-  }
-
   public PacienteService(Connection conexao) {
     pacienteDAO = new PacienteDAO(conexao);
     vinculoDAO = new VinculoDAO(conexao);

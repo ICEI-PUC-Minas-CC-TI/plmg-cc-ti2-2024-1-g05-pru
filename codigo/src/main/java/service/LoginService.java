@@ -17,11 +17,6 @@ public class LoginService {
   MedicoDAO medicoDAO;
   PacienteDAO pacienteDAO;
 
-  public LoginService() {
-    medicoDAO = new MedicoDAO();
-    pacienteDAO = new PacienteDAO();
-  }
-
   public LoginService(Connection conexao) {
     medicoDAO = new MedicoDAO(conexao);
     pacienteDAO = new PacienteDAO(conexao);

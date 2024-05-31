@@ -10,10 +10,6 @@ import java.util.List;
 import model.Especialidade;
 
 public class EspecialidadeDAO extends DAO {
-  public EspecialidadeDAO() {
-    super();
-  }
-
   public EspecialidadeDAO(Connection conexao) {
 		this.conexao = conexao;
 	}

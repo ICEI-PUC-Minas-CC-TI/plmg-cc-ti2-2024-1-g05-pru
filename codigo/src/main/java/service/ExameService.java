@@ -12,10 +12,6 @@ import spark.Response;
 public class ExameService {
 	private ExameDAO exameDAO;
 
-	public ExameService() {
-		exameDAO = new ExameDAO();
-	}
-
 	public ExameService(Connection conexao) {
 		exameDAO = new ExameDAO(conexao);
 	}

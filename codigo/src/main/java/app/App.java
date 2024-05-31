@@ -7,18 +7,30 @@ import java.sql.Connection;
 import dao.DAO;
 
 public class App {
-  private static Connection conexao = new DAO().getConexao();
+  private static LoginService loginService;
+  private static MedicoService medicoService;
+  private static PacienteService pacienteService;
+  private static ConsultaService consultaService;
+  private static ExameService exameService;
+  private static VinculoService vinculoService;
+  private static MedicamentoService medicamentoService;
+  private static EspecialidadeService especialidadeService;
 
-  private static LoginService loginService = new LoginService(conexao);
-  private static MedicoService medicoService = new MedicoService(conexao);
-  private static PacienteService pacienteService = new PacienteService(conexao);
-  private static ConsultaService consultaService = new ConsultaService(conexao);
-  private static ExameService exameService = new ExameService(conexao);
-  private static VinculoService vinculoService = new VinculoService(conexao);
-  private static MedicamentoService medicamentoService = new MedicamentoService(conexao);
-  private static EspecialidadeService especialidadeService = new EspecialidadeService(conexao);
+  private static void startServices(Connection conexao) {
+    loginService = new LoginService(conexao);
+    medicoService = new MedicoService(conexao);
+    pacienteService = new PacienteService(conexao);
+    consultaService = new ConsultaService(conexao);
+    exameService = new ExameService(conexao);
+    vinculoService = new VinculoService(conexao);
+    medicamentoService = new MedicamentoService(conexao);
+    especialidadeService = new EspecialidadeService(conexao);
+  }
 
   public static void main(String[] args) {
+    DAO dao = new DAO();
+    startServices(dao.getConexao());
+
     port(6789);
 
     // CORS

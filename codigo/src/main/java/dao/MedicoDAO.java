@@ -10,10 +10,6 @@ import java.util.List;
 import model.Medico;
 
 public class MedicoDAO extends DAO {
-	public MedicoDAO() {
-		super();
-	}
-
   public MedicoDAO(Connection conexao) {
     this.conexao = conexao;
   }
@@ -25,9 +21,7 @@ public class MedicoDAO extends DAO {
     }
 
     try {
-      String sql = "INSERT INTO usuario (nome, cpf, email, senha, telefone, sexo, nascimento, url_foto, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-      PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement st = conexao.prepareStatement("INSERT INTO usuario (nome, cpf, email, senha, telefone, sexo, nascimento, url_foto, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
       st.setString(1, medico.getNome());
       st.setString(2, medico.getCpf());
       st.setString(3, medico.getEmail());
@@ -50,11 +44,10 @@ public class MedicoDAO extends DAO {
     }
 
     try {
-      String sqlMedico = "INSERT INTO medico (usuario_id, crm) VALUES (?, ?)";
-
-      PreparedStatement stMedico = conexao.prepareStatement(sqlMedico);
+      PreparedStatement stMedico = conexao.prepareStatement("INSERT INTO medico (usuario_id, crm, validado) VALUES (?, ?, ?)");
       stMedico.setInt(1, medico.getId());
       stMedico.setString(2, medico.getCrm());
+      stMedico.setBoolean(3, medico.getValidado());
 
       int affectedRowsMedico = stMedico.executeUpdate();
 
@@ -74,8 +67,7 @@ public class MedicoDAO extends DAO {
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT * FROM usuario INNER JOIN medico ON usuario.id = medico.usuario_id WHERE usuario.id = ?";
-      st = conexao.prepareStatement(sql);
+      st = conexao.prepareStatement("SELECT * FROM usuario INNER JOIN medico ON usuario.id = medico.usuario_id WHERE usuario.id = ?");
       st.setInt(1, id);
 
       rs = st.executeQuery();
@@ -91,7 +83,8 @@ public class MedicoDAO extends DAO {
           rs.getDate("nascimento").toLocalDate(),
           rs.getString("url_foto"),
           rs.getString("cep"),
-          rs.getString("crm")
+          rs.getString("crm"),
+          rs.getBoolean("validado")
         );
       }
     } catch (SQLException u) {
@@ -107,8 +100,7 @@ public class MedicoDAO extends DAO {
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT * FROM usuario INNER JOIN medico ON usuario.id = medico.usuario_id WHERE email = ?";
-      st = conexao.prepareStatement(sql);
+      st = conexao.prepareStatement("SELECT * FROM usuario INNER JOIN medico ON usuario.id = medico.usuario_id WHERE email = ?");
       st.setString(1, email);
 
       rs = st.executeQuery();
@@ -124,7 +116,8 @@ public class MedicoDAO extends DAO {
           rs.getDate("nascimento").toLocalDate(),
           rs.getString("url_foto"),
           rs.getString("cep"),
-          rs.getString("crm")
+          rs.getString("crm"),
+          rs.getBoolean("validado")
         );
       }
     } catch (SQLException u) {
@@ -144,9 +137,7 @@ public class MedicoDAO extends DAO {
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT * FROM usuario INNER JOIN medico ON usuario.id = medico.usuario_id ORDER BY ?";
-
-      st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+      st = conexao.prepareStatement("SELECT * FROM usuario INNER JOIN medico ON usuario.id = medico.usuario_id ORDER BY ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
       st.setString(1, orderBy);
 
       rs = st.executeQuery();
@@ -162,7 +153,8 @@ public class MedicoDAO extends DAO {
           rs.getDate("nascimento").toLocalDate(),
           rs.getString("url_foto"),
           rs.getString("cep"),
-          rs.getString("crm")
+          rs.getString("crm"),
+          rs.getBoolean("validado")
         );
 
         medicos.add(medico);
@@ -181,9 +173,7 @@ public class MedicoDAO extends DAO {
     }
 
     try {
-      String sql = "UPDATE usuario SET nome = ?, email = ?, telefone = ?, url_foto = ?, cep = ? WHERE id = ?";
-
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("UPDATE usuario SET nome = ?, email = ?, telefone = ?, url_foto = ?, cep = ? WHERE id = ?");
       st.setString(1, medico.getNome());
       st.setString(2, medico.getEmail());
       st.setString(3, medico.getTelefone());
@@ -206,8 +196,7 @@ public class MedicoDAO extends DAO {
     PreparedStatement st = null;
 
     try {
-      String sql = "DELETE FROM medico WHERE usuario_id = ?";
-      st = conexao.prepareStatement(sql);
+      st = conexao.prepareStatement("DELETE FROM medico WHERE usuario_id = ?");
       st.setInt(1, id);
 
       int affectedRows = st.executeUpdate();
@@ -222,5 +211,22 @@ public class MedicoDAO extends DAO {
     }
 
     return status;
+  }
+
+  public boolean validar(int id) {
+    try {
+      PreparedStatement st = conexao.prepareStatement("UPDATE medico SET validado = true WHERE usuario_id = ?");
+      st.setInt(1, id);
+
+      int affectedRows = st.executeUpdate();
+
+      if (affectedRows == 0) {
+        throw new SQLException("Falha ao validar médico, nenhuma linha alterada.");
+      }
+
+      return true;
+    } catch (SQLException u) {
+      throw new RuntimeException(u);
+    }
   }
 }

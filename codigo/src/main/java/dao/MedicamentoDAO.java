@@ -10,10 +10,6 @@ import java.util.List;
 import model.Medicamento;
 
 public class MedicamentoDAO extends DAO {
-  public MedicamentoDAO() {
-    super();
-  }
-
   public MedicamentoDAO(Connection conexao) {
     this.conexao = conexao;
   }

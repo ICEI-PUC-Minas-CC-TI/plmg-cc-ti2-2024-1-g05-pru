@@ -8,6 +8,9 @@ import dao.VinculoDAO;
 import dao.EspecialidadeDAO;
 import util.GsonUtil;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,15 +22,12 @@ import spark.Response;
 public class MedicoService {
   private MedicoDAO medicoDAO;
   private VinculoDAO vinculoDAO;
-
-  public MedicoService() {
-    medicoDAO = new MedicoDAO();
-    vinculoDAO = new VinculoDAO();
-  }
+  private EspecialidadeDAO especialidadeDAO;
 
   public MedicoService(Connection conexao) {
     medicoDAO = new MedicoDAO(conexao);
     vinculoDAO = new VinculoDAO(conexao);
+    especialidadeDAO = new EspecialidadeDAO(conexao);
   }
 
   public Object read(Request request, Response response) {
@@ -109,7 +109,7 @@ public class MedicoService {
   // Ver todas as especialidades de um médico
   public Object readAllEspecialidades(Request request, Response response) {
     int id = Integer.parseInt(request.params(":id"));
-    List<Especialidade> especialidades = new EspecialidadeDAO().getAll(id);
+    List<Especialidade> especialidades = especialidadeDAO.getAll(id);
 
     response.header("Content-Type", "application/json");
     return GsonUtil.GSON.toJson(especialidades);
@@ -122,5 +122,55 @@ public class MedicoService {
 
     response.header("Content-Type", "application/json");
     return GsonUtil.GSON.toJson(vinculos);
+  }
+
+  // Validar um médico
+  public Object validar(Request request, Response response) {
+    int id = Integer.parseInt(request.params(":id"));
+    Medico medico = medicoDAO.get(id);
+
+    if (medico == null) {
+      response.status(404); // 404 Not found
+      return "Medico ID #" + id + " não encontrado!";
+    }
+
+    // Valida o médico com IA
+    if (medico.getUrlFoto() == null) {
+      response.status(400); // 400 Bad request
+      return "Médico ID #" + id + " não possui URL da foto!";
+    }
+
+    if (medico.getValidado()) {
+      response.status(400); // 400 Bad request
+      return "Médico ID #" + id + " já validado!";
+    }
+
+    String urlFoto = medico.getUrlFoto();
+    String json = "{\"urlFoto\": \"" + urlFoto + "\"}";
+
+    String urlReq = "http://localhost:5000/validar";
+    HttpClient client = HttpClient.newHttpClient();
+    HttpRequest req = HttpRequest.newBuilder()
+      .uri(URI.create(urlReq))
+      .header("Content-Type", "application/json")
+      .POST(HttpRequest.BodyPublishers.ofString(json))
+      .build();
+
+    String result = "";
+    try {
+      result = client.send(req, java.net.http.HttpResponse.BodyHandlers.ofString()).body();
+    } catch (Exception e) {
+      response.status(500); // 500 Internal Server Error
+      return "Erro ao validar medico: " + e.getMessage();
+    }
+
+    if (result.equals("true")) {
+      medicoDAO.validar(id);
+      response.status(200); // 200 OK
+      return "Médico ID #" + id + " validado com sucesso!";
+    } else {
+      response.status(403); // 403 Forbidden
+      return "Médico ID #" + id + " não validado!";
+    }
   }
 }

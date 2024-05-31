@@ -12,10 +12,6 @@ import java.util.List;
 import model.Exame;
 
 public class ExameDAO extends DAO {
-  public ExameDAO() {
-    super();
-  }
-
   public ExameDAO(Connection conexao) {
     this.conexao = conexao;
   }

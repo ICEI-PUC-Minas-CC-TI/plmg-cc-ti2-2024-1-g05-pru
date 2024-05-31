@@ -15,11 +15,6 @@ public class EspecialidadeService {
   private MedicoDAO medicoDAO;
   private EspecialidadeDAO especialidadeDAO;
 
-  public EspecialidadeService() {
-    medicoDAO = new MedicoDAO();
-    especialidadeDAO = new EspecialidadeDAO();
-  }
-
   public EspecialidadeService(Connection conexao) {
     medicoDAO = new MedicoDAO(conexao);
     especialidadeDAO = new EspecialidadeDAO(conexao);

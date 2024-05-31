@@ -18,12 +18,6 @@ public class ConsultaService {
 	private ExameDAO exameDAO;
 	private MedicamentoDAO medicamentoDAO;
 
-	public ConsultaService() {
-		consultaDAO = new ConsultaDAO();
-		exameDAO = new ExameDAO();
-		medicamentoDAO = new MedicamentoDAO();
-	}
-
 	public ConsultaService(Connection conexao) {
 		consultaDAO = new ConsultaDAO(conexao);
 		exameDAO = new ExameDAO(conexao);

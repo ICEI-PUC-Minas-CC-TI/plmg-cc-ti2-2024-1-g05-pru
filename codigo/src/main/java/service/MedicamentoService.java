@@ -12,10 +12,6 @@ import spark.Response;
 public class MedicamentoService {
   private MedicamentoDAO medicamentoDAO;
 
-  public MedicamentoService() {
-    medicamentoDAO = new MedicamentoDAO();
-  }
-
 	public MedicamentoService(Connection conexao) {
 		medicamentoDAO = new MedicamentoDAO(conexao);
 	}

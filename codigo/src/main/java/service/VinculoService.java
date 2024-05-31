@@ -13,10 +13,6 @@ import spark.Response;
 public class VinculoService {
   private VinculoDAO vinculoDAO;
 
-  public VinculoService() {
-    vinculoDAO = new VinculoDAO();
-  }
-
   public VinculoService(Connection conexao) {
     vinculoDAO = new VinculoDAO(conexao);
   }
