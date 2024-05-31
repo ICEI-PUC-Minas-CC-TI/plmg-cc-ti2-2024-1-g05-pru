@@ -1,0 +1,52 @@
+h1 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 0.5em;
+}
+
+p {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 0.5em;
+}
+
+main {
+  width: 80%;
+}
+
+form {
+  background-color: var(--gray-light);
+  border-radius: 1rem;
+  padding: 2rem 3rem;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+
+  & .input-field {
+    display: none;
+    margin: 2rem auto;
+    font-size: 1.2rem;
+    color: var(--primary);
+    cursor: pointer;
+
+    & :hover {
+      cursor: pointer;
+    }
+
+    & i {
+      font-size: 2.5rem;
+    }
+
+    & input {
+      display: none;
+    }
+  }
+}
+
+#load {
+  display: none;
+  margin: 2rem 0;
+  font-size: 1.2rem;
+  color: var(--primary);
+  cursor: pointer;
+  text-align: center;
+}

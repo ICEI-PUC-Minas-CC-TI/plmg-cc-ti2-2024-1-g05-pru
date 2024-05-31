@@ -9,15 +9,15 @@ async function loginValidations(email, senha, tipo) {
   try {
     const response = await requestData(`${baseURLRequest}/login`, 'POST', data);
 
-    console.log(response);
-
-
     if (!response.token) {
       alert('Falha na autenticação. Tente novamente.');
       return false;
     }
 
     sessionStorage.setItem('token', response.token);
+
+    // if medico if !validado
+    //   redirect ./validar
 
     return true;
   } catch (error) {
