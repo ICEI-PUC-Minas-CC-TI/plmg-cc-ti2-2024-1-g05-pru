@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install gnupg wget -y && \
 WORKDIR /app
 COPY ./ /app/
 # Copy package.json and install dependencies
-#COPY ./package.json /app/ 
+#COPY ./package.json /app/
 RUN npm install
 
 # Expose port (if needed)
