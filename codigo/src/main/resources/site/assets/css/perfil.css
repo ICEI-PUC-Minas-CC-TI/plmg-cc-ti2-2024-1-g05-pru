@@ -10,6 +10,8 @@
     & img {
       box-shadow: .2rem .2rem 1rem var(--gray-darker);
       width: 10rem;
+      height: 10rem;
+      object-fit: cover;
       border-radius: 100%;
     }
 

@@ -8,6 +8,7 @@ import dao.DAO;
 
 public class App {
   private static LoginService loginService;
+  private static UsuarioService usuarioService;
   private static MedicoService medicoService;
   private static PacienteService pacienteService;
   private static ConsultaService consultaService;
@@ -18,6 +19,7 @@ public class App {
 
   private static void startServices(Connection conexao) {
     loginService = new LoginService(conexao);
+    usuarioService = new UsuarioService(conexao);
     medicoService = new MedicoService(conexao);
     pacienteService = new PacienteService(conexao);
     consultaService = new ConsultaService(conexao);
@@ -47,6 +49,11 @@ public class App {
     // endpoint login
     post("/login", (request, response) -> loginService.login(request, response));
 
+    // endpoints usuario
+    path("/usuario", () -> {
+      post("/:id/foto", (request, response) -> usuarioService.updatePhoto(request, response));
+    });
+
     // endpoints medico
     path("/medico", () -> {
       get("/:id", (request, response) -> medicoService.read(request, response));
@@ -61,7 +68,7 @@ public class App {
       get("/:id/especialidades", (request, response) -> medicoService.readAllEspecialidades(request, response));
 
       // verificação do medico
-      //get("/:id/verificacao", (request, response) -> medicoService.verificacao(request, response));
+      get("/:id/validar", (request, response) -> medicoService.validate(request, response));
     });
 
     // endpoints paciente
