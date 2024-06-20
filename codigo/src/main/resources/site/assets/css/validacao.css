@@ -40,6 +40,12 @@ form {
       display: none;
     }
   }
+
+  & img {
+    display: none;
+    width: 30%;
+    margin: 2rem 0;
+  }
 }
 
 #load {

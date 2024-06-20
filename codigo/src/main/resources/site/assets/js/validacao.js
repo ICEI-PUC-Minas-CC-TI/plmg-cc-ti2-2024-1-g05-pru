@@ -1,12 +1,18 @@
 document.querySelector('input[type=file]').addEventListener('change', function() {
   var fileName = this.files[0].name;
   document.querySelector('form label').textContent = fileName;
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    document.querySelector('#image-preview').src = e.target.result;
+    document.querySelector('#image-preview').style.display = 'inline';
+  }
+  reader.readAsDataURL(this.files[0]);
 });
 
 document.querySelector('form label').addEventListener('click', () => {
   document.querySelector('input[type=file]').click();
 });
-
 const form = document.querySelector('form');
 
 form.addEventListener('submit', async (event) => {
