@@ -176,4 +176,18 @@ public class ExameDAO extends DAO {
 
     return exames;
   }
+
+  public void updateFile(int id, String urlArquivo) {
+    try {
+      PreparedStatement st = conexao.prepareStatement("UPDATE exame SET url_arquivo = ?, status = 'Concluido' WHERE id = ?");
+      st.setString(1, urlArquivo);
+      st.setInt(2, id);
+
+      if (st.executeUpdate() == 0) {
+        throw new SQLException("Falha ao atualizar arquivo do exame, nenhuma linha alterada.");
+      }
+    } catch (SQLException u) {
+      throw new RuntimeException("Falha ao atualizar arquivo do exame.", u);
+    }
+  }
 }

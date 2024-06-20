@@ -108,6 +108,7 @@ public class App {
       post("/", (request, response) -> exameService.create(request, response));
       put("/:id", (request, response) -> exameService.update(request, response));
       delete("/:id", (request, response) -> exameService.delete(request, response));
+      post("/:id/arquivo", (request, response) -> exameService.updateFile(request, response));
     });
 
     // endpoints medicamento

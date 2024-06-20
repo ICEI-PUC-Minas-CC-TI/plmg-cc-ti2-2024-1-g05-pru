@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
   if (!exameId) {
     // se for médico, redireciona para a página de pacientes e se for paciente, redireciona para a página de exmaes (caso não tenha id na URL)
     window.location.href = baseUrl +
-      (tipo === 'Medico' ?  + '/pacientes' : '/exames');
+      (tipo === 'Medico' ? + '/pacientes' : '/exames');
   }
 
   // TODO - Validar se o médico ou o paciente tem acesso
@@ -21,7 +21,7 @@ window.addEventListener('load', () => {
 async function fetchDataAndPopulate(exameId) {
   try {
     const exame = await requestData(`${baseURLRequest}/exame/${exameId}`, 'GET');
-    const { titulo:tituloConsulta, medico:nomeMedico } = await requestData(`${baseURLRequest}/consulta/${exame.consultaId}`, 'GET');
+    const { titulo: tituloConsulta, medico: nomeMedico } = await requestData(`${baseURLRequest}/consulta/${exame.consultaId}`, 'GET');
 
     // Header
     document.querySelector('.info-header h1').textContent = exame.titulo;
@@ -49,10 +49,37 @@ async function fetchDataAndPopulate(exameId) {
     } else {
       downloadButton.style.display = 'none';
       document.querySelector('section.result .upload').style.display = 'block';
-      document.querySelector('section.result .upload').addEventListener('click', () => console.log('upload') );
+
+      document.querySelector('input[type=file]').addEventListener('change', uploadFile);
     }
   } catch (error) {
     console.error(error);
     //window.location.href = baseUrl + '/404';
   }
+}
+
+async function uploadFile() {
+  const form = document.querySelector('form');
+
+  const formData = new FormData(form);
+  formData.append('file', form.querySelector('input[type="file"]').files[0]);
+  formData.append('upload_preset', 'gzq11i84');
+
+  console.log('formData', formData.get('file'))
+
+  const response = await fetch('https://api.cloudinary.com/v1_1/andrels-net/image/upload', {
+    method: 'POST',
+    body: formData
+  });
+
+  const data = await response.json();
+  const id = getUrlId();
+
+  await fetch(`${baseURLRequest}/exame/${id}/arquivo`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ urlArquivo: data.url })
+  });
 }

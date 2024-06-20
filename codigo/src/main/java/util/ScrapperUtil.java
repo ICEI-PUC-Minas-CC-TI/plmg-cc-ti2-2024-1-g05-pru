@@ -29,6 +29,8 @@ public class ScrapperUtil {
 				return "https://portal.cfm.org.br/wp-content/themes/portalcfm/assets/php/foto_medico.php?crm=13449&uf=SP&hash=797711dfb59ec8589d6da4690e6c2bbf";
 			case "Paulo Muzy":
 				return "https://portal.cfm.org.br/wp-content/themes/portalcfm/assets/php/foto_medico.php?crm=115573&uf=SP&hash=07304aa93b512cde3cd64dd5d8a8779a";
+			case "Ana Claudia Quintana":
+				return "https://portal.cfm.org.br/wp-content/themes/portalcfm/assets/php/foto_medico.php?crm=76851&uf=SP&hash=a495897c64206a51b96eb44aae9cdf03";
 			default:
 				break;
 		}

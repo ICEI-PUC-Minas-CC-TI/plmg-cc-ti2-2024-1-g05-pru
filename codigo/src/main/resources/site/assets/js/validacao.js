@@ -1,5 +1,10 @@
+document.querySelector('input[type=file]').addEventListener('change', function() {
+  var fileName = this.files[0].name;
+  document.querySelector('form label').textContent = fileName;
+});
+
 document.querySelector('form label').addEventListener('click', () => {
-  document.querySelector('input').click();
+  document.querySelector('input[type=file]').click();
 });
 
 const form = document.querySelector('form');
@@ -20,7 +25,7 @@ form.addEventListener('submit', async (event) => {
 
   const data = await response.json();
   const { id } = decodeJwt(getUserSession());
-  await fetch(`http://localhost:6789/usuario/${id}/foto`, {
+  await fetch(`${baseURLRequest}/usuario/${id}/foto`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -28,7 +33,7 @@ form.addEventListener('submit', async (event) => {
     body: JSON.stringify({ urlFoto: data.url })
   });
 
-  const validado = await fetch(`http://localhost:6789/medico/${id}/validar`, {
+  const validado = await fetch(`${baseURLRequest}/medico/${id}/validar`, {
     method: 'GET'
   });
 
@@ -36,5 +41,9 @@ form.addEventListener('submit', async (event) => {
     alert('Você foi validado com sucesso! Faça login novamente para atualizar suas informações.');
 
     logout();
+  } else {
+    alert('Houve um erro ao validar seu cadastro, tente novamente mais tarde.');
+
+    location.reload();
   }
 });
