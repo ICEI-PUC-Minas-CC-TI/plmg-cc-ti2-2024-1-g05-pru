@@ -16,6 +16,7 @@ CREATE TABLE public.usuario (
 
 CREATE TABLE public.medico (
   crm VARCHAR(8) NOT NULL,
+  validado BOOLEAN NOT NULL,
   usuario_id INT NOT NULL,
   CONSTRAINT medico_pkey PRIMARY KEY (usuario_id),
   CONSTRAINT fk_usuario_id FOREIGN KEY (usuario_id) REFERENCES public.usuario (id)

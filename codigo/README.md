@@ -43,7 +43,9 @@ codigo
   ####
   - (GET) **/paciente/:id/medicos** - Busca de vinculos do paciente
   - (GET) **/paciente/:id/consultas** - Busca de consultas do paciente
+  - (GET) **/paciente/:id/consultas/:qtde** - Busca as últimas consultas do paciente
   - (GET) **/paciente/:id/exames** - Busca de exames do paciente
+  - (GET) **/paciente/:id/exames/:qtde** - Busca os últimos exames do paciente
 
 ### /consulta
   - (GET) **/consulta/:id** - Busca de consulta por id

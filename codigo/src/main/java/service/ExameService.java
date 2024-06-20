@@ -4,15 +4,19 @@ import model.Exame;
 import dao.ExameDAO;
 import util.GsonUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+
+import com.google.gson.JsonObject;
+
 import spark.Request;
 import spark.Response;
 
 public class ExameService {
 	private ExameDAO exameDAO;
 
-	public ExameService() {
-		exameDAO = new ExameDAO();
+	public ExameService(Connection conexao) {
+		exameDAO = new ExameDAO(conexao);
 	}
 
 	public Object read(Request request, Response response) {
@@ -85,5 +89,23 @@ public class ExameService {
 			response.status(404); // 404 Not found
 			return "Exame ID #" + id + " não encontrado!";
 		}
+	}
+
+	public Object updateFile(Request request, Response response) {
+		try {
+			int id = Integer.parseInt(request.params(":id"));
+      JsonObject jsonBody = GsonUtil.GSON.fromJson(request.body(), JsonObject.class);
+
+			String urlArquivo = jsonBody.get("urlArquivo").getAsString();
+
+      exameDAO.updateFile(id, urlArquivo);
+
+      response.status(200); // 200 OK
+      return "Arquivo atualizado com sucesso!";
+    }
+    catch (Exception e) {
+      response.status(500); // 500 Internal Server Error
+      return "Erro ao atualizar arquivo: " + e.getMessage();
+    }
 	}
 }

@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +14,15 @@ public class VinculoDAO extends DAO{
     super();
   }
 
+  public VinculoDAO(Connection conexao) {
+    this.conexao = conexao;
+  }
+
   public Vinculo get(int id) {
     Vinculo vinculo = null;
 
     try {
-      String sql = "SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE v.id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE v.id = ?");
       st.setInt(1, id);
 
       ResultSet rs = st.executeQuery();
@@ -46,8 +50,7 @@ public class VinculoDAO extends DAO{
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE pac.id = ?";
-      st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE);
+      st = conexao.prepareStatement("SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE pac.id = ?", ResultSet.TYPE_SCROLL_INSENSITIVE);
       st.setInt(1, pacienteId);
 
       rs = st.executeQuery();
@@ -77,8 +80,7 @@ public class VinculoDAO extends DAO{
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE med.id = ?";
-      st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE);
+      st = conexao.prepareStatement("SELECT v.*, med.nome AS medico, pac.nome AS paciente FROM vinculo v INNER JOIN usuario med ON med.id = v.medico_id INNER JOIN usuario pac ON pac.id = v.paciente_id WHERE med.id = ?", ResultSet.TYPE_SCROLL_INSENSITIVE);
       st.setInt(1, medicoId);
 
       rs = st.executeQuery();
@@ -110,9 +112,7 @@ public class VinculoDAO extends DAO{
     }
 
     try {
-      String sql = "INSERT INTO vinculo (status, paciente_id, medico_id) VALUES (?, ?, ?)";
-
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("INSERT INTO vinculo (status, paciente_id, medico_id) VALUES (?, ?, ?)");
       st.setString(1, vinculo.getStatus());
       st.setInt(2, vinculo.getPacienteId());
       st.setInt(3, vinculo.getMedicoId());
@@ -155,8 +155,7 @@ public class VinculoDAO extends DAO{
 		boolean status = false;
 
 		try {
-			String sql = "DELETE FROM vinculo WHERE id = ?";
-			PreparedStatement st = conexao.prepareStatement(sql);
+			PreparedStatement st = conexao.prepareStatement("DELETE FROM vinculo WHERE id = ?");
 			st.setInt(1, id);
 
 			if (st.executeUpdate() > 0) {
@@ -176,8 +175,7 @@ public class VinculoDAO extends DAO{
     int pacienteId = vinculo.getPacienteId();
 
     try {
-      String sql = "SELECT * FROM vinculo WHERE medico_id = ? AND paciente_id = ?";
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("SELECT * FROM vinculo WHERE medico_id = ? AND paciente_id = ?");
       st.setInt(1, medicoId);
       st.setInt(2, pacienteId);
 

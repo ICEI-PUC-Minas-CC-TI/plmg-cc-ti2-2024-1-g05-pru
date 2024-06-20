@@ -9,14 +9,16 @@ import com.google.gson.JsonObject;
 
 public class Medico extends Usuario {
 	private String crm;
+  private Boolean validado;
 
   public Medico() {
     super();
   }
 
-	public Medico(int id, String nome, String cpf, String email, String senha, String telefone, char sexo, LocalDate nascimento, String urlFoto, String cep, String crm) {
+	public Medico(int id, String nome, String cpf, String email, String senha, String telefone, char sexo, LocalDate nascimento, String urlFoto, String cep, String crm, Boolean validado) {
     super(id, nome, cpf, email, senha, telefone, sexo, nascimento, urlFoto, cep);
     setCrm(crm);
+    setValidado(validado);
   }
 
   public Medico(int id, String nome, String email, String telefone, String urlFoto, String cep) {
@@ -37,6 +39,15 @@ public class Medico extends Usuario {
       throw new IllegalArgumentException("Os dois últimos dígitos do CRM devem ser letras.");
 
     this.crm = crm;
+  }
+
+  // validado
+  public Boolean getValidado() {
+    return validado;
+  }
+
+  public void setValidado(Boolean validado) {
+    this.validado = validado;
   }
 
   // utils
@@ -65,8 +76,9 @@ public class Medico extends Usuario {
       char sexo = jsonObject.get("sexo").getAsString().charAt(0);
       LocalDate nascimento = LocalDate.parse(jsonObject.get("nascimento").getAsString());
       String crm = jsonObject.get("crm").getAsString();
+      Boolean validado = jsonObject.get("validado").getAsBoolean();
 
-      return new Medico(id, nome, cpf, email, senha, telefone, sexo, nascimento, urlFoto, cep, crm);
+      return new Medico(id, nome, cpf, email, senha, telefone, sexo, nascimento, urlFoto, cep, crm, validado);
     }
 
     return new Medico(id, nome, email, telefone, urlFoto, cep);

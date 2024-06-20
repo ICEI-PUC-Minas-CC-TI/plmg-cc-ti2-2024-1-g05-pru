@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +10,8 @@ import java.util.List;
 import model.Consulta;
 
 public class ConsultaDAO extends DAO {
-	public ConsultaDAO() {
-		super();
+	public ConsultaDAO(Connection conexao) {
+		this.conexao = conexao;
 	}
 
 	public void finalize() {
@@ -49,8 +50,7 @@ public class ConsultaDAO extends DAO {
 		Consulta consulta = null;
 
 		try {
-			String sql = "SELECT c.*, med.nome as medico, pac.nome as paciente FROM consulta c INNER JOIN usuario med ON med.id = c.medico_id INNER JOIN usuario pac ON pac.id = c.paciente_id WHERE c.id = ?";
-			PreparedStatement st = conexao.prepareStatement(sql);
+			PreparedStatement st = conexao.prepareStatement("SELECT c.*, med.nome as medico, pac.nome as paciente FROM consulta c INNER JOIN usuario med ON med.id = c.medico_id INNER JOIN usuario pac ON pac.id = c.paciente_id WHERE c.id = ?");
 			st.setInt(1, id);
 
 			ResultSet rs = st.executeQuery();
@@ -99,8 +99,7 @@ public class ConsultaDAO extends DAO {
 		boolean status = false;
 
 		try {
-			String sql = "DELETE FROM consulta WHERE id = ?";
-			PreparedStatement st = conexao.prepareStatement(sql);
+			PreparedStatement st = conexao.prepareStatement("DELETE FROM consulta WHERE id = ?");
 			st.setInt(1, id);
 
 			if (st.executeUpdate() > 0) {
@@ -118,8 +117,7 @@ public class ConsultaDAO extends DAO {
 		List<Consulta> consultas = new ArrayList<Consulta>();
 
 		try {
-			String sql = "SELECT c.*, med.nome as medico, pac.nome as paciente FROM consulta c INNER JOIN usuario med ON med.id = c.medico_id INNER JOIN usuario pac ON pac.id = c.paciente_id WHERE paciente_id = ?";
-			PreparedStatement st = conexao.prepareStatement(sql);
+			PreparedStatement st = conexao.prepareStatement("SELECT c.*, med.nome as medico, pac.nome as paciente FROM consulta c INNER JOIN usuario med ON med.id = c.medico_id INNER JOIN usuario pac ON pac.id = c.paciente_id WHERE paciente_id = ?");
 			st.setInt(1, pacienteId);
 
 			ResultSet rs = st.executeQuery();
@@ -146,8 +144,7 @@ public class ConsultaDAO extends DAO {
 		List<Consulta> consultas = new ArrayList<Consulta>();
 
 		try {
-			String sql = "SELECT * FROM consulta WHERE paciente_id = ? ORDER BY data_hora DESC LIMIT ?";
-			PreparedStatement st = conexao.prepareStatement(sql);
+			PreparedStatement st = conexao.prepareStatement("SELECT * FROM consulta WHERE paciente_id = ? ORDER BY data_hora DESC LIMIT ?");
 			st.setInt(1, pacienteId);
 			st.setInt(2, qtde);
 

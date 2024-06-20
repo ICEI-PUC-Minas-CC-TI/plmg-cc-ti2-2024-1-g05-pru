@@ -2,17 +2,24 @@ package util;
 
 import java.util.Date;
 import io.jsonwebtoken.*;
+import model.Medico;
 import model.Usuario;
 
 public class JWTUtil {
 	public static String generateToken(Usuario usuario) {
-		return Jwts.builder()
+		JwtBuilder jwtBuilder = Jwts.builder()
 			.setSubject(usuario.getEmail())
 			.claim("id", usuario.getId())
 			.claim("tipo", usuario.getClass().getSimpleName())
 			.signWith(SignatureAlgorithm.HS512, "ACME")
-			.setExpiration(new Date(System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000))
-			.compact();
+			.setExpiration(new Date(System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000));
+
+		if (usuario instanceof Medico) {
+			Medico medico = (Medico) usuario;
+			jwtBuilder.claim("validado", medico.getValidado());
+		}
+
+		return jwtBuilder.compact();
 	}
 
 	public static boolean validateToken(String token) {

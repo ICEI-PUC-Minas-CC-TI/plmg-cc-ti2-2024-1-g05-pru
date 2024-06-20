@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,9 +10,9 @@ import java.util.List;
 import model.Paciente;
 
 public class PacienteDAO extends DAO {
-	public PacienteDAO() {
-		super();
-	}
+  public PacienteDAO(Connection conexao) {
+    this.conexao = conexao;
+  }
 
   public Paciente insert(Paciente paciente) throws SQLException {
     // verifica se o usuario é nulo
@@ -20,9 +21,7 @@ public class PacienteDAO extends DAO {
     }
 
     try {
-      String sql = "INSERT INTO usuario (nome, cpf, email, senha, telefone, sexo, nascimento, url_foto, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-      PreparedStatement st = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement st = conexao.prepareStatement("INSERT INTO usuario (nome, cpf, email, senha, telefone, sexo, nascimento, url_foto, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
       st.setString(1, paciente.getNome());
       st.setString(2, paciente.getCpf());
       st.setString(3, paciente.getEmail());
@@ -45,9 +44,7 @@ public class PacienteDAO extends DAO {
     }
 
     try {
-      String sqlPaciente = "INSERT INTO paciente (usuario_id) VALUES (?)";
-
-      PreparedStatement stPaciente = conexao.prepareStatement(sqlPaciente);
+      PreparedStatement stPaciente = conexao.prepareStatement("INSERT INTO paciente (usuario_id) VALUES (?)");
       stPaciente.setInt(1, paciente.getId());
 
       int affectedRowsPaciente = stPaciente.executeUpdate();
@@ -68,8 +65,7 @@ public class PacienteDAO extends DAO {
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT * FROM usuario INNER JOIN paciente ON usuario.id = paciente.usuario_id WHERE usuario.id = ?";
-      st = conexao.prepareStatement(sql);
+      st = conexao.prepareStatement("SELECT * FROM usuario INNER JOIN paciente ON usuario.id = paciente.usuario_id WHERE usuario.id = ?");
       st.setInt(1, id);
 
       rs = st.executeQuery();
@@ -100,8 +96,7 @@ public class PacienteDAO extends DAO {
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT * FROM usuario INNER JOIN paciente ON usuario.id = paciente.usuario_id WHERE email = ?";
-      st = conexao.prepareStatement(sql);
+      st = conexao.prepareStatement("SELECT * FROM usuario INNER JOIN paciente ON usuario.id = paciente.usuario_id WHERE email = ?");
       st.setString(1, email);
 
       rs = st.executeQuery();
@@ -136,9 +131,7 @@ public class PacienteDAO extends DAO {
     ResultSet rs = null;
 
     try {
-      String sql = "SELECT * FROM usuario INNER JOIN paciente ON usuario.id = paciente.usuario_id ORDER BY ?";
-
-      st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+      st = conexao.prepareStatement("SELECT * FROM usuario INNER JOIN paciente ON usuario.id = paciente.usuario_id ORDER BY ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
       st.setString(1, orderBy);
 
       rs = st.executeQuery();
@@ -172,9 +165,7 @@ public class PacienteDAO extends DAO {
     }
 
     try {
-      String sql = "UPDATE usuario SET nome = ?, email = ?, telefone = ?, url_foto = ?, cep = ? WHERE id = ?";
-
-      PreparedStatement st = conexao.prepareStatement(sql);
+      PreparedStatement st = conexao.prepareStatement("UPDATE usuario SET nome = ?, email = ?, telefone = ?, url_foto = ?, cep = ? WHERE id = ?");
       st.setString(1, paciente.getNome());
       st.setString(2, paciente.getEmail());
       st.setString(3, paciente.getTelefone());
@@ -197,8 +188,7 @@ public class PacienteDAO extends DAO {
     PreparedStatement st = null;
 
     try {
-      String sql = "DELETE FROM paciente WHERE usuario_id = ?";
-      st = conexao.prepareStatement(sql);
+      st = conexao.prepareStatement("DELETE FROM paciente WHERE usuario_id = ?");
       st.setInt(1, id);
 
       int affectedRows = st.executeUpdate();

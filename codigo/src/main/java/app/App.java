@@ -3,17 +3,36 @@ package app;
 import service.*;
 import static spark.Spark.*;
 
+import java.sql.Connection;
+import dao.DAO;
+
 public class App {
-  private static LoginService loginService = new LoginService();
-  private static MedicoService medicoService = new MedicoService();
-  private static PacienteService pacienteService = new PacienteService();
-  private static ConsultaService consultaService = new ConsultaService();
-  private static ExameService exameService = new ExameService();
-  private static VinculoService vinculoService = new VinculoService();
-  private static MedicamentoService medicamentoService = new MedicamentoService();
-  private static EspecialidadeService especialidadeService = new EspecialidadeService();
+  private static LoginService loginService;
+  private static UsuarioService usuarioService;
+  private static MedicoService medicoService;
+  private static PacienteService pacienteService;
+  private static ConsultaService consultaService;
+  private static ExameService exameService;
+  private static VinculoService vinculoService;
+  private static MedicamentoService medicamentoService;
+  private static EspecialidadeService especialidadeService;
+
+  private static void startServices(Connection conexao) {
+    loginService = new LoginService(conexao);
+    usuarioService = new UsuarioService(conexao);
+    medicoService = new MedicoService(conexao);
+    pacienteService = new PacienteService(conexao);
+    consultaService = new ConsultaService(conexao);
+    exameService = new ExameService(conexao);
+    vinculoService = new VinculoService(conexao);
+    medicamentoService = new MedicamentoService(conexao);
+    especialidadeService = new EspecialidadeService(conexao);
+  }
 
   public static void main(String[] args) {
+    DAO dao = new DAO();
+    startServices(dao.getConexao());
+
     port(6789);
 
     // CORS
@@ -30,6 +49,11 @@ public class App {
     // endpoint login
     post("/login", (request, response) -> loginService.login(request, response));
 
+    // endpoints usuario
+    path("/usuario", () -> {
+      post("/:id/foto", (request, response) -> usuarioService.updatePhoto(request, response));
+    });
+
     // endpoints medico
     path("/medico", () -> {
       get("/:id", (request, response) -> medicoService.read(request, response));
@@ -42,6 +66,9 @@ public class App {
 
       // especialidades do medico
       get("/:id/especialidades", (request, response) -> medicoService.readAllEspecialidades(request, response));
+
+      // verificação do medico
+      get("/:id/validar", (request, response) -> medicoService.validate(request, response));
     });
 
     // endpoints paciente
@@ -53,19 +80,14 @@ public class App {
 
       // consultas do paciente
       get("/:id/consultas", (request, response) -> pacienteService.readAllConsultas(request, response));
-      //get("/:id/consultas/:qtde", (request, response) -> pacienteService.readAllConsultas(request, response));
+      get("/:id/consultas/:qtde", (request, response) -> pacienteService.readLastConsultas(request, response));
 
       // exames do paciente
       get("/:id/exames", (request, response) -> pacienteService.readAllExames(request, response));
+      get("/:id/exames/:qtde", (request, response) -> pacienteService.readLastExames(request, response));
 
       // medicos do paciente
       get("/:id/medicos", (request, response) -> pacienteService.readAllMedicos(request, response));
-
-      // Ver as últimas consultas de um paciente
-      get("/:id/consultas/:qtde", (request, response) -> pacienteService.readLastConsultas(request, response));
-
-      // Ver os últimos exames de um paciente
-      get("/:id/exames/:qtde", (request, response) -> pacienteService.readLastExames(request, response));
     });
 
     // endpoints consulta
@@ -86,6 +108,7 @@ public class App {
       post("/", (request, response) -> exameService.create(request, response));
       put("/:id", (request, response) -> exameService.update(request, response));
       delete("/:id", (request, response) -> exameService.delete(request, response));
+      post("/:id/arquivo", (request, response) -> exameService.updateFile(request, response));
     });
 
     // endpoints medicamento

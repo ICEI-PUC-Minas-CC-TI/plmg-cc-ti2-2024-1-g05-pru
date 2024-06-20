@@ -104,3 +104,12 @@ async function requestData(url, method, body) {
     }
   }
 };
+
+window.addEventListener('load', () => {
+  const token = getUserSession();
+
+  if (token && decodeJwt(token).validado === false && location.pathname !== '/validacao') {
+    // redireciona para a página de validação
+    window.location.href = baseUrl + '/validacao';
+  }
+});

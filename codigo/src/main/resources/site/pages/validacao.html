@@ -1,0 +1,29 @@
+---
+layout: no-header
+permalink: /validacao
+css:
+- assets/css/validacao.css
+- assets/css/form.css
+js: assets/js/validacao.js
+---
+
+<main>
+  <h1>Validação por Imagem</h1>
+
+  <p>Para validar sua conta, por favor, envie uma foto de um documento de identificação com foto.</p>
+
+  <form action="" enctype="multipart/form-data">
+    <section class="input-field">
+      <label for="foto">
+        <i class="nf nf-md-file_upload"></i>
+        Enviar foto do documento
+      </label>
+      <input type="file" name="foto" accept="image/*" required>
+    </section>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <section id="load">
+    <p>Carregando...</p>
+  </section>
+</main>

@@ -63,7 +63,8 @@ async function registerDoctor() {
     nascimento,
     urlFoto: "",
     cep,
-    crm
+    crm,
+    validado: false,
   };
 
   const res = await requestData('http://localhost:6789/medico/', 'POST', data);
