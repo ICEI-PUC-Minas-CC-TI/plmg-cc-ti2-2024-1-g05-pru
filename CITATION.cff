@@ -1,31 +1,32 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: 
+title: PrU - Prontuário Unificado
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Luís Silva de Paula
+    given-names: André
+  - family-names: de Jesus e Ávila
+    given-names: João
+  - family-names: Henrique Soares Rosemberg
+    given-names: Pedro
+  - family-names: Andrade de Moraes
+    given-names: Priscila
+  - family-names: Victor Zevallos
+    given-names: Sirius
+
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: do Val Machado
+    given-names: Max
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Ferreira de Carvalho
+    given-names: Walisson
 keywords:
-  - 
-  - 
-repository-code: 
+  - Prontuário
+  - Saúde
+  - Medicina
+  - Reconhecimento Facial
+repository-code: https://github.com/ICEI-PUC-Minas-CC-TI/plmg-cc-ti2-2024-1-g05-pru/
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2022-07-14
+date-released: 2023-06-21
