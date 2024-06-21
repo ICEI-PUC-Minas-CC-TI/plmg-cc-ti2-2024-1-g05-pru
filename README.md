@@ -17,4 +17,9 @@ Para usar a aplicação, você precisa ter o Docker e o Docker compose instalado
 ```
 $ docker compose up -d
 ```
-Você pode acessar também por [aqui](https://icei-puc-minas-cc-ti.github.io/plmg-cc-ti2-2024-1-g05-pru).
+Também é necessário adicionar a configuração da AWS, para o funcionamento do sistema inteligente (reconhecimento facial), para isso, crie uma pasta chamada .aws na home do usuário e adicione um arquivo chamado credentials com o seguinte conteúdo:
+```
+[default]
+aws_access_key_id = <sua chave de acesso>
+aws_secret_access_key = <sua chave secreta>
+```
