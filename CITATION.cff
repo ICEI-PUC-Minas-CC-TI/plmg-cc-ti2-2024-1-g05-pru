@@ -12,7 +12,6 @@ authors:
     given-names: Priscila
   - family-names: Victor Zevallos
     given-names: Sirius
-
   - name-suffix: Professor
     affiliation: PUC Minas
     family-names: do Val Machado
@@ -29,4 +28,4 @@ keywords:
 repository-code: https://github.com/ICEI-PUC-Minas-CC-TI/plmg-cc-ti2-2024-1-g05-pru/
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2023-06-21
+date-released: 2024-06-21
